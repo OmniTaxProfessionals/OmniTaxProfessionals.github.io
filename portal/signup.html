@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up | Client Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: sans-serif; padding: 20px; background-color: #121212; text-align: center; color: white; }
+    input { display: block; margin: 10px auto; padding: 12px; width: 250px; border-radius: 5px; border: 1px solid #444; background-color: #222; color: white; }
+    button { padding: 10px 25px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Create Your Account</h2>
+  <p>Enter the email you were invited with.</p>
+  <input id="email" type="email" placeholder="Email Address">
+  <input id="password" type="password" placeholder="Choose Password">
+  <button id="signupBtn">Register</button>
+  <p><a href="index.html" style="color: #aaa;">Back to Login</a></p>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBOND-wraRXGL0jB8xK2zHnDMBXBhA5WRk",
+      authDomain: "otp-client-login.firebaseapp.com",
+      projectId: "otp-client-login",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    document.getElementById("signupBtn").addEventListener("click", async () => {
+      const email = document.getElementById("email").value.toLowerCase();
+      const password = document.getElementById("password").value;
+
+      // 1. Check if email is in pending_invites
+      const inviteRef = doc(db, "pending_invites", email);
+      const inviteSnap = await getDoc(inviteRef);
+
+      if (inviteSnap.exists()) {
+        try {
+          // 2. Create the user
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+
+          // 3. Create their user profile in Firestore
+          await setDoc(doc(db, "users", user.uid), {
+              email: email,
+              role: "user",
+              createdAt: new Date()
+          });
+
+          // 4. Remove them from the invite list
+          await deleteDoc(inviteRef);
+
+          alert("Account created successfully!");
+          window.location.href = "dashboard.html";
+        } catch (err) {
+          alert(err.message);
+        }
+      } else {
+        alert("This email has not been invited. Please contact an admin.");
+      }
+    });
+  </script>
+</body>
+</html>
