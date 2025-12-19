@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel</title>
   <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+        // Replace with your actual Public Key from Step 3
+        emailjs.init("QQytAqlRaqkcNjl_C"); 
+    })();
+  </script>
   <style>
     body { font-family: sans-serif; padding: 20px; background-color: #121212; color: white; text-align: center; display: none; }
     .back-btn { position: absolute; top: 20px; left: 20px; padding: 10px 15px; background-color: #333; color: white; border: 1px solid #555; border-radius: 5px; cursor: pointer; text-decoration: none; }
@@ -60,10 +67,36 @@
     // Add Email to Invite List
     document.getElementById("inviteBtn").addEventListener("click", async () => {
         const email = document.getElementById("inviteEmail").value.toLowerCase();
-        if(!email) return;
-        await setDoc(doc(db, "pending_invites", email), { invitedAt: new Date() });
-        document.getElementById("inviteEmail").value = "";
-        alert("User invited! They can now sign up using this email.");
+        
+        if(!email) {
+            alert("Please enter an email address.");
+            return;
+        }
+
+        try {
+            // 1. Save the email to your Firebase "pending_invites" list
+            await setDoc(doc(db, "pending_invites", email), { 
+                invitedAt: new Date() 
+            });
+
+            // 2. Prepare the data for the email template
+            const templateParams = {
+                user_email: email, // This matches {{user_email}} in your template
+                signup_link: "https://omnitaxprofessionals.github.io/portal/"
+            };
+
+            // 3. Send the email via EmailJS
+            // Replace SERVICE_ID and TEMPLATE_ID with your actual IDs from Steps 1 & 2
+            await emailjs.send('service_00hg1jb', 'template_uaczuoh', templateParams);
+
+            // 4. Success UI updates
+            document.getElementById("inviteEmail").value = "";
+            alert("Success! User added to list and invitation email sent.");
+
+        } catch (error) {
+            console.error("Failed to send invite:", error);
+            alert("Something went wrong. Check the console for details.");
+        }
     });
 
     // Real-time listener for the invite list
