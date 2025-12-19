@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel</title>
   <link rel="stylesheet" href="style.css">
+  
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script type="text/javascript">
     (function(){
-        // Replace with your actual Public Key from Step 3
+        // Your Public Key
         emailjs.init("QQytAqlRaqkcNjl_C"); 
     })();
   </script>
+
   <style>
     body { font-family: sans-serif; padding: 20px; background-color: #121212; color: white; text-align: center; display: none; }
     .back-btn { position: absolute; top: 20px; left: 20px; padding: 10px 15px; background-color: #333; color: white; border: 1px solid #555; border-radius: 5px; cursor: pointer; text-decoration: none; }
@@ -19,7 +21,7 @@
     input { padding: 10px; width: 250px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; margin-bottom: 10px; }
     button { padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
     .invite-list { margin-top: 30px; text-align: left; display: inline-block; width: 300px; }
-    .invite-item { background: #222; padding: 10px; border-bottom: 1px solid #444; display: flex; justify-content: space-between; }
+    .invite-item { background: #222; padding: 10px; border-bottom: 1px solid #444; display: flex; justify-content: space-between; align-items: center; }
   </style>
 </head>
 <body>
@@ -64,9 +66,9 @@
       }
     });
 
-    // Add Email to Invite List
+    // Add Email to Invite List & Send Email
     document.getElementById("inviteBtn").addEventListener("click", async () => {
-        const email = document.getElementById("inviteEmail").value.toLowerCase();
+        const email = document.getElementById("inviteEmail").value.toLowerCase().trim();
         
         if(!email) {
             alert("Please enter an email address.");
@@ -74,28 +76,30 @@
         }
 
         try {
-            // 1. Save the email to your Firebase "pending_invites" list
+            // 1. Save to Firebase
             await setDoc(doc(db, "pending_invites", email), { 
                 invitedAt: new Date() 
             });
 
-            // 2. Prepare the data for the email template
+            // 2. Prepare data for EmailJS
+            // 'name' and 'user' map to your EmailJS sidebar settings
+            // 'signup_link' maps to your email content
             const templateParams = {
-                user_email: email, // This matches {{user_email}} in your template
+                name: "Omni Tax Professionals", 
+                user: email,                   
                 signup_link: "https://omnitaxprofessionals.github.io/portal/"
             };
 
-            // 3. Send the email via EmailJS
-            // Replace SERVICE_ID and TEMPLATE_ID with your actual IDs from Steps 1 & 2
-            await emailjs.send('service_00hg1jb', 'template_uaczuoh', templateParams);
+            // 3. Send via EmailJS
+            await window.emailjs.send('service_00hg1jb', 'template_uaczuoh', templateParams);
 
             // 4. Success UI updates
             document.getElementById("inviteEmail").value = "";
-            alert("Success! User added to list and invitation email sent.");
+            alert("Success! User invited and email sent.");
 
         } catch (error) {
-            console.error("Failed to send invite:", error);
-            alert("Something went wrong. Check the console for details.");
+            console.error("Error sending invite:", error);
+            alert("Failed to send invite. Check console for details.");
         }
     });
 
@@ -107,14 +111,16 @@
             snapshot.forEach(doc => {
                 const div = document.createElement("div");
                 div.className = "invite-item";
-                div.innerHTML = `<span>${doc.id}</span> <button style="background:red; padding:2px 5px;" onclick="window.deleteInvite('${doc.id}')">X</button>`;
+                div.innerHTML = `<span>${doc.id}</span> <button style="background:red; color:white; border:none; padding:5px 10px; border-radius:3px; cursor:pointer;" onclick="window.deleteInvite('${doc.id}')">X</button>`;
                 container.appendChild(div);
             });
         });
     }
 
     window.deleteInvite = async (id) => {
-        await deleteDoc(doc(db, "pending_invites", id));
+        if(confirm("Remove this invite?")) {
+            await deleteDoc(doc(db, "pending_invites", id));
+        }
     };
   </script>
 </body>
