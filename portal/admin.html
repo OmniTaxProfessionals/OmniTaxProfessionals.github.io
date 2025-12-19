@@ -8,11 +8,12 @@
   <style>
     body { font-family: sans-serif; padding: 20px; background-color: #121212; color: white; text-align: center; display: none; }
     .back-btn { position: absolute; top: 20px; left: 20px; padding: 10px 15px; background-color: #333; color: white; border: 1px solid #555; border-radius: 5px; cursor: pointer; text-decoration: none; }
-    .admin-container { margin-top: 80px; }
-    input { padding: 10px; width: 250px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; margin-bottom: 10px; }
-    button { padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-    .invite-list { margin-top: 30px; text-align: left; display: inline-block; width: 300px; }
-    .invite-item { background: #222; padding: 10px; border-bottom: 1px solid #444; display: flex; justify-content: space-between; }
+    .admin-container { margin-top: 80px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    input { padding: 10px; width: 80%; border-radius: 5px; border: 1px solid #444; background: #222; color: white; margin-bottom: 10px; }
+    button { padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 5px; }
+    .section { background: #1e1e1e; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+    .list-item { background: #222; padding: 10px; border-bottom: 1px solid #444; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+    .delete-btn { background: #dc3545; padding: 5px 10px; font-size: 12px; }
   </style>
 </head>
 <body>
@@ -20,21 +21,31 @@
   <a href="dashboard.html" class="back-btn">← Back</a>
 
   <div class="admin-container">
-    <h2>Admin Panel</h2>
-    <p>Invite New Users</p>
-    <input type="email" id="inviteEmail" placeholder="User Email Address">
-    <button id="inviteBtn">Send Invite</button>
+    <h2>Admin Control Center</h2>
 
-    <div class="invite-list">
-        <h3>Pending Invites</h3>
-        <div id="listContainer"></div>
+    <div class="section">
+      <h3>Invite New Users</h3>
+      <input type="email" id="inviteEmail" placeholder="User Email Address">
+      <button id="inviteBtn">Send Invite</button>
+      <div id="listContainer"></div>
+    </div>
+
+    <div class="section">
+      <h3>Assign Document to User</h3>
+      <input type="email" id="docUserEmail" placeholder="Client Email">
+      <input type="text" id="docName" placeholder="Document Name (e.g. Invoice #101)">
+      <input type="text" id="docUrl" placeholder="Document URL (Link to file)">
+      <button id="uploadBtn" style="background-color: #007bff;">Assign Document</button>
+      
+      <h3 style="margin-top:20px;">All Assigned Documents</h3>
+      <div id="docListContainer"></div>
     </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot, deleteDoc, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBOND-wraRXGL0jB8xK2zHnDMBXBhA5WRk",
@@ -52,37 +63,77 @@
       if (userDoc.exists() && userDoc.data().role === "admin") {
         document.body.style.display = "block";
         loadInvites();
+        loadAllDocuments();
       } else {
         window.location.href = "dashboard.html";
       }
     });
 
-    // Add Email to Invite List
+    // --- Invite Logic ---
     document.getElementById("inviteBtn").addEventListener("click", async () => {
-        const email = document.getElementById("inviteEmail").value.toLowerCase();
+        const email = document.getElementById("inviteEmail").value.toLowerCase().trim();
         if(!email) return;
         await setDoc(doc(db, "pending_invites", email), { invitedAt: new Date() });
         document.getElementById("inviteEmail").value = "";
-        alert("User invited! They can now sign up using this email.");
     });
 
-    // Real-time listener for the invite list
     function loadInvites() {
         onSnapshot(collection(db, "pending_invites"), (snapshot) => {
             const container = document.getElementById("listContainer");
-            container.innerHTML = "";
+            container.innerHTML = "<h4>Pending Invites</h4>";
             snapshot.forEach(doc => {
                 const div = document.createElement("div");
-                div.className = "invite-item";
-                div.innerHTML = `<span>${doc.id}</span> <button style="background:red; padding:2px 5px;" onclick="window.deleteInvite('${doc.id}')">X</button>`;
+                div.className = "list-item";
+                div.innerHTML = `<span>${doc.id}</span> <button class="delete-btn" onclick="window.deleteInvite('${doc.id}')">Remove</button>`;
                 container.appendChild(div);
             });
         });
     }
 
-    window.deleteInvite = async (id) => {
-        await deleteDoc(doc(db, "pending_invites", id));
-    };
+    window.deleteInvite = async (id) => { await deleteDoc(doc(db, "pending_invites", id)); };
+
+    // --- Document Logic ---
+    document.getElementById("uploadBtn").addEventListener("click", async () => {
+        const email = document.getElementById("docUserEmail").value.toLowerCase().trim();
+        const name = document.getElementById("docName").value;
+        const url = document.getElementById("docUrl").value;
+
+        if(!email || !name || !url) { alert("Fill all fields"); return; }
+
+        await addDoc(collection(db, "client_documents"), {
+            clientEmail: email,
+            fileName: name,
+            fileUrl: url,
+            uploadedAt: new Date()
+        });
+
+        document.getElementById("docName").value = "";
+        document.getElementById("docUrl").value = "";
+        alert("Document linked to user!");
+    });
+
+    function loadAllDocuments() {
+        onSnapshot(collection(db, "client_documents"), (snapshot) => {
+            const container = document.getElementById("docListContainer");
+            container.innerHTML = "";
+            snapshot.forEach(documentSnapshot => {
+                const data = documentSnapshot.data();
+                const div = document.createElement("div");
+                div.className = "list-item";
+                div.innerHTML = `
+                    <div style="text-align:left">
+                        <strong>${data.clientEmail}</strong><br>
+                        <small>${data.fileName}</small>
+                    </div>
+                    <button class="delete-btn" onclick="window.deleteDocEntry('${documentSnapshot.id}')">Delete</button>
+                `;
+                container.appendChild(div);
+            });
+        });
+    }
+
+    window.deleteDocEntry = async (id) => { await deleteDoc(doc(db, "client_documents", id)); };
+
   </script>
 </body>
 </html>

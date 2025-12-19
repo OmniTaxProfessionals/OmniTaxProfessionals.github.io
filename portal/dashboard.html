@@ -6,41 +6,15 @@
   <title>Dashboard</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    body {
-      font-family: sans-serif;
-      padding: 20px;
-      text-align: center;
-      background-color: #121212;
-    }
-
-    .admin-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      padding: 10px 15px;
-      background-color: #333;
-      color: white;
-      border: 1px solid #555;
-      border-radius: 5px;
-      cursor: pointer;
-      text-decoration: none;
-      font-size: 14px;
-      display: none; /* Hidden by default */
-    }
-
-    .center-logo {
-      display: block;
-      margin: 40px auto;
-      width: 450px;
-      max-width: 90%;
-      height: auto;
-    }
-
-    #logoutBtn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      cursor: pointer;
-    }
+    body { font-family: sans-serif; padding: 20px; text-align: center; background-color: #121212; color: white; }
+    .admin-btn { position: absolute; top: 20px; right: 20px; padding: 10px 15px; background-color: #333; color: white; border: 1px solid #555; border-radius: 5px; cursor: pointer; text-decoration: none; font-size: 14px; display: none; }
+    .center-logo { display: block; margin: 40px auto; width: 300px; max-width: 90%; height: auto; }
+    #logoutBtn { margin-top: 20px; padding: 10px 20px; cursor: pointer; background: #444; color: white; border: none; border-radius: 5px; }
+    
+    .doc-container { max-width: 500px; margin: 40px auto; background: #1e1e1e; padding: 20px; border-radius: 10px; border: 1px solid #333; }
+    .doc-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333; background: #252525; margin-bottom: 5px; border-radius: 5px; }
+    .download-link { color: #007bff; text-decoration: none; font-weight: bold; border: 1px solid #007bff; padding: 5px 10px; border-radius: 4px; }
+    .download-link:hover { background: #007bff; color: white; }
   </style>
 </head>
 <body>
@@ -51,15 +25,20 @@
        alt="Logo" 
        class="center-logo">
 
-  <h1 style="color: white">Dashboard</h1>
-  <p id="welcome" style="color: white">Loading user info...</p>
+  <h1>Dashboard</h1>
+  <p id="welcome">Loading user info...</p>
   
+  <div class="doc-container">
+    <h3>Your Documents</h3>
+    <div id="userDocList">Searching for files...</div>
+  </div>
+
   <button id="logoutBtn">Logout</button>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBOND-wraRXGL0jB8xK2zHnDMBXBhA5WRk",
@@ -77,7 +56,10 @@
       } else {
         document.getElementById("welcome").textContent = `Logged in as: ${user.email}`;
         
-        // Check if user is admin to show the button
+        // Load documents for this specific email
+        loadUserDocuments(user.email);
+
+        // Check for admin role
         const userDocRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists() && userDoc.data().role === "admin") {
@@ -86,12 +68,32 @@
       }
     });
 
+    function loadUserDocuments(email) {
+        const q = query(collection(db, "client_documents"), where("clientEmail", "==", email.toLowerCase()));
+        
+        onSnapshot(q, (snapshot) => {
+            const container = document.getElementById("userDocList");
+            if (snapshot.empty) {
+                container.innerHTML = "<p style='color: #888;'>No documents assigned to you yet.</p>";
+                return;
+            }
+            
+            container.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const div = document.createElement("div");
+                div.className = "doc-item";
+                div.innerHTML = `
+                    <span>${data.fileName}</span>
+                    <a href="${data.fileUrl}" target="_blank" class="download-link">View / Download</a>
+                `;
+                container.appendChild(div);
+            });
+        });
+    }
+
     document.getElementById("logoutBtn").addEventListener("click", () => {
-      signOut(auth)
-        .then(() => {
-          window.location.href = "index.html";
-        })
-        .catch((err) => alert(err.message));
+      signOut(auth).then(() => { window.location.href = "index.html"; });
     });
   </script>
 </body>
