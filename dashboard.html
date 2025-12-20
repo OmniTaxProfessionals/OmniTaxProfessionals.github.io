@@ -119,21 +119,22 @@
     }
 
     window.downloadChunked = async (docId, fileName) => {
-      // --- RESTORE SECURITY: Email Verification Check ---
       if (!auth.currentUser.emailVerified) {
-        alert("Please verify your email via 'Security Settings' before downloading sensitive documents.");
+        alert("Please verify your email first.");
         return;
       }
 
       const btn = document.getElementById(`btn-${docId}`);
-      const originalText = btn.textContent;
       btn.disabled = true;
-      btn.textContent = "Rebuilding...";
+      btn.textContent = "Downloading...";
 
       try {
-        // Fetch chunks in order
-        const chunksRef = collection(db, `client_documents/${docId}/chunks`);
-        const q = query(chunksRef, orderBy("index"));
+        // 1. Get the Master Doc to get the File Type Header
+        const masterSnap = await getDoc(doc(db, "client_documents", docId));
+        const fileTypeHeader = masterSnap.data().fileTypeHeader || "data:application/pdf;base64";
+
+        // 2. Fetch all chunks
+        const q = query(collection(db, `client_documents/${docId}/chunks`), orderBy("index"));
         const chunkSnaps = await getDocs(q);
         
         let fullBase64 = "";
@@ -141,18 +142,34 @@
           fullBase64 += c.data().data;
         });
 
+        // 3. Convert Base64 to a real Blob (This fixes the "Failed to load" error)
+        const byteCharacters = atob(fullBase64);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const mimeType = fileTypeHeader.split(':')[1].split(';')[0];
+        const blob = new Blob([byteArray], {type: mimeType});
+
+        // 4. Trigger Download
+        const blobUrl = URL.createObjectURL(blob);
         const link = document.createElement("a");
-        link.href = fullBase64;
+        link.href = blobUrl;
         link.download = fileName;
         document.body.appendChild(link);
         link.click();
+        
+        // Cleanup
         document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+
       } catch (e) {
         console.error(e);
-        alert("Download failed. Ensure you have a stable connection and are verified.");
+        alert("Download failed. The file may be corrupted or missing chunks.");
       } finally {
         btn.disabled = false;
-        btn.textContent = originalText;
+        btn.textContent = "Download";
       }
     };
 
