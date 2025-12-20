@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login | Client Portal</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#39a86a">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="icon" type="image/png" href="https://reamaze-prod.s3.amazonaws.com/7quihtsj41abido77mph4jsqyrhu?response-content-disposition=inline%3B%20filename%3D%22blob-da9560d.png%22%3B%20filename%2A%3DUTF-8%27%27blob-da9560d.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATA2FHRYN45YO3RPE%2F20251220%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251220T063644Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=b09e12fdfb9eab83fe9d7337999dc09e498cdd0ee392f4b20af10b5b6f8affbb">
 <link rel="apple-touch-icon" href="https://reamaze-prod.s3.amazonaws.com/7quihtsj41abido77mph4jsqyrhu?response-content-disposition=inline%3B%20filename%3D%22blob-da9560d.png%22%3B%20filename%2A%3DUTF-8%27%27blob-da9560d.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATA2FHRYN45YO3RPE%2F20251220%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251220T063644Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=b09e12fdfb9eab83fe9d7337999dc09e498cdd0ee392f4b20af10b5b6f8affbb">
 <link rel="shortcut icon" href="https://reamaze-prod.s3.amazonaws.com/7quihtsj41abido77mph4jsqyrhu?response-content-disposition=inline%3B%20filename%3D%22blob-da9560d.png%22%3B%20filename%2A%3DUTF-8%27%27blob-da9560d.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATA2FHRYN45YO3RPE%2F20251220%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251220T063644Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=b09e12fdfb9eab83fe9d7337999dc09e498cdd0ee392f4b20af10b5b6f8affbb">
@@ -104,6 +108,10 @@
     document.getElementById('appVersion').textContent = firebaseConfig.version || '';
   </script>
   <script type="module" src="auth.js"></script>
-
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js');
+    }
+  </script>
 </body>
 </html>

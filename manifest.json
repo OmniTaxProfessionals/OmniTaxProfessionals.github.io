@@ -1,0 +1,20 @@
+{
+  "short_name": "OTP Client Portal",
+  "name": "OmniTax Professionals Client Portal",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#39a86a",
+  "background_color": "#f4f4f4"
+}
