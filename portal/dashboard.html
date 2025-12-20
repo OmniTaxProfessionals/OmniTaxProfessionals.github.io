@@ -24,7 +24,7 @@
   <p id="welcome">Checking authorization...</p>
   
   <div class="doc-container">
-    <h3>Your Documents</h3>
+    <h3 id="groupTitle">Your Documents</h3>
     <div id="userDocList">Loading documents...</div>
   </div>
 
@@ -50,21 +50,35 @@
         window.location.href = "index.html";
       } else {
         document.getElementById("welcome").textContent = `Logged in as: ${user.email}`;
-        loadUserDocuments(user.email);
+        
+        // 1. Get User Profile to find their Group
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          
+          // Show Admin Link if applicable
+          if (userData.role === "admin") {
+            document.getElementById("adminLink").style.display = "block";
+          }
 
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (userDoc.exists() && userDoc.data().role === "admin") {
-          document.getElementById("adminLink").style.display = "block";
+          // 2. Load documents for that Group
+          if (userData.groupId) {
+            loadGroupDocuments(userData.groupId);
+          } else {
+            document.getElementById("userDocList").innerHTML = "No group assigned.";
+          }
         }
       }
     });
 
-    function loadUserDocuments(email) {
-      const q = query(collection(db, "client_documents"), where("clientEmail", "==", email.toLowerCase()));
+    function loadGroupDocuments(groupId) {
+      const q = query(collection(db, "client_documents"), where("groupId", "==", groupId));
       onSnapshot(q, (snapshot) => {
         const container = document.getElementById("userDocList");
         if (snapshot.empty) {
-          container.innerHTML = "<p style='color: #888;'>No documents assigned to you.</p>";
+          container.innerHTML = "<p style='color: #888;'>No documents assigned to your group.</p>";
           return;
         }
         container.innerHTML = "";

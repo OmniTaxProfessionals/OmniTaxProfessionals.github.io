@@ -34,27 +34,26 @@
     const db = getFirestore(app);
 
     document.getElementById("signupBtn").addEventListener("click", async () => {
-      const email = document.getElementById("email").value.toLowerCase();
+      const email = document.getElementById("email").value.toLowerCase().trim();
       const password = document.getElementById("password").value;
 
-      // 1. Check if email is in pending_invites
       const inviteRef = doc(db, "pending_invites", email);
       const inviteSnap = await getDoc(inviteRef);
 
       if (inviteSnap.exists()) {
+        const inviteData = inviteSnap.data();
         try {
-          // 2. Create the user
           const userCredential = await createUserWithEmailAndPassword(auth, email, password);
           const user = userCredential.user;
 
-          // 3. Create their user profile in Firestore
+          // Save user with their assigned GroupID
           await setDoc(doc(db, "users", user.uid), {
               email: email,
               role: "user",
+              groupId: inviteData.groupId || "unassigned", 
               createdAt: new Date()
           });
 
-          // 4. Remove them from the invite list
           await deleteDoc(inviteRef);
 
           alert("Account created successfully!");
