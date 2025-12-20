@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; text-align: center; background-color: #121212; color: white; }
+    .admin-btn { position: absolute; top: 20px; right: 20px; padding: 10px 15px; background-color: #333; color: white; border: 1px solid #555; border-radius: 5px; cursor: pointer; text-decoration: none; font-size: 14px; display: none; }
+    .center-logo { display: block; margin: 40px auto; width: 300px; max-width: 90%; height: auto; }
+    .doc-container { max-width: 500px; margin: 40px auto; background: #1e1e1e; padding: 20px; border-radius: 10px; border: 1px solid #333; }
+    .doc-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333; background: #252525; margin-bottom: 5px; border-radius: 5px; }
+    .download-link { color: #007bff; text-decoration: none; font-weight: bold; border: 1px solid #007bff; padding: 5px 10px; border-radius: 4px; }
+    #logoutBtn { margin-top: 20px; padding: 10px 20px; cursor: pointer; background: #444; color: white; border: none; border-radius: 5px; }
+  </style>
+</head>
+<body>
+
+  <a href="admin.html" id="adminLink" class="admin-btn">Admin Panel</a>
+
+  <img src="https://img1.wsimg.com/isteam/ip/6c9b1640-2814-4751-8d24-403a493571f0/blob-ed533a7.png/:/rs=w:346,h:96,cg:true,m/cr=w:346,h:96/qt=q:95" alt="Logo" class="center-logo">
+
+  <h1>Dashboard</h1>
+  <p id="welcome">Checking authorization...</p>
+  
+  <div class="doc-container">
+    <h3 id="groupTitle">Your Documents</h3>
+    <div id="userDocList">Loading documents...</div>
+  </div>
+
+  <button id="logoutBtn">Logout</button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBOND-wraRXGL0jB8xK2zHnDMBXBhA5WRk",
+      authDomain: "otp-client-login.firebaseapp.com",
+      projectId: "otp-client-login",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+      } else {
+        document.getElementById("welcome").textContent = `Logged in as: ${user.email}`;
+        
+        // 1. Get User Profile to find their Group
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          
+          // Show Admin Link if applicable
+          if (userData.role === "admin") {
+            document.getElementById("adminLink").style.display = "block";
+          }
+
+          // 2. Load documents for that Group
+          if (userData.groupId) {
+            loadGroupDocuments(userData.groupId);
+          } else {
+            document.getElementById("userDocList").innerHTML = "No group assigned.";
+          }
+        }
+      }
+    });
+
+    function loadGroupDocuments(groupId) {
+      const q = query(collection(db, "client_documents"), where("groupId", "==", groupId));
+      onSnapshot(q, (snapshot) => {
+        const container = document.getElementById("userDocList");
+        if (snapshot.empty) {
+          container.innerHTML = "<p style='color: #888;'>No documents assigned to your group.</p>";
+          return;
+        }
+        container.innerHTML = "";
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const div = document.createElement("div");
+          div.className = "doc-item";
+          div.innerHTML = `<span>${data.fileName}</span><a href="${data.fileUrl}" target="_blank" class="download-link">Download</a>`;
+          container.appendChild(div);
+        });
+      });
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      signOut(auth).then(() => { window.location.href = "index.html"; });
+    });
+  </script>
+</body>
+</html>
