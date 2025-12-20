@@ -96,7 +96,15 @@
           groupId: groupId,
           invitedAt: new Date()
         });
-        alert(`Success! ${email} can now sign up.`);
+
+        // EMAIL LOGIC: Open local mail app
+        const signupUrl = window.location.origin + "/signup.html"; 
+        const subject = encodeURIComponent("Welcome to the OmniTax Professionals Client Portal");
+        const body = encodeURIComponent(`Hello,\n\nYou have been invited to join the OmniTax Professionals Client portal. Please register using this email at the following link:\n\n${signupUrl}\n\nBest regards,\nOmniTax Professionals Admin`);
+        
+        window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+
+        alert(`Success! ${email} added to invites and email client opened.`);
         document.getElementById("inviteEmail").value = "";
       } catch (err) {
         alert("Error: " + err.message);
