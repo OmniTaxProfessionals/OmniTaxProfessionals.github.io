@@ -12,9 +12,13 @@
     body {
       font-family: sans-serif;
       padding: 20px;
-      background-color: #121212; /* Consistent dark background */
+      background-color: #121212; 
       text-align: center;
       color: white;
+      min-height: 100vh;
+      position: relative;
+      margin: 0;
+      box-sizing: border-box;
     }
 
     .center-logo {
@@ -25,7 +29,6 @@
       height: auto;
     }
 
-    /* Style inputs to look better on dark background */
     input {
       display: block;
       margin: 10px auto;
@@ -52,7 +55,6 @@
       background-color: #1e5c39;
     }
 
-    /* Styles for the signup link */
     .signup-redirect {
       margin-top: 20px;
       font-size: 14px;
@@ -66,6 +68,15 @@
 
     .signup-redirect a:hover {
       text-decoration: underline;
+    }
+
+    .version-footer {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: #555;
     }
   </style>
 </head>
@@ -86,6 +97,12 @@
     Invited, but don't have a login yet? <a href="signup.html">Sign up here</a>
   </p>
 
+  <div class="version-footer" id="appVersion"></div>
+
+  <script type="module">
+    import firebaseConfig from './config.js';
+    document.getElementById('appVersion').textContent = firebaseConfig.version || '';
+  </script>
   <script type="module" src="auth.js"></script>
 
 </body>

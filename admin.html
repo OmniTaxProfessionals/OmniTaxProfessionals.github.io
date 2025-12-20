@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; background-color: #121212; color: white; text-align: center; }
+    body { font-family: sans-serif; padding: 20px; background-color: #121212; color: white; text-align: center; min-height: 100vh; position: relative; margin: 0; box-sizing: border-box; }
     .back-btn { position: absolute; top: 20px; left: 20px; padding: 10px 15px; background-color: #333; color: white; border: 1px solid #555; border-radius: 5px; cursor: pointer; text-decoration: none; }
-    .admin-container { margin-top: 80px; max-width: 900px; margin-left: auto; margin-right: auto; }
+    .admin-container { margin-top: 80px; max-width: 900px; margin-left: auto; margin-right: auto; padding-bottom: 40px; }
     input, select { padding: 8px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; margin: 5px; }
     button { padding: 8px 15px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
     .section { background: #1e1e1e; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; text-align: left; }
     .card { background: #252525; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #39a86a; }
     .doc-mini-list { font-size: 13px; background: #121212; padding: 10px; border-radius: 5px; margin-top: 10px; }
     .doc-mini-item { display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+    .version-footer { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #555; }
   </style>
 </head>
 <body>
@@ -45,15 +46,16 @@
     </div>
   </div>
 
+  <div class="version-footer" id="appVersion"></div>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, collection, onSnapshot, deleteDoc, addDoc, query, where, getDocs, writeBatch, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // 1. IMPORT YOUR CONFIG FROM THE EXTERNAL FILE
     import firebaseConfig from './config.js';
+    document.getElementById('appVersion').textContent = firebaseConfig.version || '';
 
-    // 2. INITIALIZE USING THE IMPORTED CONFIG
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -68,7 +70,6 @@
       else { window.location.href = "dashboard.html"; }
     });
 
-    // --- INVITE LOGIC ---
     async function populateInviteGroups() {
       onSnapshot(collection(db, "groups"), (snap) => {
         const select = document.getElementById("inviteGroupId");
@@ -131,10 +132,7 @@
             <div class="doc-mini-list" id="docs-${gid}">Loading...</div>
           `;
           container.appendChild(card);
-          
-          // Attach upload event
           document.getElementById(`btn-upload-${gid}`).onclick = () => window.chunkUpload(gid);
-          
           fetchGroupDocs(gid);
         });
       });
@@ -152,8 +150,7 @@
       reader.readAsDataURL(file);
       reader.onload = async () => {
         const result = reader.result;
-        const commaIndex = result.indexOf(",");
-        const rawData = result.substring(commaIndex + 1);
+        const rawData = result.substring(result.indexOf(",") + 1);
 
         const chunkSize = 700000; 
         const totalChunks = Math.ceil(rawData.length / chunkSize);
