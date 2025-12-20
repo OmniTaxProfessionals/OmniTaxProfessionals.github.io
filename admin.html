@@ -147,7 +147,7 @@
             await addDoc(collection(db, "client_documents"), {
               groupId: gid,
               fileName: file.name,
-              fileUrl: reader.result, // Base64 data
+              fileUrl: reader.result, 
               method: "blob",
               uploadedAt: new Date()
             });
@@ -162,14 +162,21 @@
           const response = await fetch(CLOUDINARY_URL, { method: "POST", body: formData });
           const data = await response.json();
 
-          await addDoc(collection(db, "client_documents"), {
-            groupId: gid,
-            fileName: file.name,
-            fileUrl: data.secure_url,
-            method: "cloudinary",
-            uploadedAt: new Date()
-          });
-          finalizeUpload(fileInput, btn);
+          if (data.secure_url) {
+            // FIX: Add 'fl_attachment' to force download and prevent 401 errors on preview
+            const forceDownloadUrl = data.secure_url.replace("/upload/", "/upload/fl_attachment/");
+
+            await addDoc(collection(db, "client_documents"), {
+              groupId: gid,
+              fileName: file.name,
+              fileUrl: forceDownloadUrl,
+              method: "cloudinary",
+              uploadedAt: new Date()
+            });
+            finalizeUpload(fileInput, btn);
+          } else {
+            throw new Error(data.error.message || "Cloudinary Upload Failed");
+          }
         }
       } catch (e) {
         alert("Upload Error: " + e.message);
