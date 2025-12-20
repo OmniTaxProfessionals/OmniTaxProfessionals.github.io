@@ -14,7 +14,6 @@
     .card { background: #252525; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #007bff; }
     .doc-mini-list { font-size: 13px; background: #121212; padding: 10px; border-radius: 5px; margin-top: 10px; }
     .doc-mini-item { display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 1px solid #333; padding-bottom: 5px; }
-    .upload-info { font-size: 11px; color: #888; display: block; margin-top: 5px; }
   </style>
 </head>
 <body>
@@ -23,13 +22,11 @@
 
   <div class="admin-container">
     <h2>Admin Center (Secure Chunking)</h2>
-
     <div class="section">
       <h3>1. Create Business Group</h3>
       <input type="text" id="groupName" placeholder="Group Name" style="width: 60%;">
       <button id="createGroupBtn">Create Group</button>
     </div>
-
     <div class="section">
       <h3>2. Manage Groups & Uploads</h3>
       <div id="groupListContainer">Loading...</div>
@@ -39,7 +36,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot, deleteDoc, addDoc, query, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, collection, onSnapshot, deleteDoc, addDoc, query, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBOND-wraRXGL0jB8xK2zHnDMBXBhA5WRk",
@@ -54,11 +51,8 @@
     onAuthStateChanged(auth, async (user) => {
       if (!user) { window.location.href = "index.html"; return; }
       const userDoc = await getDoc(doc(db, "users", user.uid));
-      if (userDoc.exists() && userDoc.data().role === "admin") {
-        loadGroupsMain();
-      } else {
-        window.location.href = "dashboard.html";
-      }
+      if (userDoc.exists() && userDoc.data().role === "admin") { loadGroupsMain(); } 
+      else { window.location.href = "dashboard.html"; }
     });
 
     document.getElementById("createGroupBtn").addEventListener("click", async () => {
@@ -96,39 +90,37 @@
       if (!file) return alert("Select file");
 
       const btn = fileInput.nextElementSibling;
-      btn.disabled = true;
-      btn.textContent = "Chunking...";
+      btn.disabled = true; btn.textContent = "Processing...";
 
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = async () => {
-        const base64String = reader.result;
-        const chunkSize = 800000; // ~800KB to stay safe under 1MB limit
-        const totalChunks = Math.ceil(base64String.length / chunkSize);
+        const result = reader.result;
+        const commaIndex = result.indexOf(",");
+        const header = result.substring(0, commaIndex); // e.g. data:application/pdf;base64
+        const rawData = result.substring(commaIndex + 1);
 
-        // 1. Create the Master Document
+        const chunkSize = 700000; 
+        const totalChunks = Math.ceil(rawData.length / chunkSize);
+
         const masterDoc = await addDoc(collection(db, "client_documents"), {
           groupId: gid,
           fileName: file.name,
+          mimeType: file.type,
           totalChunks: totalChunks,
-          isChunked: true,
           uploadedAt: new Date()
         });
 
-        // 2. Upload Chunks to sub-collection
         for (let i = 0; i < totalChunks; i++) {
           btn.textContent = `Uploading ${i+1}/${totalChunks}`;
-          const chunkData = base64String.substring(i * chunkSize, (i + 1) * chunkSize);
           await addDoc(collection(db, `client_documents/${masterDoc.id}/chunks`), {
             index: i,
-            data: chunkData
+            data: rawData.substring(i * chunkSize, (i + 1) * chunkSize)
           });
         }
 
         alert("Upload Complete!");
-        fileInput.value = "";
-        btn.disabled = false;
-        btn.textContent = "Secure Upload";
+        fileInput.value = ""; btn.disabled = false; btn.textContent = "Secure Upload";
       };
     };
 
@@ -149,12 +141,10 @@
 
     window.deleteChunkedDoc = async (id) => {
       if(!confirm("Delete forever?")) return;
-      // Delete chunks first
       const chunks = await getDocs(collection(db, `client_documents/${id}/chunks`));
       const batch = writeBatch(db);
       chunks.forEach(c => batch.delete(c.ref));
       await batch.commit();
-      // Delete master
       await deleteDoc(doc(db, "client_documents", id));
     };
   </script>
