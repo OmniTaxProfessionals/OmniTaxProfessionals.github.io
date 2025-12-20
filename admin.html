@@ -22,13 +22,25 @@
 
   <div class="admin-container">
     <h2>Admin Center (Secure Chunking)</h2>
+
     <div class="section">
       <h3>1. Create Business Group</h3>
       <input type="text" id="groupName" placeholder="Group Name" style="width: 60%;">
       <button id="createGroupBtn">Create Group</button>
     </div>
+
     <div class="section">
-      <h3>2. Manage Groups & Uploads</h3>
+      <h3>2. Invite User for Signup</h3>
+      <p style="font-size: 14px; color: #aaa;">Authorized emails will be allowed to register via signup.html</p>
+      <input type="email" id="inviteEmail" placeholder="User Email" style="width: 40%;">
+      <select id="inviteGroupId">
+        <option value="unassigned">No Group</option>
+      </select>
+      <button id="inviteBtn">Send Invitation</button>
+    </div>
+
+    <div class="section">
+      <h3>3. Manage Groups & Uploads</h3>
       <div id="groupListContainer">Loading...</div>
     </div>
   </div>
@@ -36,7 +48,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, collection, onSnapshot, deleteDoc, addDoc, query, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, collection, onSnapshot, deleteDoc, addDoc, query, where, getDocs, writeBatch, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBOND-wraRXGL0jB8xK2zHnDMBXBhA5WRk",
@@ -51,9 +63,46 @@
     onAuthStateChanged(auth, async (user) => {
       if (!user) { window.location.href = "index.html"; return; }
       const userDoc = await getDoc(doc(db, "users", user.uid));
-      if (userDoc.exists() && userDoc.data().role === "admin") { loadGroupsMain(); } 
+      if (userDoc.exists() && userDoc.data().role === "admin") { 
+        loadGroupsMain(); 
+        populateInviteGroups();
+      } 
       else { window.location.href = "dashboard.html"; }
     });
+
+    // --- INVITE LOGIC ---
+    async function populateInviteGroups() {
+      onSnapshot(collection(db, "groups"), (snap) => {
+        const select = document.getElementById("inviteGroupId");
+        select.innerHTML = '<option value="unassigned">No Group</option>';
+        snap.forEach(gDoc => {
+          const opt = document.createElement("option");
+          opt.value = gDoc.id;
+          opt.textContent = gDoc.data().name;
+          select.appendChild(opt);
+        });
+      });
+    }
+
+    document.getElementById("inviteBtn").addEventListener("click", async () => {
+      const email = document.getElementById("inviteEmail").value.toLowerCase().trim();
+      const groupId = document.getElementById("inviteGroupId").value;
+      
+      if(!email) return alert("Enter an email");
+
+      try {
+        // Adds email to pending_invites so signup.html can verify it
+        await setDoc(doc(db, "pending_invites", email), {
+          groupId: groupId,
+          invitedAt: new Date()
+        });
+        alert(`Success! ${email} can now sign up.`);
+        document.getElementById("inviteEmail").value = "";
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    });
+    // --- END INVITE LOGIC ---
 
     document.getElementById("createGroupBtn").addEventListener("click", async () => {
       const name = document.getElementById("groupName").value.trim();
@@ -97,7 +146,6 @@
       reader.onload = async () => {
         const result = reader.result;
         const commaIndex = result.indexOf(",");
-        const header = result.substring(0, commaIndex); // e.g. data:application/pdf;base64
         const rawData = result.substring(commaIndex + 1);
 
         const chunkSize = 700000; 
