@@ -12,6 +12,7 @@
     .doc-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333; background: #252525; margin-bottom: 5px; border-radius: 5px; }
     .download-link { color: #007bff; text-decoration: none; font-weight: bold; border: 1px solid #007bff; padding: 5px 10px; border-radius: 4px; }
     #logoutBtn { margin-top: 20px; padding: 10px 20px; cursor: pointer; background: #444; color: white; border: none; border-radius: 5px; }
+    #groupNameDisplay { color: #007bff; font-weight: bold; margin-top: -10px; margin-bottom: 20px; }
   </style>
 </head>
 <body>
@@ -22,8 +23,7 @@
 
   <h1>Dashboard</h1>
   <p id="welcome">Checking authorization...</p>
-  
-  <div class="doc-container">
+  <p id="groupNameDisplay"></p> <div class="doc-container">
     <h3 id="groupTitle">Your Documents</h3>
     <div id="userDocList">Loading documents...</div>
   </div>
@@ -63,11 +63,22 @@
             document.getElementById("adminLink").style.display = "block";
           }
 
-          // 2. Load documents for that Group
-          if (userData.groupId) {
+          // 2. Fetch and display the Group Name
+          if (userData.groupId && userData.groupId !== "unassigned") {
+            const groupRef = doc(db, "groups", userData.groupId);
+            const groupSnap = await getDoc(groupRef);
+            
+            if (groupSnap.exists()) {
+              document.getElementById("groupNameDisplay").textContent = `Group: ${groupSnap.data().name}`;
+            } else {
+              document.getElementById("groupNameDisplay").textContent = "Group not found";
+            }
+
+            // 3. Load documents for that Group
             loadGroupDocuments(userData.groupId);
           } else {
-            document.getElementById("userDocList").innerHTML = "No group assigned.";
+            document.getElementById("groupNameDisplay").textContent = "No group assigned";
+            document.getElementById("userDocList").innerHTML = "Contact an admin to be assigned to a group.";
           }
         }
       }
