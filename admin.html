@@ -14,6 +14,7 @@
     .card { background: #252525; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #007bff; }
     .doc-mini-list { font-size: 13px; background: #121212; padding: 10px; border-radius: 5px; margin-top: 10px; }
     .doc-mini-item { display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+    .upload-info { font-size: 11px; color: #888; display: block; margin-top: 5px; }
   </style>
 </head>
 <body>
@@ -54,6 +55,10 @@
       projectId: "otp-client-login",
     };
 
+    // --- CLOUDINARY CONFIG ---
+    const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dstdkquyt/upload";
+    const CLOUDINARY_UPLOAD_PRESET = "ufkqtrhv";
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -70,7 +75,6 @@
       }
     });
 
-    // Create Group
     document.getElementById("createGroupBtn").addEventListener("click", async () => {
       const name = document.getElementById("groupName").value.trim();
       if(!name) return;
@@ -78,7 +82,6 @@
       document.getElementById("groupName").value = "";
     });
 
-    // Invite User
     document.getElementById("inviteBtn").addEventListener("click", async () => {
       const email = document.getElementById("inviteEmail").value.toLowerCase().trim();
       const groupId = document.getElementById("groupSelectInvite").value;
@@ -108,17 +111,15 @@
         const container = document.getElementById("groupListContainer");
         container.innerHTML = "";
         snap.forEach((gDoc) => {
-          const gData = gDoc.data();
           const gid = gDoc.id;
-
           const card = document.createElement("div");
           card.className = "card";
           card.innerHTML = `
-            <div><strong>GROUP: ${gData.name}</strong></div>
+            <div><strong>GROUP: ${gDoc.data().name}</strong></div>
             <div style="margin-top:10px;">
-              <input type="text" id="n-${gid}" placeholder="Doc Name">
-              <input type="text" id="u-${gid}" placeholder="URL">
-              <button onclick="window.assignGroupDoc('${gid}')">Add Group Doc</button>
+              <input type="file" id="f-${gid}">
+              <button onclick="window.processUpload('${gid}')">Upload File</button>
+              <span class="upload-info">Auto-secure: < 1MB uses Firestore, > 1MB uses Cloudinary</span>
             </div>
             <div class="doc-mini-list" id="docs-${gid}">Loading group docs...</div>
           `;
@@ -128,36 +129,78 @@
       });
     }
 
+    window.processUpload = async (gid) => {
+      const fileInput = document.getElementById(`f-${gid}`);
+      const file = fileInput.files[0];
+      if (!file) return alert("Select a file");
+
+      const btn = fileInput.nextElementSibling;
+      btn.disabled = true;
+      btn.textContent = "Uploading...";
+
+      try {
+        if (file.size < 1000000) {
+          // --- METHOD 1: FIRESTORE BLOB ---
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = async () => {
+            await addDoc(collection(db, "client_documents"), {
+              groupId: gid,
+              fileName: file.name,
+              fileUrl: reader.result, // Base64 data
+              method: "blob",
+              uploadedAt: new Date()
+            });
+            finalizeUpload(fileInput, btn);
+          };
+        } else {
+          // --- METHOD 2: CLOUDINARY ---
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+          const response = await fetch(CLOUDINARY_URL, { method: "POST", body: formData });
+          const data = await response.json();
+
+          await addDoc(collection(db, "client_documents"), {
+            groupId: gid,
+            fileName: file.name,
+            fileUrl: data.secure_url,
+            method: "cloudinary",
+            uploadedAt: new Date()
+          });
+          finalizeUpload(fileInput, btn);
+        }
+      } catch (e) {
+        alert("Upload Error: " + e.message);
+        btn.disabled = false;
+        btn.textContent = "Upload File";
+      }
+    };
+
+    function finalizeUpload(input, btn) {
+      input.value = "";
+      btn.disabled = false;
+      btn.textContent = "Upload File";
+      alert("Uploaded successfully!");
+    }
+
     function fetchGroupDocs(gid) {
       const q = query(collection(db, "client_documents"), where("groupId", "==", gid));
       onSnapshot(q, (snap) => {
         const docDiv = document.getElementById(`docs-${gid}`);
-        if (snap.empty) { docDiv.innerHTML = "No docs for this group."; return; }
-        docDiv.innerHTML = "";
+        docDiv.innerHTML = snap.empty ? "No docs for this group." : "";
         snap.forEach((d) => {
           const data = d.data();
+          const methodTag = data.method === "blob" ? "🔒" : "☁️";
           docDiv.innerHTML += `
             <div class="doc-mini-item">
-              <span>${data.fileName}</span>
+              <span>${methodTag} ${data.fileName}</span>
               <button onclick="window.deleteDoc('${d.id}')" style="background:red; font-size:10px;">Delete</button>
             </div>`;
         });
       });
     }
-
-    window.assignGroupDoc = async (gid) => {
-      const name = document.getElementById(`n-${gid}`).value;
-      const url = document.getElementById(`u-${gid}`).value;
-      if(!name || !url) return alert("Fill all fields");
-      await addDoc(collection(db, "client_documents"), {
-        groupId: gid,
-        fileName: name,
-        fileUrl: url,
-        uploadedAt: new Date()
-      });
-      document.getElementById(`n-${gid}`).value = "";
-      document.getElementById(`u-${gid}`).value = "";
-    };
 
     window.deleteDoc = async (id) => {
       if(confirm("Remove document?")) await deleteDoc(doc(db, "client_documents", id));

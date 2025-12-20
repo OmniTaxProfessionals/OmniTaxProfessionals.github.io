@@ -75,7 +75,12 @@
         container.innerHTML = snap.empty ? "No documents found." : "";
         snap.forEach(d => {
           const data = d.data();
-          container.innerHTML += `<div class="doc-item"><span>${data.fileName}</span><a href="${data.fileUrl}" target="_blank" class="download-link">Download</a></div>`;
+          // This href handles both Cloudinary URLS and Firestore Base64 Blobs
+          container.innerHTML += `
+            <div class="doc-item">
+              <span>${data.fileName}</span>
+              <a href="${data.fileUrl}" download="${data.fileName}" target="_blank" class="download-link">Download</a>
+            </div>`;
         });
       });
     }
