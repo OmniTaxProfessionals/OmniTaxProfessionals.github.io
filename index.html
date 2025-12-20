@@ -113,5 +113,23 @@
       navigator.serviceWorker.register('./sw.js');
     }
   </script>
+  <script>
+  // Check if it's an iOS device
+  const isIos = () => {
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    return /iphone|ipad|ipod/.test(userAgent);
+  }
+
+  // Check if the app is already installed/running in standalone mode
+  const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+
+  // Show the alert only to iOS users who haven't installed it yet
+  if (isIos() && !isInStandaloneMode()) {
+    // We wait 3 seconds after the page loads so we don't annoy them instantly
+    setTimeout(() => {
+      alert("To install this portal as an app on your iPhone: tap the 'Share' icon (square with arrow) and select 'Add to Home Screen'.");
+    }, 3000);
+  }
+  </script>
 </body>
 </html>
