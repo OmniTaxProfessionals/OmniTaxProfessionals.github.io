@@ -50,12 +50,10 @@
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, collection, onSnapshot, deleteDoc, addDoc, query, where, getDocs, writeBatch, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBOND-wraRXGL0jB8xK2zHnDMBXBhA5WRk",
-      authDomain: "otp-client-login.firebaseapp.com",
-      projectId: "otp-client-login",
-    };
+    // 1. IMPORT YOUR CONFIG FROM THE EXTERNAL FILE
+    import firebaseConfig from './config.js';
 
+    // 2. INITIALIZE USING THE IMPORTED CONFIG
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -91,13 +89,11 @@
       if(!email) return alert("Enter an email");
 
       try {
-        // Adds email to pending_invites so signup.html can verify it
         await setDoc(doc(db, "pending_invites", email), {
           groupId: groupId,
           invitedAt: new Date()
         });
 
-        // EMAIL LOGIC: Open local mail app
         const signupUrl = window.location.origin + "/signup.html"; 
         const subject = encodeURIComponent("Welcome to the OmniTax Professionals Client Portal");
         const body = encodeURIComponent(`Hello,\n\nYou have been invited to join the OmniTax Professionals Client portal. Please register using this email at the following link:\n\n${signupUrl}\n\nBest regards,\nOmniTax Professionals Admin`);
@@ -110,7 +106,6 @@
         alert("Error: " + err.message);
       }
     });
-    // --- END INVITE LOGIC ---
 
     document.getElementById("createGroupBtn").addEventListener("click", async () => {
       const name = document.getElementById("groupName").value.trim();
@@ -131,11 +126,15 @@
             <div><strong>${gDoc.data().name}</strong></div>
             <div style="margin-top:10px;">
               <input type="file" id="f-${gid}">
-              <button onclick="window.chunkUpload('${gid}')">Secure Upload</button>
+              <button id="btn-upload-${gid}">Secure Upload</button>
             </div>
             <div class="doc-mini-list" id="docs-${gid}">Loading...</div>
           `;
           container.appendChild(card);
+          
+          // Attach upload event
+          document.getElementById(`btn-upload-${gid}`).onclick = () => window.chunkUpload(gid);
+          
           fetchGroupDocs(gid);
         });
       });
@@ -146,7 +145,7 @@
       const file = fileInput.files[0];
       if (!file) return alert("Select file");
 
-      const btn = fileInput.nextElementSibling;
+      const btn = document.getElementById(`btn-upload-${gid}`);
       btn.disabled = true; btn.textContent = "Processing...";
 
       const reader = new FileReader();
@@ -186,11 +185,13 @@
         const docDiv = document.getElementById(`docs-${gid}`);
         docDiv.innerHTML = snap.empty ? "Empty" : "";
         snap.forEach((d) => {
-          docDiv.innerHTML += `
-            <div class="doc-mini-item">
-              <span>🔒 ${d.data().fileName}</span>
-              <button onclick="window.deleteChunkedDoc('${d.id}')" style="background:red; font-size:10px;">Delete</button>
-            </div>`;
+          const item = document.createElement("div");
+          item.className = "doc-mini-item";
+          item.innerHTML = `
+            <span>🔒 ${d.data().fileName}</span>
+            <button id="del-${d.id}" style="background:red; font-size:10px;">Delete</button>`;
+          docDiv.appendChild(item);
+          document.getElementById(`del-${d.id}`).onclick = () => window.deleteChunkedDoc(d.id);
         });
       });
     }

@@ -42,12 +42,10 @@
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, collection, query, where, onSnapshot, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBOND-wraRXGL0jB8xK2zHnDMBXBhA5WRk",
-      authDomain: "otp-client-login.firebaseapp.com",
-      projectId: "otp-client-login",
-    };
+    // 1. IMPORT YOUR CONFIG FROM THE EXTERNAL FILE
+    import firebaseConfig from './config.js';
 
+    // 2. INITIALIZE USING THE IMPORTED CONFIG
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -94,7 +92,6 @@
         let base64 = "";
         snap.forEach(c => base64 += c.data().data);
 
-        // CONVERT TO BLOB (Fixes mobile and length errors)
         const bin = atob(base64);
         const buf = new Uint8Array(bin.length);
         for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);

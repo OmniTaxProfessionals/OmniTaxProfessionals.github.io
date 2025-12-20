@@ -37,12 +37,10 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, multiFactor, PhoneAuthProvider, PhoneMultiFactorGenerator, RecaptchaVerifier, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBOND-wraRXGL0jB8xK2zHnDMBXBhA5WRk",
-      authDomain: "otp-client-login.firebaseapp.com",
-      projectId: "otp-client-login",
-    };
+    // 1. IMPORT YOUR CONFIG
+    import firebaseConfig from './config.js';
 
+    // 2. INITIALIZE
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
@@ -52,7 +50,6 @@
       const isVerified = user.emailVerified;
       const factors = multiFactor(user).enrolledFactors;
 
-      // Update UI based on verification status
       if (!isVerified) {
         document.getElementById("emailWarning").style.display = "block";
         document.getElementById("phoneNumber").disabled = true;
@@ -63,7 +60,6 @@
       }
     });
 
-    // Handle Resend Email
     document.getElementById("resendEmailBtn").addEventListener("click", async () => {
       try {
         await sendEmailVerification(auth.currentUser);

@@ -23,12 +23,10 @@
     import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBOND-wraRXGL0jB8xK2zHnDMBXBhA5WRk",
-      authDomain: "otp-client-login.firebaseapp.com",
-      projectId: "otp-client-login",
-    };
+    // 1. IMPORT YOUR CONFIG
+    import firebaseConfig from './config.js';
 
+    // 2. INITIALIZE
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -36,6 +34,8 @@
     document.getElementById("signupBtn").addEventListener("click", async () => {
       const email = document.getElementById("email").value.toLowerCase().trim();
       const password = document.getElementById("password").value;
+
+      if (!email || !password) return alert("Please fill in all fields.");
 
       const inviteRef = doc(db, "pending_invites", email);
       const inviteSnap = await getDoc(inviteRef);
