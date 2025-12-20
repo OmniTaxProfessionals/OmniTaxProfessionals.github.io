@@ -8,15 +8,21 @@
     .card { background: #1e1e1e; padding: 30px; border-radius: 10px; max-width: 400px; margin: auto; border: 1px solid #333; }
     input { padding: 10px; width: 80%; margin: 10px 0; background: #222; color: white; border: 1px solid #444; border-radius: 5px; }
     button { padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:disabled { background: #555; cursor: not-allowed; }
     .status { margin-top: 20px; font-size: 14px; color: #aaa; }
+    .warning { color: #ffc107; font-size: 13px; margin-bottom: 15px; display: none; }
     .back-link { display: block; margin-top: 20px; color: #007bff; text-decoration: none; }
   </style>
 </head>
 <body>
   <div class="card">
     <h2>Two-Factor Auth</h2>
-    <p>Secure your account with SMS verification.</p>
     
+    <div id="emailWarning" class="warning">
+      ⚠️ You must verify your email before enabling 2FA. 
+      <br><button id="resendEmailBtn" style="background:none; color:#007bff; text-decoration:underline; border:none; padding:5px; font-size:12px;">Resend Verification Email</button>
+    </div>
+
     <div id="mfaEnrollmentUI">
       <input type="text" id="phoneNumber" placeholder="+1 555 000 0000">
       <button id="sendCodeBtn">Enable 2FA</button>
@@ -29,7 +35,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, multiFactor, PhoneAuthProvider, PhoneMultiFactorGenerator, RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, onAuthStateChanged, multiFactor, PhoneAuthProvider, PhoneMultiFactorGenerator, RecaptchaVerifier, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBOND-wraRXGL0jB8xK2zHnDMBXBhA5WRk",
@@ -42,8 +48,29 @@
 
     onAuthStateChanged(auth, (user) => {
       if (!user) { window.location.href = "index.html"; return; }
+
+      const isVerified = user.emailVerified;
       const factors = multiFactor(user).enrolledFactors;
-      document.getElementById("mfaStatus").textContent = factors.length > 0 ? "✅ 2FA is currently ENABLED" : "❌ 2FA is currently DISABLED";
+
+      // Update UI based on verification status
+      if (!isVerified) {
+        document.getElementById("emailWarning").style.display = "block";
+        document.getElementById("phoneNumber").disabled = true;
+        document.getElementById("sendCodeBtn").disabled = true;
+        document.getElementById("mfaStatus").textContent = "Email verification required.";
+      } else {
+        document.getElementById("mfaStatus").textContent = factors.length > 0 ? "✅ 2FA is currently ENABLED" : "❌ 2FA is currently DISABLED";
+      }
+    });
+
+    // Handle Resend Email
+    document.getElementById("resendEmailBtn").addEventListener("click", async () => {
+      try {
+        await sendEmailVerification(auth.currentUser);
+        alert("Verification email sent! Please check your inbox and refresh this page.");
+      } catch (e) {
+        alert(e.message);
+      }
     });
 
     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'sendCodeBtn', { 'size': 'invisible' });
