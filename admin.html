@@ -97,32 +97,28 @@
 
       const btn = fileInput.nextElementSibling;
       btn.disabled = true;
-      btn.textContent = "Processing...";
+      btn.textContent = "Chunking...";
 
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = async () => {
-        // reader.result looks like "data:application/pdf;base64,JVBERi0xLjQK..."
-        const result = reader.result;
-        const commaIndex = result.indexOf(",");
-        const fileTypeHeader = result.substring(0, commaIndex); // e.g. "data:application/pdf;base64"
-        const rawBase64 = result.substring(commaIndex + 1);    // The actual file data
+        const base64String = reader.result;
+        const chunkSize = 800000; // ~800KB to stay safe under 1MB limit
+        const totalChunks = Math.ceil(base64String.length / chunkSize);
 
-        const chunkSize = 700000; // ~700KB
-        const totalChunks = Math.ceil(rawBase64.length / chunkSize);
-
+        // 1. Create the Master Document
         const masterDoc = await addDoc(collection(db, "client_documents"), {
           groupId: gid,
           fileName: file.name,
-          fileTypeHeader: fileTypeHeader, // Save this so we know how to open it later
           totalChunks: totalChunks,
           isChunked: true,
           uploadedAt: new Date()
         });
 
+        // 2. Upload Chunks to sub-collection
         for (let i = 0; i < totalChunks; i++) {
           btn.textContent = `Uploading ${i+1}/${totalChunks}`;
-          const chunkData = rawBase64.substring(i * chunkSize, (i + 1) * chunkSize);
+          const chunkData = base64String.substring(i * chunkSize, (i + 1) * chunkSize);
           await addDoc(collection(db, `client_documents/${masterDoc.id}/chunks`), {
             index: i,
             data: chunkData
