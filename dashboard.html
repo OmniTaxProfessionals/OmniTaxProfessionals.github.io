@@ -11,9 +11,11 @@
     .center-logo { display: block; margin: 40px auto; width: 300px; max-width: 90%; height: auto; }
     .doc-container { max-width: 500px; margin: 40px auto; background: #1e1e1e; padding: 20px; border-radius: 10px; border: 1px solid #333; }
     .doc-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333; background: #252525; margin-bottom: 5px; border-radius: 5px; }
-    .download-link { color: #007bff; text-decoration: none; font-weight: bold; border: 1px solid #007bff; padding: 5px 10px; border-radius: 4px; }
+    .download-link { color: #007bff; text-decoration: none; font-weight: bold; border: 1px solid #007bff; padding: 5px 10px; border-radius: 4px; font-size: 14px; }
+    .download-link:hover { background: #007bff; color: white; }
     #logoutBtn { margin-top: 20px; padding: 10px 20px; cursor: pointer; background: #444; color: white; border: none; border-radius: 5px; }
-    #groupNameDisplay { color: #007bff; font-weight: bold; margin-bottom: 20px; }
+    #groupNameDisplay { color: #007bff; font-weight: bold; margin-bottom: 20px; font-size: 18px; }
+    .file-icon { margin-right: 10px; opacity: 0.7; }
   </style>
 </head>
 <body>
@@ -27,11 +29,11 @@
 
   <h1>Dashboard</h1>
   <p id="welcome">Checking authorization...</p>
-  <p id="groupNameDisplay"></p>
+  <div id="groupNameDisplay"></div>
   
   <div class="doc-container">
     <h3>Your Documents</h3>
-    <div id="userDocList">Loading...</div>
+    <div id="userDocList">Loading documents...</div>
   </div>
 
   <button id="logoutBtn">Logout</button>
@@ -52,46 +54,74 @@
     const db = getFirestore(app);
 
     onAuthStateChanged(auth, async (user) => {
-      if (!user) { window.location.href = "index.html"; return; }
+      if (!user) { 
+        window.location.href = "index.html"; 
+        return; 
+      }
+      
       document.getElementById("welcome").textContent = `Logged in as: ${user.email}`;
       
-      const userSnap = await getDoc(doc(db, "users", user.uid));
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-        if (userData.role === "admin") document.getElementById("adminLink").style.display = "block";
-        
-        if (userData.groupId) {
-          const gSnap = await getDoc(doc(db, "groups", userData.groupId));
-          if (gSnap.exists()) document.getElementById("groupNameDisplay").textContent = `Group: ${gSnap.data().name}`;
-          loadDocs(userData.groupId);
+      try {
+        const userSnap = await getDoc(doc(db, "users", user.uid));
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          
+          // Show Admin Panel button if user is admin
+          if (userData.role === "admin") {
+            document.getElementById("adminLink").style.display = "block";
+          }
+          
+          // Load group documents if user belongs to a group
+          if (userData.groupId) {
+            const gSnap = await getDoc(doc(db, "groups", userData.groupId));
+            if (gSnap.exists()) {
+              document.getElementById("groupNameDisplay").textContent = `Client Group: ${gSnap.data().name}`;
+            }
+            loadDocs(userData.groupId);
+          } else {
+            document.getElementById("userDocList").textContent = "Account pending group assignment.";
+          }
         }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
     });
 
     function loadDocs(gid) {
       const q = query(collection(db, "client_documents"), where("groupId", "==", gid));
+      
       onSnapshot(q, (snap) => {
         const container = document.getElementById("userDocList");
-        container.innerHTML = snap.empty ? "No documents found." : "";
+        
+        if (snap.empty) {
+          container.innerHTML = "<p style='color: #888;'>No documents shared with your group yet.</p>";
+          return;
+        }
+
+        container.innerHTML = ""; // Clear loader
+        
         snap.forEach(d => {
           const data = d.data();
-          
           const div = document.createElement("div");
           div.className = "doc-item";
           
-          // If it's a blob, we use the standard download
-          // If it's Cloudinary, we open it in a new tab which triggers 
-          // the 'fl_attachment' download we set up in the admin
-          const downloadAttr = data.method === "blob" ? `download="${data.fileName}"` : "";
-          
+          // Determine if we need the 'download' attribute (mostly for Base64 Blobs)
+          // Cloudinary uses fl_attachment in the URL to handle the download logic
+          const isBlob = data.method === "blob";
+          const downloadAttr = isBlob ? `download="${data.fileName}"` : "";
+          const icon = isBlob ? "🔒" : "📄";
+
           div.innerHTML = `
-            <span>${data.fileName}</span>
+            <div style="text-align: left;">
+              <span class="file-icon">${icon}</span>
+              <span>${data.fileName}</span>
+            </div>
             <a href="${data.fileUrl}" 
-              ${downloadAttr} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              class="download-link">
-              Download
+               ${downloadAttr} 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="download-link">
+               Download
             </a>
           `;
           container.appendChild(div);
@@ -99,7 +129,13 @@
       });
     }
 
-    document.getElementById("logoutBtn").addEventListener("click", () => signOut(auth).then(() => window.location.href = "index.html"));
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      signOut(auth).then(() => {
+        window.location.href = "index.html";
+      }).catch((error) => {
+        alert("Logout failed: " + error.message);
+      });
+    });
   </script>
 </body>
 </html>
