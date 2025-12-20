@@ -6,16 +6,25 @@
   <title>Dashboard</title>
   <style>
     body { font-family: sans-serif; padding: 20px; text-align: center; background-color: #121212; color: white; }
-    .center-logo { display: block; margin: 40px auto; width: 300px; max-width: 90%; }
+    .nav-links { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; }
+    .btn-small { padding: 8px 12px; background-color: #333; color: white; border: 1px solid #555; border-radius: 5px; cursor: pointer; text-decoration: none; font-size: 13px; }
+    .center-logo { display: block; margin: 40px auto; width: 300px; max-width: 90%; height: auto; }
     .doc-container { max-width: 500px; margin: 40px auto; background: #1e1e1e; padding: 20px; border-radius: 10px; border: 1px solid #333; }
     .doc-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333; background: #252525; margin-bottom: 5px; border-radius: 5px; }
-    .download-btn { color: #007bff; background: transparent; border: 1px solid #007bff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-    .download-btn:disabled { color: #555; border-color: #555; }
-    #logoutBtn { margin-top: 20px; padding: 10px 20px; background: #444; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    #groupNameDisplay { color: #007bff; font-weight: bold; margin-bottom: 20px; }
+    .download-btn { color: #007bff; background: transparent; border: 1px solid #007bff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; }
+    .download-btn:disabled { color: #555; border-color: #555; cursor: not-allowed; }
+    .download-btn:hover:not(:disabled) { background: #007bff; color: white; }
+    #logoutBtn { margin-top: 20px; padding: 10px 20px; cursor: pointer; background: #444; color: white; border: none; border-radius: 5px; }
+    #groupNameDisplay { color: #007bff; font-weight: bold; margin-bottom: 20px; font-size: 18px; }
+    .file-icon { margin-right: 10px; opacity: 0.7; }
   </style>
 </head>
 <body>
+
+  <div class="nav-links">
+    <a href="settings.html" class="btn-small">🔒 Security Settings</a>
+    <a href="admin.html" id="adminLink" class="btn-small" style="display: none;">Admin Panel</a>
+  </div>
 
   <img src="https://img1.wsimg.com/isteam/ip/6c9b1640-2814-4751-8d24-403a493571f0/blob-ed533a7.png" alt="Logo" class="center-logo">
 
@@ -25,7 +34,7 @@
   
   <div class="doc-container">
     <h3>Secure Documents</h3>
-    <div id="userDocList">Loading...</div>
+    <div id="userDocList">Loading documents...</div>
   </div>
 
   <button id="logoutBtn">Logout</button>
@@ -46,45 +55,85 @@
     const db = getFirestore(app);
 
     onAuthStateChanged(auth, async (user) => {
-      if (!user) { window.location.href = "index.html"; return; }
-      document.getElementById("welcome").textContent = `User: ${user.email}`;
+      if (!user) { 
+        window.location.href = "index.html"; 
+        return; 
+      }
       
-      const userSnap = await getDoc(doc(db, "users", user.uid));
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-        if (userData.groupId) {
-          const gSnap = await getDoc(doc(db, "groups", userData.groupId));
-          if (gSnap.exists()) document.getElementById("groupNameDisplay").textContent = `Group: ${gSnap.data().name}`;
-          loadDocs(userData.groupId);
+      document.getElementById("welcome").textContent = `Logged in as: ${user.email}`;
+      
+      try {
+        const userSnap = await getDoc(doc(db, "users", user.uid));
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          
+          // --- Restore Admin Logic ---
+          if (userData.role === "admin") {
+            document.getElementById("adminLink").style.display = "block";
+          }
+          
+          if (userData.groupId) {
+            const gSnap = await getDoc(doc(db, "groups", userData.groupId));
+            if (gSnap.exists()) {
+              document.getElementById("groupNameDisplay").textContent = `Group: ${gSnap.data().name}`;
+            }
+            loadDocs(userData.groupId);
+          } else {
+            document.getElementById("userDocList").textContent = "Account pending group assignment.";
+          }
         }
+      } catch (error) {
+        console.error("Auth error:", error);
       }
     });
 
     function loadDocs(gid) {
       const q = query(collection(db, "client_documents"), where("groupId", "==", gid));
+      
       onSnapshot(q, (snap) => {
         const container = document.getElementById("userDocList");
-        container.innerHTML = snap.empty ? "No documents." : "";
+        if (snap.empty) {
+          container.innerHTML = "<p style='color: #888;'>No documents found.</p>";
+          return;
+        }
+
+        container.innerHTML = "";
         snap.forEach(d => {
           const data = d.data();
           const div = document.createElement("div");
           div.className = "doc-item";
+          
           div.innerHTML = `
-            <span>${data.fileName}</span>
-            <button class="download-btn" id="btn-${d.id}" onclick="window.downloadChunked('${d.id}', '${data.fileName}')">Download</button>
+            <div style="text-align: left;">
+              <span class="file-icon">🔒</span>
+              <span>${data.fileName}</span>
+            </div>
+            <button class="download-btn" id="btn-${d.id}">Download</button>
           `;
           container.appendChild(div);
+
+          // Add click event for the chunking logic
+          document.getElementById(`btn-${d.id}`).onclick = () => window.downloadChunked(d.id, data.fileName);
         });
       });
     }
 
     window.downloadChunked = async (docId, fileName) => {
+      // --- RESTORE SECURITY: Email Verification Check ---
+      if (!auth.currentUser.emailVerified) {
+        alert("Please verify your email via 'Security Settings' before downloading sensitive documents.");
+        return;
+      }
+
       const btn = document.getElementById(`btn-${docId}`);
+      const originalText = btn.textContent;
       btn.disabled = true;
       btn.textContent = "Rebuilding...";
 
       try {
-        const q = query(collection(db, `client_documents/${docId}/chunks`), orderBy("index"));
+        // Fetch chunks in order
+        const chunksRef = collection(db, `client_documents/${docId}/chunks`);
+        const q = query(chunksRef, orderBy("index"));
         const chunkSnaps = await getDocs(q);
         
         let fullBase64 = "";
@@ -95,12 +144,15 @@
         const link = document.createElement("a");
         link.href = fullBase64;
         link.download = fileName;
+        document.body.appendChild(link);
         link.click();
+        document.body.removeChild(link);
       } catch (e) {
-        alert("Download failed.");
+        console.error(e);
+        alert("Download failed. Ensure you have a stable connection and are verified.");
       } finally {
         btn.disabled = false;
-        btn.textContent = "Download";
+        btn.textContent = originalText;
       }
     };
 
