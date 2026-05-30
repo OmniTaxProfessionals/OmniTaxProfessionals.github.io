@@ -1,0 +1,108 @@
+name: Add Team Member
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: Full name (e.g. Jane Smith)
+        required: true
+        type: string
+      title:
+        description: Job title (e.g. Director)
+        required: true
+        type: string
+      bio_preview:
+        description: Short bio shown on the people card (1–2 sentences)
+        required: true
+        type: string
+      bio:
+        description: Full bio for the profile modal. Separate paragraphs with a blank line.
+        required: true
+        type: string
+      card_photo_filename:
+        description: Headshot filename in .staging/team/ (saved as {slug}.jpg)
+        required: true
+        type: string
+      standing_photo_filename:
+        description: Standing photo filename in .staging/team/ (saved as {slug}-standing.jpg)
+        required: true
+        type: string
+      profile_pdf_filename:
+        description: Optional profile PDF filename in .staging/team/
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  add-team-member:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate staged files exist
+        run: |
+          CARD=".staging/team/${{ github.event.inputs.card_photo_filename }}"
+          STANDING=".staging/team/${{ github.event.inputs.standing_photo_filename }}"
+          if [ ! -f "$CARD" ]; then
+            echo "Card photo not found: $CARD"
+            exit 1
+          fi
+          if [ ! -f "$STANDING" ]; then
+            echo "Standing photo not found: $STANDING"
+            exit 1
+          fi
+          if [ -n "${{ github.event.inputs.profile_pdf_filename }}" ]; then
+            PDF=".staging/team/${{ github.event.inputs.profile_pdf_filename }}"
+            if [ ! -f "$PDF" ]; then
+              echo "Profile PDF not found: $PDF"
+              exit 1
+            fi
+          fi
+
+      - name: Add team member
+        env:
+          INPUT_NAME: ${{ github.event.inputs.name }}
+          INPUT_TITLE: ${{ github.event.inputs.title }}
+          INPUT_BIO_PREVIEW: ${{ github.event.inputs.bio_preview }}
+          INPUT_BIO: ${{ github.event.inputs.bio }}
+          CARD_FILE: ${{ github.event.inputs.card_photo_filename }}
+          STANDING_FILE: ${{ github.event.inputs.standing_photo_filename }}
+          PROFILE_PDF: ${{ github.event.inputs.profile_pdf_filename }}
+        run: |
+          ARGS=(
+            --name "$INPUT_NAME"
+            --title "$INPUT_TITLE"
+            --bio-preview "$INPUT_BIO_PREVIEW"
+            --bio "$INPUT_BIO"
+            --card-photo ".staging/team/$CARD_FILE"
+            --standing-photo ".staging/team/$STANDING_FILE"
+          )
+          if [ -n "$PROFILE_PDF" ]; then
+            ARGS+=(--profile-pdf ".staging/team/$PROFILE_PDF")
+          fi
+          node scripts/add-team-member.js "${ARGS[@]}"
+
+      - name: Remove staged files
+        run: |
+          rm -f ".staging/team/${{ github.event.inputs.card_photo_filename }}"
+          rm -f ".staging/team/${{ github.event.inputs.standing_photo_filename }}"
+          if [ -n "${{ github.event.inputs.profile_pdf_filename }}" ]; then
+            rm -f ".staging/team/${{ github.event.inputs.profile_pdf_filename }}"
+          fi
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/info/team.json assets/images/ assets/teampdfs/
+          git diff --staged --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "Add team member: ${{ github.event.inputs.name }}"
+          git push

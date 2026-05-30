@@ -1,0 +1,2 @@
+# Place insight PDFs here before running the "Add Insight PDF" GitHub Action.
+# After the workflow completes successfully, files in this folder are removed.

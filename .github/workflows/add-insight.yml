@@ -1,0 +1,64 @@
+name: Add Insight PDF
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: Report title (shown on Insights page)
+        required: true
+        type: string
+      date:
+        description: Publication date (YYYY-MM-DD)
+        required: true
+        type: string
+      pdf_filename:
+        description: Filename of PDF already uploaded to .staging/insight/
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  add-insight:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate staged PDF exists
+        run: |
+          STAGED=".staging/insight/${{ github.event.inputs.pdf_filename }}"
+          if [ ! -f "$STAGED" ]; then
+            echo "Staged PDF not found: $STAGED"
+            echo "Upload your PDF to .staging/insight/ on GitHub first, then re-run this workflow."
+            exit 1
+          fi
+
+      - name: Add insight to manifest
+        env:
+          INPUT_TITLE: ${{ github.event.inputs.title }}
+          INPUT_DATE: ${{ github.event.inputs.date }}
+          PDF_FILE: ${{ github.event.inputs.pdf_filename }}
+        run: |
+          node scripts/add-insight.js \
+            --title "$INPUT_TITLE" \
+            --date "$INPUT_DATE" \
+            --pdf ".staging/insight/$PDF_FILE"
+
+      - name: Remove staged file
+        run: rm -f ".staging/insight/${{ github.event.inputs.pdf_filename }}"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/tnipdfs/
+          git diff --staged --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "Add insight: ${{ github.event.inputs.title }}"
+          git push
