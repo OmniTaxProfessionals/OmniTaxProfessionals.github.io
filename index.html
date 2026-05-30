@@ -202,7 +202,7 @@
                         </p>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start;">
+                    <div class="about-grid">
                         <div class="animate-hidden">
                             <p class="mt-16" style="margin-bottom: 20px;">
                                 OmniTax Professionals is comprised of a network of tax practitioners with significant
@@ -229,43 +229,16 @@
 
                         <div class="animate-hidden animate-hidden--delay-2">
                             <h3 style="margin-bottom: 20px; font-size: 1.25rem;">Our Commitment to Clients</h3>
-                            <ul style="display: flex; flex-direction: column; gap: 10px;" aria-label="Client commitments">
-                                <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; color: var(--dark-grey);">
-                                    <span style="color: var(--omni-gold); font-weight: 700; margin-top: 2px; flex-shrink: 0;">✦</span>
-                                    Regular and open communication
-                                </li>
-                                <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; color: var(--dark-grey);">
-                                    <span style="color: var(--omni-gold); font-weight: 700; margin-top: 2px; flex-shrink: 0;">✦</span>
-                                    Solutions-focused and commercial mindset
-                                </li>
-                                <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; color: var(--dark-grey);">
-                                    <span style="color: var(--omni-gold); font-weight: 700; margin-top: 2px; flex-shrink: 0;">✦</span>
-                                    Access to all members of the team
-                                </li>
-                                <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; color: var(--dark-grey);">
-                                    <span style="color: var(--omni-gold); font-weight: 700; margin-top: 2px; flex-shrink: 0;">✦</span>
-                                    Timeliness and reliability
-                                </li>
-                                <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; color: var(--dark-grey);">
-                                    <span style="color: var(--omni-gold); font-weight: 700; margin-top: 2px; flex-shrink: 0;">✦</span>
-                                    Independent and free of conflicts
-                                </li>
-                                <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; color: var(--dark-grey);">
-                                    <span style="color: var(--omni-gold); font-weight: 700; margin-top: 2px; flex-shrink: 0;">✦</span>
-                                    All deliverables reviewed by at least two senior professionals
-                                </li>
-                                <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; color: var(--dark-grey);">
-                                    <span style="color: var(--omni-gold); font-weight: 700; margin-top: 2px; flex-shrink: 0;">✦</span>
-                                    Competitive hourly rates — no administration surcharge
-                                </li>
-                                <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; color: var(--dark-grey);">
-                                    <span style="color: var(--omni-gold); font-weight: 700; margin-top: 2px; flex-shrink: 0;">✦</span>
-                                    Fee quotes available for specific tasks or projects
-                                </li>
-                                <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; color: var(--dark-grey);">
-                                    <span style="color: var(--omni-gold); font-weight: 700; margin-top: 2px; flex-shrink: 0;">✦</span>
-                                    Flexibility to work on small discrete tasks or large transactions
-                                </li>
+                            <ul class="about-commitments" aria-label="Client commitments">
+                                <li><span aria-hidden="true">✦</span> Regular and open communication</li>
+                                <li><span aria-hidden="true">✦</span> Solutions-focused and commercial mindset</li>
+                                <li><span aria-hidden="true">✦</span> Access to all members of the team</li>
+                                <li><span aria-hidden="true">✦</span> Timeliness and reliability</li>
+                                <li><span aria-hidden="true">✦</span> Independent and free of conflicts</li>
+                                <li><span aria-hidden="true">✦</span> All deliverables reviewed by at least two senior professionals</li>
+                                <li><span aria-hidden="true">✦</span> Competitive hourly rates — no administration surcharge</li>
+                                <li><span aria-hidden="true">✦</span> Fee quotes available for specific tasks or projects</li>
+                                <li><span aria-hidden="true">✦</span> Flexibility to work on small discrete tasks or large transactions</li>
                             </ul>
                         </div>
                     </div>
@@ -273,25 +246,81 @@
             </section>
 
             <!-- ══════════════════════════════════════════
-                OUR PEOPLE & VALUES TEASERS
+                LEADERSHIP
             ══════════════════════════════════════════ -->
-            <section class="section section--offwhite" aria-label="Our people and values">
+            <section class="section section--offwhite" aria-labelledby="leadership-heading">
+                <div class="container">
+                    <div class="leadership">
+                        <figure class="leadership__figure animate-hidden">
+                            <img
+                                src="/assets/images/owners.jpg"
+                                alt="Managing Directors Abhi Aggarwal, Allan Neilsen, and Stephanie Lam of OmniTax Professionals"
+                                loading="lazy"
+                            >
+                        </figure>
+                        <div class="leadership__content animate-hidden animate-hidden--delay-2">
+                            <span class="leadership__eyebrow">Leadership</span>
+                            <h2 id="leadership-heading">Guided by Three Managing Directors</h2>
+                            <p class="lead">
+                                OmniTax Professionals is led by Abhi Aggarwal, Allan Neilsen, and Stephanie Lam —
+                                each with deep Big&nbsp;4 experience and decades of combined tax advisory expertise.
+                            </p>
+                            <p>
+                                Together they set the firm’s direction: senior-led delivery, commercial judgment,
+                                and hands-on involvement on the matters that matter most to our clients.
+                            </p>
+                            <p class="leadership__names">
+                                Allan Neilsen · Stephanie Lam · Abhi Aggarwal — Managing Directors
+                            </p>
+                            <a href="/our-people/" class="btn btn--secondary">Meet Our People</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════
+                EXPLORE THE SITE
+            ══════════════════════════════════════════ -->
+            <section class="section" aria-labelledby="explore-heading">
                 <div class="container">
                     <div class="section__header animate-hidden">
-                        <h2>Who We Are</h2>
+                        <h2 id="explore-heading">Explore OmniTax Professionals</h2>
                         <div class="divider" aria-hidden="true"></div>
-                        <p class="mt-24">A team built on expertise, guided by principle.</p>
+                        <p class="mt-24 lead">
+                            From advisory services and technical insights to careers and contact —
+                            find what you need across our site.
+                        </p>
                     </div>
-                    <div class="teaser-cards">
-                        <a href="/our-people/" class="teaser-card animate-hidden animate-hidden--delay-1">
+                    <div class="teaser-cards teaser-cards--site">
+                        <a href="/services/" class="teaser-card animate-hidden animate-hidden--delay-1">
+                            <h3>Services</h3>
+                            <p>Income tax, CGT, M&amp;A structuring, international tax, GST, governance, compliance lodgements, and specialist advisory across entity types and industries.</p>
+                            <span class="teaser-card__cta">View Services</span>
+                        </a>
+                        <a href="/our-people/" class="teaser-card animate-hidden animate-hidden--delay-2">
                             <h3>Our People</h3>
-                            <p>Senior tax professionals with Big&nbsp;4 pedigree and deep industry experience across transactions, compliance, governance, and advisory work.</p>
+                            <p>Senior tax professionals with Big&nbsp;4 pedigree — profiles, qualifications, and experience across transactions, compliance, and advisory work.</p>
                             <span class="teaser-card__cta">Meet the Team</span>
                         </a>
-                        <a href="/our-values/" class="teaser-card animate-hidden animate-hidden--delay-2">
+                        <a href="/our-values/" class="teaser-card animate-hidden animate-hidden--delay-3">
                             <h3>Our Values</h3>
-                            <p>Independence, integrity, and commercial acumen — the principles that shape every engagement and every client relationship we hold.</p>
-                            <span class="teaser-card__cta">Learn More</span>
+                            <p>Independence, integrity, excellence, and commercial acumen — the principles that shape every engagement and client relationship.</p>
+                            <span class="teaser-card__cta">Our Values</span>
+                        </a>
+                        <a href="/insights/" class="teaser-card animate-hidden animate-hidden--delay-1">
+                            <h3>Insights</h3>
+                            <p>Technical updates and commentary on income tax, CGT, M&amp;A, international tax, GST, governance, and other developments relevant to our clients.</p>
+                            <span class="teaser-card__cta">Read Insights</span>
+                        </a>
+                        <a href="/careers/" class="teaser-card animate-hidden animate-hidden--delay-2">
+                            <h3>Careers</h3>
+                            <p>Join a growing, senior-led practice. Explore current opportunities and submit an expression of interest to work with us.</p>
+                            <span class="teaser-card__cta">View Careers</span>
+                        </a>
+                        <a href="/contact/" class="teaser-card animate-hidden animate-hidden--delay-3">
+                            <h3>Contact</h3>
+                            <p>Reach our Brisbane team to discuss your tax needs, request a consultation, or enquire about how we can support your organisation.</p>
+                            <span class="teaser-card__cta">Get in Touch</span>
                         </a>
                     </div>
                 </div>

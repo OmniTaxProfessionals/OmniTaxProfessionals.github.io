@@ -1669,6 +1669,85 @@ p {
     content: ' →';
 }
 
+.teaser-cards--site {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* ── 15b-ii. Home — About & Leadership ─────────────────── */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+}
+
+.about-commitments {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.about-commitments li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.9375rem;
+    color: var(--dark-grey);
+}
+
+.about-commitments li span {
+    color: var(--omni-gold);
+    font-weight: 700;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.leadership {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: center;
+}
+
+.leadership__figure {
+    margin: 0;
+}
+
+.leadership__figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lift);
+    border: 1px solid rgba(81, 132, 101, 0.12);
+}
+
+.leadership__eyebrow {
+    font-family: var(--font-secondary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--omni-gold-dark);
+    margin-bottom: 12px;
+    display: block;
+}
+
+.leadership__content h2 {
+    margin-bottom: 16px;
+}
+
+.leadership__content .lead {
+    margin-bottom: 20px;
+}
+
+.leadership__names {
+    font-size: 0.9375rem;
+    color: var(--mid-grey);
+    margin-bottom: 24px;
+    font-style: italic;
+}
+
 /* ── 15c. Contact Form & Info ────────────────────────────── */
 .contact-grid {
     display: grid;
@@ -1879,6 +1958,7 @@ p {
 @media (max-width: 1024px) {
     .cards-grid--4 { grid-template-columns: repeat(2, 1fr); }
     .footer__grid  { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .teaser-cards--site { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -1906,7 +1986,10 @@ p {
     .modal--profile .modal__header  { padding: 28px 24px 20px; }
     .modal--profile .modal__body    { padding: 20px 24px 28px; }
 
-    .teaser-cards           { grid-template-columns: 1fr; }
+    .teaser-cards,
+    .teaser-cards--site    { grid-template-columns: 1fr; }
+    .about-grid,
+    .leadership             { grid-template-columns: 1fr; gap: 40px; }
     .contact-grid           { grid-template-columns: 1fr; gap: 40px; }
     .contact-form__row      { grid-template-columns: 1fr; }
     .page-hero              { padding: 72px 20px 60px; }

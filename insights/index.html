@@ -652,12 +652,19 @@
             } catch { return str; }
         }
 
+        function compareInsightDates(a, b) {
+            const ta = Date.parse(a.date) || 0;
+            const tb = Date.parse(b.date) || 0;
+            return tb - ta;
+        }
+
         /* ── Load manifest ── */
         let docs = [];
         async function boot() {
             try {
                 const r = await fetch('/assets/tnipdfs/manifest.json?v=' + Date.now());
                 docs = await r.json();
+                docs.sort(compareInsightDates);
             } catch { docs = []; }
             const c = docs.length;
             document.getElementById('tniCount').textContent = c ? c + ' report' + (c !== 1 ? 's' : '') : '';

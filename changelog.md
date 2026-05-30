@@ -1,5 +1,15 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-05-30 — Insights grid sort by date (newest first)
+
+- Tax Insights page now sorts manifest entries by `date` descending before rendering, so the most recent report appears top-left in the grid.
+
+## 2026-05-30 — Home page leadership photo and site-wide explore section
+
+- Added leadership section on home page featuring `/assets/images/owners.jpg` (three Managing Directors) with link to Our People.
+- Replaced two-card “Who We Are” teasers with six-card “Explore OmniTax Professionals” grid covering Services, Our People, Our Values, Insights, Careers, and Contact.
+- Added `.leadership`, `.about-grid`, `.about-commitments`, and `.teaser-cards--site` styles in `css/styles.css`.
+
 ## 2026-05-30 — Privacy Policy and Terms of Use
 
 - Added `/privacy/` and `/terms/` legal pages with Australian Privacy Act (APPs) aligned privacy policy and website terms of use (no-advice disclaimer, IP, liability, Queensland governing law).
