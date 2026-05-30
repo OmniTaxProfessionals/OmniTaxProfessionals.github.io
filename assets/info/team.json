@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "id": "abhi-aggarwal",
     "name": "Abhi Aggarwal",
@@ -17,8 +17,8 @@
       "• Bachelor of Business (Accounting, Finance)",
       "• Bachelor of Information Technology (Information Systems)"
     ],
-    "cardPhoto": "assets/images/abhi-aggarwal.jpg",
-    "standingPhoto": "assets/images/abhi-aggarwal-standing.jpg",
+    "cardPhoto": "/assets/images/abhi-aggarwal.jpg",
+    "standingPhoto": "/assets/images/abhi-aggarwal-standing.jpg",
     "pdf": "abhi-aggarwal.pdf"
   },
   {
@@ -30,8 +30,8 @@
       "placholder",
       "placholder"
     ],
-    "cardPhoto": "assets/images/allan-neilsen.jpg",
-    "standingPhoto": "assets/images/allan-neilsen-standing.jpg",
+    "cardPhoto": "/assets/images/allan-neilsen.jpg",
+    "standingPhoto": "/assets/images/allan-neilsen-standing.jpg",
     "pdf": "allan-neilsen.pdf"
   },
   {
@@ -43,8 +43,8 @@
       "placholder",
       "placholder"
     ],
-    "cardPhoto": "assets/images/stephanie-lam.jpg",
-    "standingPhoto": "assets/images/stephanie-lam-standing.jpg",
+    "cardPhoto": "/assets/images/stephanie-lam.jpg",
+    "standingPhoto": "/assets/images/stephanie-lam-standing.jpg",
     "pdf": "stephanie-lam.pdf"
   },
   {
@@ -56,8 +56,8 @@
       "placholder",
       "placholder"
     ],
-    "cardPhoto": "assets/images/alice-ratcliffe.jpg",
-    "standingPhoto": "assets/images/alice-ratcliffe-standing.jpg",
+    "cardPhoto": "/assets/images/alice-ratcliffe.jpg",
+    "standingPhoto": "/assets/images/alice-ratcliffe-standing.jpg",
     "pdf": "alice-ratcliffe.pdf"
   },
   {
@@ -69,8 +69,8 @@
       "placholder",
       "placholder"
     ],
-    "cardPhoto": "assets/images/ted-ryan.jpg",
-    "standingPhoto": "assets/images/ted-ryan-standing.jpg",
+    "cardPhoto": "/assets/images/ted-ryan.jpg",
+    "standingPhoto": "/assets/images/ted-ryan-standing.jpg",
     "pdf": "ted-ryan.pdf"
   }
 ]

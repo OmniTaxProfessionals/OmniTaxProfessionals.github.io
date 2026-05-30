@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,25 +8,25 @@
     <title>Contact Us | OmniTax Professionals</title>
     <meta name="description" content="Contact OmniTax Professionals in Brisbane. Send us an enquiry, schedule a consultation, or reach us directly at contact@omnitax.com.au.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.omnitaxprofessionals.com.au/contact.html">
+    <link rel="canonical" href="https://www.omnitaxprofessionals.com.au/contact/">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Contact Us | OmniTax Professionals">
     <meta property="og:description" content="Get in touch with OmniTax Professionals. Expert tax advisory based in Brisbane, Australia.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.omnitaxprofessionals.com.au/contact.html">
-    <meta property="og:image" content="assets/icons/omnitaxicon.jpg">
+    <meta property="og:url" content="https://www.omnitaxprofessionals.com.au/contact/">
+    <meta property="og:image" content="/assets/icons/omnitaxicon.jpg">
     <meta property="og:locale" content="en_AU">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="assets/icons/omnitaxicon.jpg">
+    <link rel="icon" type="image/jpeg" href="/assets/icons/omnitaxicon.jpg">
 
     <!-- Google Fonts preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
@@ -36,26 +36,26 @@
     <header role="banner">
         <nav class="navbar" aria-label="Main navigation">
             <div class="navbar__inner">
-                <a href="index.html" class="navbar__brand" aria-label="OmniTax Professionals home">
-                    <img src="assets/icons/omnitaxicon.jpg" alt="OmniTax Professionals logo" class="navbar__logo">
+                <a href="/" class="navbar__brand" aria-label="OmniTax Professionals home">
+                    <img src="/assets/icons/omnitaxicon.jpg" alt="OmniTax Professionals logo" class="navbar__logo">
                     <span class="navbar__name">OmniTax Professionals</span>
                 </a>
 
                 <ul class="navbar__nav" role="list">
-                    <li><a href="index.html" class="navbar__link">Home</a></li>
-                    <li><a href="services.html" class="navbar__link">Services</a></li>
+                    <li><a href="/" class="navbar__link">Home</a></li>
+                    <li><a href="/services/" class="navbar__link">Services</a></li>
                     <li class="navbar__dropdown-wrap">
                         <button class="navbar__dropdown-btn" aria-expanded="false" aria-haspopup="true">
                             Our Firm <span class="navbar__caret" aria-hidden="true">▾</span>
                         </button>
                         <ul class="navbar__dropdown-menu" role="list">
-                            <li><a href="our-people.html" class="navbar__dropdown-item">Our People</a></li>
-                            <li><a href="our-values.html" class="navbar__dropdown-item">Our Values</a></li>
+                            <li><a href="/our-people/" class="navbar__dropdown-item">Our People</a></li>
+                            <li><a href="/our-values/" class="navbar__dropdown-item">Our Values</a></li>
                         </ul>
                     </li>
-                    <li><a href="insights.html" class="navbar__link">Insights</a></li>
-                    <li><a href="careers.html" class="navbar__link">Careers</a></li>
-                    <li><a href="contact.html" class="navbar__link active">Contact</a></li>
+                    <li><a href="/insights/" class="navbar__link">Insights</a></li>
+                    <li><a href="/careers/" class="navbar__link">Careers</a></li>
+                    <li><a href="/contact/" class="navbar__link active">Contact</a></li>
                 </ul>
 
                 <button class="navbar__hamburger" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNav">
@@ -66,20 +66,20 @@
             </div>
 
             <ul class="navbar__mobile" id="mobileNav" role="list" aria-label="Mobile navigation">
-                <li><a href="index.html" class="navbar__link">Home</a></li>
-                <li><a href="services.html" class="navbar__link">Services</a></li>
+                <li><a href="/" class="navbar__link">Home</a></li>
+                <li><a href="/services/" class="navbar__link">Services</a></li>
                 <li class="navbar__mobile-group">
                     <button class="navbar__mobile-group-btn" aria-expanded="false">
                         Our Firm <span class="navbar__caret" aria-hidden="true">▾</span>
                     </button>
                     <ul class="navbar__mobile-submenu" role="list">
-                        <li><a href="our-people.html" class="navbar__link">Our People</a></li>
-                        <li><a href="our-values.html" class="navbar__link">Our Values</a></li>
+                        <li><a href="/our-people/" class="navbar__link">Our People</a></li>
+                        <li><a href="/our-values/" class="navbar__link">Our Values</a></li>
                     </ul>
                 </li>
-                <li><a href="insights.html" class="navbar__link">Insights</a></li>
-                <li><a href="careers.html" class="navbar__link">Careers</a></li>
-                <li><a href="contact.html" class="navbar__link">Contact</a></li>
+                <li><a href="/insights/" class="navbar__link">Insights</a></li>
+                <li><a href="/careers/" class="navbar__link">Careers</a></li>
+                <li><a href="/contact/" class="navbar__link">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -116,7 +116,7 @@
                             <div>
                                 <div class="contact-info__label">Email</div>
                                 <div class="contact-info__value">
-                                    <a href="mailto:sam.garg2101@gmail.com">contact@omnitax.com.au</a>
+                                    <a href="mailto:contact@omnitax.com.au">contact@omnitax.com.au</a>
                                 </div>
                             </div>
                         </div>
@@ -188,6 +188,7 @@
                                         id="firstName"
                                         name="First Name"
                                         required
+                                        maxlength="4000"
                                         autocomplete="given-name"
                                         placeholder="Jane"
                                     >
@@ -199,6 +200,7 @@
                                         id="lastName"
                                         name="Last Name"
                                         required
+                                        maxlength="4000"
                                         autocomplete="family-name"
                                         placeholder="Smith"
                                     >
@@ -213,6 +215,7 @@
                                         id="email"
                                         name="Email"
                                         required
+                                        maxlength="4000"
                                         autocomplete="email"
                                         placeholder="jane@example.com"
                                     >
@@ -223,6 +226,7 @@
                                         type="tel"
                                         id="phone"
                                         name="Phone"
+                                        maxlength="4000"
                                         autocomplete="tel"
                                         placeholder="+61 4xx xxx xxx"
                                     >
@@ -235,6 +239,7 @@
                                     type="text"
                                     id="organisation"
                                     name="Organisation"
+                                    maxlength="4000"
                                     autocomplete="organization"
                                     placeholder="Your company name (optional)"
                                 >
@@ -265,6 +270,7 @@
                                     id="message"
                                     name="Message"
                                     required
+                                    maxlength="4000"
                                     placeholder="Please describe how we can assist you..."
                                 ></textarea>
                             </div>
@@ -294,10 +300,10 @@
                     Send us an email directly and we'll be in touch to arrange a time that suits you.
                 </p>
                 <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
-                    <a href="mailto:sam.garg2101@gmail.com" class="btn btn--primary" aria-label="Email OmniTax Professionals">
+                    <a href="mailto:contact@omnitax.com.au" class="btn btn--primary" aria-label="Email OmniTax Professionals">
                         contact@omnitax.com.au
                     </a>
-                    <a href="dashboard.html" class="btn btn--secondary" aria-label="Access the client portal">
+                    <a href="/dashboard/" class="btn btn--secondary" aria-label="Access the client portal">
                         Client Portal
                     </a>
                 </div>
@@ -313,7 +319,7 @@
         <div class="footer__grid">
             <div>
                 <div class="footer__brand">
-                    <img src="assets/icons/omnitaxicon.jpg" alt="OmniTax Professionals" class="footer__logo">
+                    <img src="/assets/icons/omnitaxicon.jpg" alt="OmniTax Professionals" class="footer__logo">
                     <span class="footer__name">OmniTax Professionals</span>
                 </div>
                 <p class="footer__desc">
@@ -334,13 +340,13 @@
                 <div class="footer__col">
                     <h5>Services</h5>
                     <ul class="footer__links">
-                        <li><a href="services.html">Income Tax Advisory</a></li>
-                        <li><a href="services.html">CGT Advisory</a></li>
-                        <li><a href="services.html">M&amp;A Tax Structuring</a></li>
-                        <li><a href="services.html">International Tax</a></li>
-                        <li><a href="services.html">GST Advisory</a></li>
-                        <li><a href="services.html">Tax Governance</a></li>
-                        <li><a href="services.html">View All Services</a></li>
+                        <li><a href="/services/">Income Tax Advisory</a></li>
+                        <li><a href="/services/">CGT Advisory</a></li>
+                        <li><a href="/services/">M&amp;A Tax Structuring</a></li>
+                        <li><a href="/services/">International Tax</a></li>
+                        <li><a href="/services/">GST Advisory</a></li>
+                        <li><a href="/services/">Tax Governance</a></li>
+                        <li><a href="/services/">View All Services</a></li>
                     </ul>
                 </div>
             </nav>
@@ -349,12 +355,12 @@
                 <div class="footer__col">
                     <h5>Company</h5>
                     <ul class="footer__links">
-                        <li><a href="index.html#about">About Us</a></li>
-                        <li><a href="our-people.html">Our People</a></li>
-                        <li><a href="our-values.html">Our Values</a></li>
-                        <li><a href="insights.html">Insights</a></li>
-                        <li><a href="careers.html">Careers</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="/#about">About Us</a></li>
+                        <li><a href="/our-people/">Our People</a></li>
+                        <li><a href="/our-values/">Our Values</a></li>
+                        <li><a href="/insights/">Insights</a></li>
+                        <li><a href="/careers/">Careers</a></li>
+                        <li><a href="/contact/">Contact</a></li>
                     </ul>
                 </div>
             </nav>
@@ -367,7 +373,7 @@
                 </div>
                 <div class="footer__contact-line">
                     <span class="footer__contact-icon" aria-hidden="true">✉</span>
-                    <a href="mailto:sam.garg2101@gmail.com">contact@omnitax.com.au</a>
+                    <a href="mailto:contact@omnitax.com.au">contact@omnitax.com.au</a>
                 </div>
                 <div class="footer__contact-line" style="margin-top: 16px; font-size: 0.8rem; color: rgba(255,255,255,0.45);">
                     Services provided throughout Australia and globally.
@@ -387,7 +393,7 @@
     <!-- ══════════════════════════════════════════
         SCRIPTS
     ══════════════════════════════════════════ -->
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
     <script>
         /* ── Mobile nav toggle ── */
         const navToggle = document.getElementById('navToggle');

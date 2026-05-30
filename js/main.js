@@ -94,3 +94,41 @@
         if (window.innerWidth >= NAV_DESKTOP_MIN) closeMobileNav();
     }, { passive: true });
 })();
+
+/* ── Form character limits (contact & careers) ─────────────── */
+(function () {
+    const FORM_CHAR_LIMIT = 4000;
+    const FORMS = ['#contactForm', '#careersForm'];
+
+    function initCharLimits(form) {
+        const fields = form.querySelectorAll(
+            'input:not([type="hidden"]):not([type="file"]), textarea'
+        );
+
+        fields.forEach((field) => {
+            field.maxLength = FORM_CHAR_LIMIT;
+
+            const counter = document.createElement('span');
+            const counterId = `${field.id || field.name}-char-count`;
+            counter.id = counterId;
+            counter.className = 'contact-form__char-count';
+            counter.setAttribute('aria-live', 'polite');
+            field.setAttribute('aria-describedby', counterId);
+
+            const update = () => {
+                const len = field.value.length;
+                counter.textContent = `${len} / ${FORM_CHAR_LIMIT}`;
+                counter.classList.toggle('contact-form__char-count--limit', len >= FORM_CHAR_LIMIT);
+            };
+
+            field.addEventListener('input', update);
+            field.parentElement.appendChild(counter);
+            update();
+        });
+    }
+
+    FORMS.forEach((selector) => {
+        const form = document.querySelector(selector);
+        if (form) initCharLimits(form);
+    });
+})();

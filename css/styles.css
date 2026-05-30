@@ -1784,6 +1784,20 @@ p {
     margin-top: 8px;
 }
 
+.contact-form__char-count {
+    display: block;
+    text-align: right;
+    font-size: 0.75rem;
+    color: var(--mid-grey);
+    margin-top: 4px;
+    font-family: var(--font-secondary);
+}
+
+.contact-form__char-count--limit {
+    color: #c0392b;
+    font-weight: 600;
+}
+
 /* ── Careers file upload ──────────────────────────────────── */
 .careers-upload {
     position: relative;
