@@ -1,5 +1,11 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-05-30 — Privacy Policy and Terms of Use
+
+- Added `/privacy/` and `/terms/` legal pages with Australian Privacy Act (APPs) aligned privacy policy and website terms of use (no-advice disclaimer, IP, liability, Queensland governing law).
+- Added `.legal-document` styles and `.visually-hidden` utility in `css/styles.css`.
+- Updated footer links site-wide from `#` placeholders to `/privacy/` and `/terms/`.
+
 ## 2026-05-30 — Admin workflows for Insights PDFs and team members
 
 - Added Node.js scripts (`scripts/add-insight.js`, `scripts/add-team-member.js`) to copy files and update `manifest.json` / `team.json`.
