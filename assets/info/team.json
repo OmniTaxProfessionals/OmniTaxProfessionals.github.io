@@ -17,18 +17,22 @@
       "• Bachelor of Business (Accounting, Finance)",
       "• Bachelor of Information Technology (Information Systems)"
     ],
-    "photo": "assets/images/placeholderstanding.png"
+    "cardPhoto": "assets/images/abhi-aggarwal.jpg",
+    "standingPhoto": "assets/images/abhi-aggarwal-standing.jpg",
+    "pdf": "abhi-aggarwal.pdf"
   },
   {
-    "id": "allan-nielsen",
-    "name": "Allan Nielsen",
+    "id": "allan-neilsen",
+    "name": "Allan Neilsen",
     "title": "Managing Director",
     "bioPreview": "placeholder",
     "bio": [
       "placholder",
       "placholder"
     ],
-    "photo": "assets/images/placeholderstanding.png"
+    "cardPhoto": "assets/images/allan-neilsen.jpg",
+    "standingPhoto": "assets/images/allan-neilsen-standing.jpg",
+    "pdf": "allan-neilsen.pdf"
   },
   {
     "id": "stephanie-lam",
@@ -39,7 +43,9 @@
       "placholder",
       "placholder"
     ],
-    "photo": "assets/images/placeholderstanding.png"
+    "cardPhoto": "assets/images/stephanie-lam.jpg",
+    "standingPhoto": "assets/images/stephanie-lam-standing.jpg",
+    "pdf": "stephanie-lam.pdf"
   },
   {
     "id": "alice-ratcliffe",
@@ -50,7 +56,9 @@
       "placholder",
       "placholder"
     ],
-    "photo": "assets/images/placeholderstanding.png"
+    "cardPhoto": "assets/images/alice-ratcliffe.jpg",
+    "standingPhoto": "assets/images/alice-ratcliffe-standing.jpg",
+    "pdf": "alice-ratcliffe.pdf"
   },
   {
     "id": "ted-ryan",
@@ -61,6 +69,8 @@
       "placholder",
       "placholder"
     ],
-    "photo": "assets/images/placeholderstanding.png"
+    "cardPhoto": "assets/images/ted-ryan.jpg",
+    "standingPhoto": "assets/images/ted-ryan-standing.jpg",
+    "pdf": "ted-ryan.pdf"
   }
 ]

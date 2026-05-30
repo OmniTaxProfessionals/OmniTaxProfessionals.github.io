@@ -56,7 +56,6 @@
                     <li><a href="insights.html" class="navbar__link">Insights</a></li>
                     <li><a href="careers.html" class="navbar__link">Careers</a></li>
                     <li><a href="contact.html" class="navbar__link">Contact</a></li>
-                    <li><a href="dashboard.html" class="navbar__cta" aria-label="Access client portal">Client Portal</a></li>
                 </ul>
 
                 <button class="navbar__hamburger" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNav">
@@ -81,7 +80,6 @@
                 <li><a href="insights.html" class="navbar__link">Insights</a></li>
                 <li><a href="careers.html" class="navbar__link">Careers</a></li>
                 <li><a href="contact.html" class="navbar__link">Contact</a></li>
-                <li><a href="dashboard.html" class="navbar__cta">Client Portal</a></li>
             </ul>
         </nav>
     </header>
@@ -211,6 +209,38 @@
     <div id="teamModals"></div>
 
     <!-- ══════════════════════════════════════════
+        PROFILE PDF VIEWER
+    ══════════════════════════════════════════ -->
+    <div class="pdf-viewer" id="profilePdfViewer" role="dialog" aria-modal="true" aria-labelledby="profilePdfTitle">
+        <div class="pdf-viewer__header">
+            <span class="pdf-viewer__subtitle" id="profilePdfSubtitle"></span>
+            <div class="pdf-viewer__sep"></div>
+            <span class="pdf-viewer__title" id="profilePdfTitle"></span>
+            <div class="pdf-viewer__sep"></div>
+            <span class="pdf-viewer__pages">Page <b id="profilePdfCur">1</b> of <b id="profilePdfTot">—</b></span>
+            <button class="pdf-viewer__close" id="profilePdfClose" aria-label="Close profile viewer">
+                <svg viewBox="0 0 14 14" fill="none"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>
+            </button>
+        </div>
+        <div class="pdf-viewer__page" id="profilePdfPage">
+            <div class="pdf-viewer__page-inner" id="profilePdfPageInner">
+                <div class="pdf-viewer__loading"><div class="pdf-viewer__spinner"></div></div>
+            </div>
+        </div>
+        <div class="pdf-viewer__footer">
+            <button class="pdf-viewer__nav" id="profilePdfPrev" disabled>
+                <svg viewBox="0 0 14 14"><polyline points="9,2 5,7 9,12"/></svg>
+                Previous
+            </button>
+            <span class="pdf-viewer__count" id="profilePdfCount">— / —</span>
+            <button class="pdf-viewer__nav" id="profilePdfNext" disabled>
+                Next
+                <svg viewBox="0 0 14 14"><polyline points="5,2 9,7 5,12"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
         FOOTER
     ══════════════════════════════════════════ -->
     <footer class="footer" role="contentinfo" aria-label="Site footer">
@@ -259,7 +289,6 @@
                         <li><a href="insights.html">Insights</a></li>
                         <li><a href="careers.html">Careers</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="dashboard.html">Client Portal</a></li>
                     </ul>
                 </div>
             </nav>
@@ -272,7 +301,7 @@
                 </div>
                 <div class="footer__contact-line">
                     <span class="footer__contact-icon" aria-hidden="true">✉</span>
-                    <a href="mailto:contact@omnitax.com.au">contact@omnitax.com.au</a>
+                    <a href="mailto:sam.garg2101@gmail.com">contact@omnitax.com.au</a>
                 </div>
                 <div class="footer__contact-line" style="margin-top: 16px; font-size: 0.8rem; color: rgba(255,255,255,0.45);">
                     Services provided throughout Australia and globally.
@@ -293,6 +322,8 @@
         SCRIPTS
     ══════════════════════════════════════════ -->
     <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="js/pdf-viewer.js"></script>
     <script>
         /* ── Mobile nav toggle ── */
         const navToggle = document.getElementById('navToggle');
@@ -352,10 +383,15 @@
             document.body.style.overflow = '';
         }
 
+        let profilePdfViewer = null;
+
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal-overlay.active').forEach(o => closeModal(o.id));
+            if (e.key !== 'Escape') return;
+            if (profilePdfViewer && profilePdfViewer.isOpen()) {
+                profilePdfViewer.close();
+                return;
             }
+            document.querySelectorAll('.modal-overlay.active').forEach(o => closeModal(o.id));
         });
 
         /* ── Bio rich-text parser ── */
@@ -414,10 +450,12 @@
 
                 team.forEach(function (person) {
                     const modalId = 'modal-' + person.id;
+                    const cardPhotoSrc = person.cardPhoto || person.photo;
+                    const standingPhotoSrc = person.standingPhoto || person.photo;
 
-                    /* ── 1. Define Card Photo ── */
-                    const cardPhotoHTML = person.photo
-                        ? `<img src="${person.photo}" alt="${person.name}">`
+                    /* ── 1. Define Card Photo (portrait / headshot) ── */
+                    const cardPhotoHTML = cardPhotoSrc
+                        ? `<img src="${cardPhotoSrc}" alt="${person.name}" class="people-card__photo-img">`
                         : '<span aria-hidden="true">👤</span>';
 
                     /* ── 2. Create Card ── */
@@ -444,12 +482,20 @@
                     `;
                     grid.appendChild(card);
 
-                    /* ── 3. Define Modal Photo ── */
-                    const modalPhotoHTML = person.photo
-                        ? `<img src="${person.photo}" alt="${person.name}" class="modal__standing-photo">`
+                    /* ── 3. Define Modal Photo (standing) ── */
+                    const modalPhotoHTML = standingPhotoSrc
+                        ? `<img src="${standingPhotoSrc}" alt="${person.name}" class="modal__standing-photo">`
                         : '<div class="modal__photo-placeholder" aria-hidden="true">👤</div>';
 
                     const bioHTML = buildBioHTML(person.bio);
+                    const pdfFile = person.pdf || (person.id + '.pdf');
+                    const pdfBtnHTML = `
+                        <div class="modal__pdf-action">
+                            <button type="button" class="modal__pdf-btn" aria-label="View full profile PDF for ${person.name}">
+                                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                View Full Profile
+                            </button>
+                        </div>`;
 
                     /* ── 4. Create Modal ── */
                     const overlay = document.createElement('div');
@@ -470,6 +516,7 @@
                                     <p class="modal__role">${person.title}</p>
                                 </div>
                                 <div class="modal__body">${bioHTML}</div>
+                                ${pdfBtnHTML}
                             </div>
                         </div>
                     `;
@@ -478,11 +525,35 @@
                         if (e.target === overlay) closeModal(modalId);
                     });
                     overlay.querySelector('.modal__close').addEventListener('click', () => closeModal(modalId));
+                    overlay.querySelector('.modal__pdf-btn').addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        if (!profilePdfViewer) return;
+                        profilePdfViewer.open({
+                            title: person.name,
+                            subtitle: person.title,
+                            file: pdfFile
+                        });
+                    });
 
                     modalsContainer.appendChild(overlay);
                 });
 
                 console.log("Finished rendering team cards.");
+
+                profilePdfViewer = new PdfViewer({
+                    overlayId:    'profilePdfViewer',
+                    pageAreaId:   'profilePdfPage',
+                    pageInnerId:  'profilePdfPageInner',
+                    titleId:      'profilePdfTitle',
+                    subtitleId:   'profilePdfSubtitle',
+                    curPageId:    'profilePdfCur',
+                    totalPagesId: 'profilePdfTot',
+                    countId:      'profilePdfCount',
+                    prevId:       'profilePdfPrev',
+                    nextId:       'profilePdfNext',
+                    closeId:      'profilePdfClose',
+                    basePath:     'assets/teampdfs/'
+                });
 
             } catch (e) {
                 console.error('CRITICAL ERROR LOADING TEAM:', e);

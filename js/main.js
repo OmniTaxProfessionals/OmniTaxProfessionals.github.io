@@ -76,3 +76,21 @@
 
     counters.forEach((el) => observer.observe(el));
 })();
+
+/* ── Navbar — close mobile menu when returning to desktop width ── */
+(function () {
+    const NAV_DESKTOP_MIN = 1101;
+    const mobileNav = document.getElementById('mobileNav');
+    const navToggle = document.getElementById('navToggle');
+    if (!mobileNav || !navToggle) return;
+
+    function closeMobileNav() {
+        mobileNav.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    window.addEventListener('resize', function () {
+        if (window.innerWidth >= NAV_DESKTOP_MIN) closeMobileNav();
+    }, { passive: true });
+})();
