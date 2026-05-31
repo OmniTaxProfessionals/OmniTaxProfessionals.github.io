@@ -1,5 +1,23 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-05-31 — Site favicon updated to dedicated favicon asset
+
+- Replaced `<link rel="icon">` on all pages from `omnitaxicon.jpg` to `omnitaxfavicon.png`; navbar, footer, and OG logo references unchanged.
+
+## 2026-05-31 — PDF viewer scroll fix (top of document clipped)
+
+- Fixed tall PDF pages being clipped at the top when scrolling: removed `justify-content: center` from the scroll container and used safe `margin: auto` centering so short pages stay centred but long pages scroll from the top.
+
+## 2026-05-31 — Futuristic PDF viewer with character-select page previews
+
+- Redesigned shared PDF viewer (`js/pdf-viewer.js`, `css/styles.css`) with adjacent prev/next page previews on desktop (character-select layout), animated transitions, grid/scanline HUD styling, and progress bar.
+- Mobile layout uses full-width active page plus a dock strip with peek thumbnails and arrow controls.
+- Migrated Insights page from inline viewer to shared `PdfViewer` component; Our People viewer updated to same markup.
+
+## 2026-05-31 — Complete TNI PDF manifest (excluding Budget Edition)
+
+- Added manifest entries `report-003` through `report-013` in `assets/tnipdfs/manifest.json` for all fortnightly OTP Tax News PDFs; Budget Edition left for manual entry.
+
 ## 2026-05-30 — Insights grid sort by date (newest first)
 
 - Tax Insights page now sorts manifest entries by `date` descending before rendering, so the most recent report appears top-left in the grid.

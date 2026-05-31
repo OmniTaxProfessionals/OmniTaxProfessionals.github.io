@@ -66,9 +66,9 @@ function main() {
     bioPreview: bioPreview,
     bio: bio,
     cardPhoto: '/assets/images/' + id + '.jpg',
-    standingPhoto: '/assets/images/' + id + '-standing.jpg',
-    pdf: pdfFilename
+    standingPhoto: '/assets/images/' + id + '-standing.jpg'
   };
+  if (profilePdf) member.pdf = pdfFilename;
 
   team.push(member);
   writeJson(teamPath, team);

@@ -19,7 +19,7 @@
     <meta property="og:locale" content="en_AU">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="/assets/icons/omnitaxicon.jpg">
+    <link rel="icon" type="image/png" href="/assets/icons/omnitaxfavicon.png">
 
     <!-- Google Fonts preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -212,32 +212,74 @@
         PROFILE PDF VIEWER
     ══════════════════════════════════════════ -->
     <div class="pdf-viewer" id="profilePdfViewer" role="dialog" aria-modal="true" aria-labelledby="profilePdfTitle">
-        <div class="pdf-viewer__header">
-            <span class="pdf-viewer__subtitle" id="profilePdfSubtitle"></span>
-            <div class="pdf-viewer__sep"></div>
-            <span class="pdf-viewer__title" id="profilePdfTitle"></span>
-            <div class="pdf-viewer__sep"></div>
-            <span class="pdf-viewer__pages">Page <b id="profilePdfCur">1</b> of <b id="profilePdfTot">—</b></span>
+        <div class="pdf-viewer__grid-bg" aria-hidden="true"></div>
+        <div class="pdf-viewer__scanlines" aria-hidden="true"></div>
+
+        <header class="pdf-viewer__header">
+            <div class="pdf-viewer__header-meta">
+                <span class="pdf-viewer__subtitle" id="profilePdfSubtitle"></span>
+                <div class="pdf-viewer__sep"></div>
+                <span class="pdf-viewer__title" id="profilePdfTitle"></span>
+            </div>
+            <div class="pdf-viewer__header-status">
+                <span class="pdf-viewer__pages">PG <b id="profilePdfCur">01</b><span class="pdf-viewer__pages-div">/</span><b id="profilePdfTot">—</b></span>
+                <div class="pdf-viewer__progress" aria-hidden="true"><div class="pdf-viewer__progress-bar"></div></div>
+            </div>
             <button class="pdf-viewer__close" id="profilePdfClose" aria-label="Close profile viewer">
                 <svg viewBox="0 0 14 14" fill="none"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>
             </button>
-        </div>
-        <div class="pdf-viewer__page" id="profilePdfPage">
-            <div class="pdf-viewer__page-inner" id="profilePdfPageInner">
-                <div class="pdf-viewer__loading"><div class="pdf-viewer__spinner"></div></div>
+        </header>
+
+        <div class="pdf-viewer__stage" id="profilePdfPage">
+            <div class="pdf-viewer__carousel">
+                <button type="button" class="pdf-viewer__panel pdf-viewer__panel--prev" aria-label="Previous page">
+                    <div class="pdf-viewer__panel-corners" aria-hidden="true"></div>
+                    <div class="pdf-viewer__frame pdf-viewer__frame--prev"></div>
+                    <span class="pdf-viewer__panel-tag">Prev</span>
+                </button>
+
+                <div class="pdf-viewer__panel pdf-viewer__panel--active">
+                    <div class="pdf-viewer__panel-corners pdf-viewer__panel-corners--active" aria-hidden="true"></div>
+                    <div class="pdf-viewer__frame pdf-viewer__frame--main" id="profilePdfPageInner">
+                        <div class="pdf-viewer__loading"><div class="pdf-viewer__spinner"></div></div>
+                    </div>
+                    <span class="pdf-viewer__panel-tag pdf-viewer__panel-tag--active">Page 01</span>
+                </div>
+
+                <button type="button" class="pdf-viewer__panel pdf-viewer__panel--next" aria-label="Next page">
+                    <div class="pdf-viewer__panel-corners" aria-hidden="true"></div>
+                    <div class="pdf-viewer__frame pdf-viewer__frame--next"></div>
+                    <span class="pdf-viewer__panel-tag">Next</span>
+                </button>
+            </div>
+
+            <div class="pdf-viewer__dock">
+                <div class="pdf-viewer__dock-track">
+                    <button type="button" class="pdf-viewer__dock-card pdf-viewer__dock-card--prev" aria-label="Previous page">
+                        <div class="pdf-viewer__dock-frame pdf-viewer__dock-frame--prev"></div>
+                    </button>
+                    <div class="pdf-viewer__dock-card pdf-viewer__dock-card--current">
+                        <div class="pdf-viewer__dock-indicator"></div>
+                        <span class="pdf-viewer__dock-label">Now</span>
+                    </div>
+                    <button type="button" class="pdf-viewer__dock-card pdf-viewer__dock-card--next" aria-label="Next page">
+                        <div class="pdf-viewer__dock-frame pdf-viewer__dock-frame--next"></div>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="pdf-viewer__footer">
+
+        <footer class="pdf-viewer__footer">
             <button class="pdf-viewer__nav" id="profilePdfPrev" disabled>
                 <svg viewBox="0 0 14 14"><polyline points="9,2 5,7 9,12"/></svg>
-                Previous
+                <span class="pdf-viewer__nav-label">Previous</span>
             </button>
             <span class="pdf-viewer__count" id="profilePdfCount">— / —</span>
             <button class="pdf-viewer__nav" id="profilePdfNext" disabled>
-                Next
+                <span class="pdf-viewer__nav-label">Next</span>
                 <svg viewBox="0 0 14 14"><polyline points="5,2 9,7 5,12"/></svg>
             </button>
-        </div>
+        </footer>
     </div>
 
     <!-- ══════════════════════════════════════════
@@ -488,14 +530,14 @@
                         : '<div class="modal__photo-placeholder" aria-hidden="true">👤</div>';
 
                     const bioHTML = buildBioHTML(person.bio);
-                    const pdfFile = person.pdf || (person.id + '.pdf');
-                    const pdfBtnHTML = `
-                        <div class="modal__pdf-action">
+                    const hasProfilePdf = person.pdf && String(person.pdf).trim();
+                    const pdfFooterHTML = hasProfilePdf ? `
+                        <div class="modal__footer">
                             <button type="button" class="modal__pdf-btn" aria-label="View full profile PDF for ${person.name}">
-                                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                                 View Full Profile
                             </button>
-                        </div>`;
+                        </div>` : '';
 
                     /* ── 4. Create Modal ── */
                     const overlay = document.createElement('div');
@@ -511,12 +553,14 @@
                             <div class="modal__image-panel">${modalPhotoHTML}</div>
                             <div class="modal__content-panel">
                                 <button class="modal__close" aria-label="Close ${person.name} profile">&times;</button>
-                                <div class="modal__header">
-                                    <h2 class="modal__name" id="${modalId}-name">${person.name}</h2>
-                                    <p class="modal__role">${person.title}</p>
+                                <div class="modal__scroll">
+                                    <div class="modal__header">
+                                        <h2 class="modal__name" id="${modalId}-name">${person.name}</h2>
+                                        <p class="modal__role">${person.title}</p>
+                                    </div>
+                                    <div class="modal__body">${bioHTML}</div>
                                 </div>
-                                <div class="modal__body">${bioHTML}</div>
-                                ${pdfBtnHTML}
+                                ${pdfFooterHTML}
                             </div>
                         </div>
                     `;
@@ -525,15 +569,17 @@
                         if (e.target === overlay) closeModal(modalId);
                     });
                     overlay.querySelector('.modal__close').addEventListener('click', () => closeModal(modalId));
-                    overlay.querySelector('.modal__pdf-btn').addEventListener('click', function (e) {
-                        e.stopPropagation();
-                        if (!profilePdfViewer) return;
-                        profilePdfViewer.open({
-                            title: person.name,
-                            subtitle: person.title,
-                            file: pdfFile
+                    if (hasProfilePdf) {
+                        overlay.querySelector('.modal__pdf-btn').addEventListener('click', function (e) {
+                            e.stopPropagation();
+                            if (!profilePdfViewer) return;
+                            profilePdfViewer.open({
+                                title: person.name,
+                                subtitle: person.title,
+                                file: person.pdf
+                            });
                         });
-                    });
+                    }
 
                     modalsContainer.appendChild(overlay);
                 });
