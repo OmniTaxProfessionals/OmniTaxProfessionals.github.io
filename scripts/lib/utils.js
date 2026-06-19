@@ -81,6 +81,16 @@ function repoRoot() {
   return path.resolve(__dirname, '..', '..');
 }
 
+function normalizeTeamData(data) {
+  if (Array.isArray(data)) {
+    return { defaults: {}, members: data };
+  }
+  return {
+    defaults: data.defaults || {},
+    members: data.members || []
+  };
+}
+
 module.exports = {
   slugify: slugify,
   readJson: readJson,
@@ -92,5 +102,6 @@ module.exports = {
   assertDate: assertDate,
   parseBio: parseBio,
   nextReportId: nextReportId,
-  repoRoot: repoRoot
+  repoRoot: repoRoot,
+  normalizeTeamData: normalizeTeamData
 };

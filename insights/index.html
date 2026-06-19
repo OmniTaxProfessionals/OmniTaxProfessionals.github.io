@@ -119,26 +119,56 @@
         }
         .tni-card:hover::before { transform: scaleX(1); }
 
-        /* Thumbnail */
+        /* Card body — title and date above preview */
+        .tni-card-body {
+            padding: 18px 20px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            border-bottom: 1px solid rgba(81, 132, 101, 0.08);
+        }
+        .tni-card-title {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--omni-green-dark);
+            line-height: 1.45;
+            margin: 0;
+        }
+        .tni-card-date {
+            font-family: var(--font-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--omni-gold-dark);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        /* Half-page preview (top 50% of page 1 only) */
         .tni-card-preview {
             position: relative;
             background: #f0f2f0;
-            aspect-ratio: 3/4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            aspect-ratio: 3 / 2;
             overflow: hidden;
-            border-bottom: 1px solid rgba(81, 132, 101, 0.08);
         }
         .tni-card-preview canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
             display: block;
+            width: 100%;
+            height: auto;
             user-select: none;
             -webkit-user-select: none;
+            pointer-events: none;
+        }
+        .tni-card-preview::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 28px;
+            background: linear-gradient(to bottom, transparent, rgba(240, 242, 240, 0.95));
+            pointer-events: none;
+            z-index: 2;
         }
         .tni-card-shield {
             position: absolute;
@@ -202,29 +232,6 @@
             color: #fff;
         }
 
-        /* Card body */
-        .tni-card-body {
-            padding: 18px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .tni-card-date {
-            font-family: var(--font-secondary);
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--omni-gold-dark);
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-        .tni-card-title {
-            font-family: var(--font-primary);
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--omni-green-dark);
-            line-height: 1.45;
-        }
-
         /* Empty state */
         .tni-empty {
             grid-column: 1 / -1;
@@ -265,7 +272,7 @@
                 </a>
                 <ul class="navbar__nav" role="list">
                     <li><a href="/" class="navbar__link">Home</a></li>
-                    <li><a href="/services/" class="navbar__link">Services</a></li>
+                    <li><a href="/our-services/" class="navbar__link">Services</a></li>
                     <li class="navbar__dropdown-wrap">
                         <button class="navbar__dropdown-btn" aria-expanded="false" aria-haspopup="true">
                             Our Firm <span class="navbar__caret" aria-hidden="true">▾</span>
@@ -285,7 +292,7 @@
             </div>
             <ul class="navbar__mobile" id="mobileNav" role="list" aria-label="Mobile navigation">
                 <li><a href="/" class="navbar__link">Home</a></li>
-                <li><a href="/services/" class="navbar__link">Services</a></li>
+                <li><a href="/our-services/" class="navbar__link">Services</a></li>
                 <li class="navbar__mobile-group">
                     <button class="navbar__mobile-group-btn" aria-expanded="false">
                         Our Firm <span class="navbar__caret" aria-hidden="true">▾</span>
@@ -432,20 +439,6 @@
                     <div class="footer__reg-badge"><span>CAANZ</span> Registered Practice Entity Member</div>
                 </div>
             </div>
-            <nav aria-label="Services footer navigation">
-                <div class="footer__col">
-                    <h5>Services</h5>
-                    <ul class="footer__links">
-                        <li><a href="/services/">Income Tax Advisory</a></li>
-                        <li><a href="/services/">CGT Advisory</a></li>
-                        <li><a href="/services/">M&amp;A Tax Structuring</a></li>
-                        <li><a href="/services/">International Tax</a></li>
-                        <li><a href="/services/">GST Advisory</a></li>
-                        <li><a href="/services/">Tax Governance</a></li>
-                        <li><a href="/services/">View All Services</a></li>
-                    </ul>
-                </div>
-            </nav>
             <nav aria-label="Company footer navigation">
                 <div class="footer__col">
                     <h5>Company</h5>
@@ -576,6 +569,10 @@
                 card.setAttribute('role', 'listitem');
                 card.setAttribute('tabindex', '0');
                 card.innerHTML = `
+                    <div class="tni-card-body">
+                        <p class="tni-card-title">${doc.title}</p>
+                        <span class="tni-card-date">${formatDate(doc.date)}</span>
+                    </div>
                     <div class="tni-card-preview">
                         <div class="tni-skeleton" id="sk-${doc.id}"></div>
                         <canvas id="th-${doc.id}" style="display:none;"></canvas>
@@ -589,10 +586,6 @@
                             </div>
                         </div>
                         <span class="tni-card-pages" id="pg-${doc.id}"></span>
-                    </div>
-                    <div class="tni-card-body">
-                        <span class="tni-card-date">${formatDate(doc.date)}</span>
-                        <p class="tni-card-title">${doc.title}</p>
                     </div>`;
                 card.addEventListener('click', () => openViewer(doc));
                 card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openViewer(doc); } });
@@ -618,9 +611,17 @@
                 if (sk) sk.style.display = 'none';
                 th.style.display = 'block';
                 th.addEventListener('contextmenu', e => e.preventDefault());
+                requestAnimationFrame(() => clipPreviewToHalfPage(th));
             } catch {
                 if (sk) { sk.style.animation = 'none'; sk.style.background = '#eef0ee'; }
             }
+        }
+
+        function clipPreviewToHalfPage(canvas) {
+            const preview = canvas.closest('.tni-card-preview');
+            if (!preview || !canvas.offsetHeight) return;
+            preview.style.aspectRatio = 'auto';
+            preview.style.height = `${Math.floor(canvas.offsetHeight / 2)}px`;
         }
 
         /* ══════════════════════════════════════

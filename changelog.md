@@ -1,5 +1,44 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-06-19 — Our People card photo vertical crop offset
+
+- `team.json` uses a `{ defaults, members }` shape with `defaults.cardPhotoOffsetY` to trim top headspace via `object-position`.
+- Per-member `cardPhotoOffsetY` overrides the default when present (e.g. Kevin Qi uses `"0%"`; any value from `"0%"` to `"50%"` or pixels).
+- `our-people/index.html` applies offset when rendering cards; `add-team-member.js` preserves the new JSON structure.
+
+## 2026-06-19 — Insights card layout: title, date, half-page preview
+
+- Reordered Tax News & Insights cards so title appears first, then date, then the PDF preview below.
+- Preview area now clips to the top half of page 1 only (`aspect-ratio: 3/2`) with a subtle fade at the bottom edge.
+
+## 2026-06-19 — PDF viewer larger default size on desktop
+
+- Increased desktop main-page render width cap from 680px to 980px in `js/pdf-viewer.js`; fallback sizing now uses ~56% of viewport width before layout.
+- Widened `.pdf-viewer__panel--active` and `.pdf-viewer__carousel` max widths so PDFs open at a substantially larger, readable size on computer screens without manual browser zoom.
+
+## 2026-06-19 — Services navigation links updated to /our-services/
+
+- Replaced all internal `/services/` hrefs with `/our-services/` across navbar, mobile nav, home CTAs, Our Values footer links, and Our Services canonical/OG URLs.
+
+## 2026-06-19 — Hero section full-width layout
+
+- Removed `max-width` constraint from `.hero__inner` so the hero text/photo grid spans the full viewport width (within section padding).
+- Removed character-width caps on `.hero__title` and `.hero__subtitle` so copy uses the full text column.
+
+## 2026-06-19 — Hero photo sizing, people card crop, values placeholder copy
+
+- Enlarged home hero team photo by widening the photo grid column (`--hero-photo-column: 1.25fr`); constrained `.hero__inner` to site max-width.
+- Our People card photos now anchor from the top (`object-position: top center`) so heads stay visible when cropped.
+- Replaced golden-retriever placeholder copy on Our Values cards with lorem ipsum.
+
+## 2026-06-19 — Footer Services navigation removed site-wide
+
+- Removed the "Services footer navigation" column from all pages; updated `.footer__grid` to a three-column layout (brand, company, contact).
+
+## 2026-06-19 — Navbar shows logo only (no company name text)
+
+- Hid `.navbar__name` site-wide so the navigation bar displays only the company logo on every page.
+
 ## 2026-05-31 — Site favicon updated to dedicated favicon asset
 
 - Replaced `<link rel="icon">` on all pages from `omnitaxicon.jpg` to `omnitaxfavicon.png`; navbar, footer, and OG logo references unchanged.

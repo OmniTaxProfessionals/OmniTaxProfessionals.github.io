@@ -10,7 +10,8 @@ const {
   requireArg,
   assertFileExists,
   parseBio,
-  repoRoot
+  repoRoot,
+  normalizeTeamData
 } = require('./lib/utils');
 
 function main() {
@@ -35,9 +36,9 @@ function main() {
   }
 
   const teamPath = path.join(root, 'assets', 'info', 'team.json');
-  const team = readJson(teamPath);
+  const teamData = normalizeTeamData(readJson(teamPath));
 
-  if (team.some(function (member) { return member.id === id; })) {
+  if (teamData.members.some(function (member) { return member.id === id; })) {
     throw new Error('A team member with id "' + id + '" already exists.');
   }
 
@@ -70,8 +71,8 @@ function main() {
   };
   if (profilePdf) member.pdf = pdfFilename;
 
-  team.push(member);
-  writeJson(teamPath, team);
+  teamData.members.push(member);
+  writeJson(teamPath, teamData);
 
   console.log('Team member added successfully.');
   console.log('  id:    ' + member.id);

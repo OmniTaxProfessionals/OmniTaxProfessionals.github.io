@@ -93,12 +93,19 @@
     };
 
     PdfViewer.prototype._getMainWidth = function () {
+        var isMobile = window.matchMedia('(max-width: 768px)').matches;
+        var desktopMax = 980;
+
+        if (isMobile) {
+            var mobileW = this.mainFrame ? this.mainFrame.clientWidth : 0;
+            return mobileW || Math.min(window.innerWidth - 32, 680);
+        }
+
         var w = this.mainFrame ? this.mainFrame.clientWidth : 0;
         if (!w) {
-            var isMobile = window.matchMedia('(max-width: 768px)').matches;
-            w = isMobile ? Math.min(window.innerWidth - 32, 680) : 620;
+            w = Math.min(Math.floor(window.innerWidth * 0.56), desktopMax);
         }
-        return Math.min(w || 620, 680);
+        return Math.min(w || desktopMax, desktopMax);
     };
 
     PdfViewer.prototype._cloneCanvas = function (source) {
