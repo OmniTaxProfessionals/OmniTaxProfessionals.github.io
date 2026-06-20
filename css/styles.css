@@ -35,7 +35,7 @@
     --section-pad-sm: 60px 24px;
 
     /* Footer TPB / CAANZ logos — horizontal inset from brand column edges (higher = closer together) */
-    --footer-reg-logo-inset: 10px;
+    --footer-reg-logo-inset: 25px;
 
     --radius-sm:  6px;
     --radius-md:  10px;
