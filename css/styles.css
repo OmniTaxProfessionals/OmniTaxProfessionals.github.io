@@ -34,6 +34,9 @@
     --section-pad:    96px 24px;
     --section-pad-sm: 60px 24px;
 
+    /* Footer TPB / CAANZ logos — horizontal inset from brand column edges (higher = closer together) */
+    --footer-reg-logo-inset: 10px;
+
     --radius-sm:  6px;
     --radius-md:  10px;
     --radius-lg:  18px;
@@ -1814,12 +1817,14 @@ p {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-inline: var(--footer-reg-logo-inset);
     gap: 24px;
 }
 
 .footer__reg-logo {
-    height: 84px;
+    height: 100px;
     width: auto;
     max-width: 320px;
     object-fit: contain;
