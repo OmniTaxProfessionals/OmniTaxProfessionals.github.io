@@ -1,5 +1,10 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-06-20 — Eyebrow dash symmetry; leadership on Our People
+
+- Added matching right-side gold dash (`::after`) to `.hero__eyebrow` and `.tni-eyebrow` so eyebrow labels are flanked on both sides site-wide.
+- Inserted the home page leadership block (Managing Directors photo and copy) on `our-people/index.html` above the team card grid; team intro (“Experience You Can Rely On”) precedes leadership; section backgrounds alternate white/off-white through to CTA; CTA scrolls to `#team-grid-heading`.
+
 ## 2026-06-20 — Our Services footer aligned with site standard
 
 - Replaced broken footer markup on `our-services/index.html` (stray character, missing `footer__registrations` wrapper, obsolete Services column) with the three-column homepage footer layout.

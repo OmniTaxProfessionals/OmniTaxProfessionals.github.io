@@ -131,6 +131,18 @@
       "pdf": "jeff-pfaff.pdf"
     },
     {
+      "id": "jonathan-turner",
+      "name": "Jonathan Turner",
+      "title": "Director (R&D Tax Incentives)",
+      "bioPreview": "Jonathan is a tax specialist who provides Research & Development Tax Incentive services to all clients of OmniTax Professionals. He has over 20 years of experience as an R&D tax specialist.",
+      "bio": [
+        "Jonathan is a tax specialist who provides Research & Development Tax Incentive services to all clients of OmniTax Professionals. He has over 20 years of experience as an R&D tax specialist and was previously a Partner in a Big 4 accounting firm, leading their Brisbane R&D tax incentive team for 7 years. Jonathan is also a degree qualified mechanical engineer with 18 years of experience as a design engineer in the defence, transportation and automotive industries.",
+        "Jonathan provides a more immersive approach to his R&D tax services, regularly visiting clients throughout the claim period to ensure an R&D governance framework is in place, that suitable processes are developed and implemented to ensure that all R&D activities are captured, that contemporaneous documents are being produced and filed, and that staff time and project expenditure can be linked back to the activities being claimed. He provides R&D Tax Incentive services across a range of industries, including underground and open-cut operations in the resources sector, automotive, motorsport, agriculture, meat processing, animal genetics, veterinary products, healthcare, manufacturing, engineering and software."
+      ],
+      "cardPhoto": "/assets/images/jonathan-turner.jpg",
+      "standingPhoto": "/assets/images/jonathan-turner-standing.jpg"
+    },
+    {
       "id": "graham-sorensen",
       "name": "Graham Sorensen",
       "title": "Tax Counsel",
@@ -144,18 +156,6 @@
       ],
       "cardPhoto": "/assets/images/graham-sorensen.jpg",
       "standingPhoto": "/assets/images/graham-sorensen-standing.jpg"
-    },
-    {
-      "id": "jonathan-turner",
-      "name": "Jonathan Turner",
-      "title": "Director (R&D Tax Incentives)",
-      "bioPreview": "Jonathan is a tax specialist who provides Research & Development Tax Incentive services to all clients of OmniTax Professionals. He has over 20 years of experience as an R&D tax specialist.",
-      "bio": [
-        "Jonathan is a tax specialist who provides Research & Development Tax Incentive services to all clients of OmniTax Professionals. He has over 20 years of experience as an R&D tax specialist and was previously a Partner in a Big 4 accounting firm, leading their Brisbane R&D tax incentive team for 7 years. Jonathan is also a degree qualified mechanical engineer with 18 years of experience as a design engineer in the defence, transportation and automotive industries.",
-        "Jonathan provides a more immersive approach to his R&D tax services, regularly visiting clients throughout the claim period to ensure an R&D governance framework is in place, that suitable processes are developed and implemented to ensure that all R&D activities are captured, that contemporaneous documents are being produced and filed, and that staff time and project expenditure can be linked back to the activities being claimed. He provides R&D Tax Incentive services across a range of industries, including underground and open-cut operations in the resources sector, automotive, motorsport, agriculture, meat processing, animal genetics, veterinary products, healthcare, manufacturing, engineering and software."
-      ],
-      "cardPhoto": "/assets/images/jonathan-turner.jpg",
-      "standingPhoto": "/assets/images/jonathan-turner-standing.jpg"
     },
     {
       "id": "kevin-qi",

@@ -625,7 +625,8 @@ p {
     margin-bottom: 22px;
 }
 
-.hero__eyebrow::before {
+.hero__eyebrow::before,
+.hero__eyebrow::after {
     content: '';
     display: block;
     width: 28px;
