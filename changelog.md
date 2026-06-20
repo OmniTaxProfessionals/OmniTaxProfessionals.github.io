@@ -1,5 +1,17 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-06-20 — Legal pages: no PDF download; larger registration logos
+
+- Removed "Download PDF" buttons from Privacy Policy and Terms of Use pages; inline viewer and cross-page links retained.
+- Enlarged footer TPB and CAANZ logos (`height: 84px`, `max-width: 320px`, full opacity) and centered them under the brand copy site-wide.
+
+## 2026-06-20 — Legal PDFs, footer brand, crisp insight previews, "Big 4" quotes
+
+- Privacy Policy and Terms of Use pages now display the original PDFs from `assets/website legislation/` via inline high-DPI PDF.js viewer (`js/legal-pdf.js`); download links included.
+- Footer brand column shows gold "OmniTax Professionals" text instead of the logo; TPB and CAANZ registration badges replaced with `tpb.jpg` and `caanz.png` logos site-wide.
+- Tax News & Insights card previews render at device-pixel-ratio-aware resolution for sharper thumbnails (no CSS upscaling blur).
+- Standardised `"Big 4"` quoted styling in `team.json`, meta descriptions, footer copy, and remaining unquoted references.
+
 ## 2026-06-20 — Eyebrow dash symmetry; leadership on Our People
 
 - Added matching right-side gold dash (`::after`) to `.hero__eyebrow` and `.tni-eyebrow` so eyebrow labels are flanked on both sides site-wide.

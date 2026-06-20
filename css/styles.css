@@ -1789,22 +1789,17 @@ p {
 }
 
 .footer__brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
     margin-bottom: 18px;
 }
 
-/* ── Footer logo: horizontal rectangle — NO circular clipping ── */
-.footer__logo {
-    height: 30px;
-    width: auto;
-    object-fit: contain;
-    display: block;
-}
-
 .footer__name {
-    display: none;
+    display: block;
+    color: var(--omni-gold);
+    font-family: var(--font-primary);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
 }
 
 .footer__desc {
@@ -1817,25 +1812,19 @@ p {
 
 .footer__registrations {
     display: flex;
-    flex-direction: column;
-    gap: 7px;
-}
-
-.footer__reg-badge {
-    display: inline-flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
-    font-size: 0.76rem;
-    color: rgba(255, 255, 255, 0.48);
-    border: 1px solid rgba(212, 175, 55, 0.18);
-    border-radius: var(--radius-sm);
-    padding: 5px 10px;
-    width: fit-content;
+    justify-content: center;
+    gap: 24px;
 }
 
-.footer__reg-badge span {
-    color: var(--omni-gold);
-    font-weight: 700;
+.footer__reg-logo {
+    height: 84px;
+    width: auto;
+    max-width: 320px;
+    object-fit: contain;
+    display: block;
+    opacity: 1;
 }
 
 .footer__col h5 {
@@ -2619,6 +2608,64 @@ p {
 
 .legal-document a:hover {
     color: var(--omni-green-dark);
+}
+
+.legal-pdf-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--light-grey);
+}
+
+.legal-pdf-toolbar__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.9rem;
+}
+
+.legal-pdf-toolbar__links a {
+    color: var(--omni-green);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.legal-pdf-embed {
+    max-width: 820px;
+    margin: 0 auto;
+    background: var(--white);
+    border: 1px solid rgba(81, 132, 101, 0.15);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+}
+
+.legal-pdf-embed__page {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.legal-pdf-embed__page + .legal-pdf-embed__page {
+    border-top: 1px solid rgba(81, 132, 101, 0.1);
+}
+
+.legal-pdf-embed__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+    padding: 48px;
+}
+
+.legal-pdf-embed__error {
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--mid-grey);
 }
 
 .legal-document__notice {
