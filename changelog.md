@@ -1,5 +1,17 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-06-20 — Our Values: intro left, commitments in two columns
+
+- Reordered `.commitment-strip` so "Our Commitment to Clients" intro sits in the first column with six commitment items in each of the next two columns.
+
+## 2026-06-20 — Our Values: commitments flanking intro
+
+- Split the twelve client commitments on `our-values/index.html` into two six-item columns flanking the intro copy (`.commitment-strip` in `css/styles.css`); stacks on tablet and mobile.
+
+## 2026-06-20 — Our Values: full client commitments list
+
+- Replaced three placeholder "Regular and open communication" items on `our-values/index.html` with all twelve client commitments from the home page About section.
+
 ## 2026-06-20 — Configurable footer logo spacing
 
 - Added `--footer-reg-logo-inset` in `css/styles.css` `:root` to control how close TPB and CAANZ logos sit under the brand copy (default `64px`).
