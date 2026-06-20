@@ -1,5 +1,14 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-06-20 — Our Services footer aligned with site standard
+
+- Replaced broken footer markup on `our-services/index.html` (stray character, missing `footer__registrations` wrapper, obsolete Services column) with the three-column homepage footer layout.
+
+## 2026-06-20 — Fixed navbar on scroll; footer logo-only brand
+
+- Switched `.navbar` from `sticky` to `fixed` with `--navbar-height` offset on `body` and `scroll-padding-top` on `html` so the nav stays visible while scrolling and anchor links clear the bar.
+- Hid `.footer__name` site-wide so footers show the logo only, matching the navbar brand treatment.
+
 ## 2026-06-19 — Our People card photo vertical crop offset
 
 - `team.json` uses a `{ defaults, members }` shape with `defaults.cardPhotoOffsetY` to trim top headspace via `object-position`.
