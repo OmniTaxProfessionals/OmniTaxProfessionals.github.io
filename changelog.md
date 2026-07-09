@@ -1,5 +1,27 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-07-09 — Navbar logo size & Services industries list spacing
+
+- Increased `.navbar__logo` height from 36px to 50px site-wide.
+- Tightened Industries bullet list under Clients We Serve: switched from CSS columns to a 2-column grid with reduced row padding to eliminate column-balancing gaps on laptop screens.
+
+## 2026-07-09 — Our Services: Industries list with icons
+
+- Split inline Industries copy on `our-services/index.html` into a dedicated "Industries" heading and two-column bullet list under "Clients We Serve" (reuses `.services-list` gold dot bullets; industry SVG icons removed per client request).
+- Added `.clients-block` styles in `css/styles.css`.
+
+## 2026-07-09 — Navbar: Our Firm dropdown caret fix
+
+- Replaced corrupted `?` markers with `▾` carets next to "Our Firm" in desktop and mobile navigation across all pages.
+
+## 2026-07-09 — Home: hero badge checkmark fix
+
+- Replaced corrupted `?` markers with `✓` checkmarks in the hero credentials badges on `index.html`.
+
+## 2026-07-09 — Home: commitment list bullet fix
+
+- Replaced corrupted `?` markers with `•` bullets in the "Our Commitment to Clients" list on `index.html`.
+
 ## 2026-07-09 — Navbar: Follow Us LinkedIn link
 
 - Added "Follow Us" nav item after Contact in desktop and mobile navigation on all pages, linking to the OmniTax Professionals LinkedIn company page (opens in new tab).

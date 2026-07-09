@@ -158,7 +158,8 @@
         "• Bachelor of Commerce"
       ],
       "cardPhoto": "/assets/images/graham-sorensen.jpg",
-      "standingPhoto": "/assets/images/graham-sorensen-standing.jpg"
+      "standingPhoto": "/assets/images/graham-sorensen-standing.jpg",
+      "pdf": "graham-sorensen.pdf"
     },
     {
       "id": "kevin-qi",

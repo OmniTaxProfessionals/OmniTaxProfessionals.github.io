@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -46,7 +46,7 @@
                     <li><a href="/services/" class="navbar__link active">Services</a></li>
                     <li class="navbar__dropdown-wrap">
                         <button class="navbar__dropdown-btn" aria-expanded="false" aria-haspopup="true">
-                            Our Firm <span class="navbar__caret" aria-hidden="true">?</span>
+                            Our Firm <span class="navbar__caret" aria-hidden="true">▾</span>
                         </button>
                         <ul class="navbar__dropdown-menu" role="list">
                             <li><a href="/our-people/" class="navbar__dropdown-item">Our People</a></li>
@@ -71,7 +71,7 @@
                 <li><a href="/services/" class="navbar__link">Services</a></li>
                 <li class="navbar__mobile-group">
                     <button class="navbar__mobile-group-btn" aria-expanded="false">
-                        Our Firm <span class="navbar__caret" aria-hidden="true">?</span>
+                        Our Firm <span class="navbar__caret" aria-hidden="true">▾</span>
                     </button>
                     <ul class="navbar__mobile-submenu" role="list">
                         <li><a href="/our-people/" class="navbar__link">Our People</a></li>
@@ -141,8 +141,8 @@
                     <li>Tax support for estate planning and succession planning</li>
                 </ul>
 
-                <div style="margin-top: 40px; padding-top: 40px; border-top: 1px solid rgba(81,132,101,0.12);" class="animate-hidden animate-hidden--delay-2">
-                    <h3 style="margin-bottom: 12px; font-size: 1.15rem;">Clients We Serve</h3>
+                <div class="clients-block animate-hidden animate-hidden--delay-2">
+                    <h3 class="clients-block__heading">Clients We Serve</h3>
                     <p>
                         We provide the above services to a diverse range of entity types, including listed companies,
                         private companies, small businesses, managed investment trusts, private trusts, discretionary
@@ -150,11 +150,23 @@
                         family offices / groups, investment houses, sovereign investors, government and public-private
                         partnerships.
                     </p>
-                    <p class="mt-16">
-                        <strong>Industries:</strong> Infrastructure, real estate, private equity, private debt,
-                        funds management, superannuation, insurance, banking, financing, services, resources, energy,
-                        and government privatisations.
-                    </p>
+
+                    <h3 class="clients-block__heading clients-block__heading--sub">Industries</h3>
+                    <ul class="services-list" aria-label="Industries we serve">
+                        <li>Infrastructure</li>
+                        <li>Real estate</li>
+                        <li>Private equity</li>
+                        <li>Private debt</li>
+                        <li>Funds management</li>
+                        <li>Superannuation</li>
+                        <li>Insurance</li>
+                        <li>Banking</li>
+                        <li>Financing</li>
+                        <li>Services</li>
+                        <li>Resources</li>
+                        <li>Energy</li>
+                        <li>Government privatisations</li>
+                    </ul>
                 </div>
             </div>
         </section>

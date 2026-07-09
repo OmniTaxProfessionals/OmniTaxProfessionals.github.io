@@ -289,7 +289,7 @@ p {
 
 /* ── Logo: horizontal rectangle — NO circular clipping ── */
 .navbar__logo {
-    height: 36px;
+    height: 50px;
     width: auto;
     object-fit: contain;
     display: block;
@@ -1947,6 +1947,33 @@ p {
     background: var(--omni-gold);
 }
 
+.clients-block {
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(81, 132, 101, 0.12);
+}
+
+.clients-block__heading {
+    margin-bottom: 12px;
+    font-size: 1.15rem;
+}
+
+.clients-block__heading--sub {
+    margin-top: 32px;
+}
+
+.clients-block .services-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 32px;
+    row-gap: 0;
+    columns: unset;
+}
+
+.clients-block .services-list li {
+    padding: 5px 0 5px 26px;
+}
+
 /* ── 12. Trust Banner ─────────────────────────────────────── */
 .trust-banner {
     background: var(--off-white);
@@ -2428,6 +2455,10 @@ p {
     .cards-grid--4      { grid-template-columns: 1fr; }
 
     .services-list      { columns: 1; }
+
+    .clients-block .services-list {
+        grid-template-columns: 1fr;
+    }
 
     .footer__grid       { grid-template-columns: 1fr; gap: 28px; }
 
