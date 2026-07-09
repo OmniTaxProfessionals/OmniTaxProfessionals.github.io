@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="/css/styles.css">
 
     <style>
-        /* ── Section ── */
+        /* -- Section -- */
         .tni-section {
             background: var(--off-white);
             padding: 80px 0 100px;
@@ -40,7 +40,7 @@
             padding: 0 24px;
         }
 
-        /* ── Header ── */
+        /* -- Header -- */
         .tni-header {
             display: flex;
             align-items: flex-end;
@@ -84,14 +84,14 @@
             align-self: flex-end;
         }
 
-        /* ── Grid ── */
+        /* -- Grid -- */
         .tni-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 28px;
         }
 
-        /* ── Card ── */
+        /* -- Card -- */
         .tni-card {
             background: var(--white);
             border: 1px solid rgba(81, 132, 101, 0.15);
@@ -260,9 +260,9 @@
 </head>
 <body>
 
-    <!-- ══════════════════════════════════════════
+    <!-- ------------------------------------------
         NAVIGATION
-    ══════════════════════════════════════════ -->
+    ------------------------------------------ -->
     <header role="banner">
         <nav class="navbar" aria-label="Main navigation">
             <div class="navbar__inner">
@@ -275,7 +275,7 @@
                     <li><a href="/our-services/" class="navbar__link">Services</a></li>
                     <li class="navbar__dropdown-wrap">
                         <button class="navbar__dropdown-btn" aria-expanded="false" aria-haspopup="true">
-                            Our Firm <span class="navbar__caret" aria-hidden="true">▾</span>
+                            Our Firm <span class="navbar__caret" aria-hidden="true">?</span>
                         </button>
                         <ul class="navbar__dropdown-menu" role="list">
                             <li><a href="/our-people/" class="navbar__dropdown-item">Our People</a></li>
@@ -285,6 +285,7 @@
                     <li><a href="/insights/" class="navbar__link active">Insights</a></li>
                     <li><a href="/careers/" class="navbar__link">Careers</a></li>
                     <li><a href="/contact/" class="navbar__link">Contact</a></li>
+                    <li><a href="https://www.linkedin.com/company/omnitax-professionals/" class="navbar__link" target="_blank" rel="noopener noreferrer">Follow Us</a></li>
                 </ul>
                 <button class="navbar__hamburger" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNav">
                     <span></span><span></span><span></span>
@@ -295,7 +296,7 @@
                 <li><a href="/our-services/" class="navbar__link">Services</a></li>
                 <li class="navbar__mobile-group">
                     <button class="navbar__mobile-group-btn" aria-expanded="false">
-                        Our Firm <span class="navbar__caret" aria-hidden="true">▾</span>
+                        Our Firm <span class="navbar__caret" aria-hidden="true">?</span>
                     </button>
                     <ul class="navbar__mobile-submenu" role="list">
                         <li><a href="/our-people/" class="navbar__link">Our People</a></li>
@@ -305,6 +306,7 @@
                 <li><a href="/insights/" class="navbar__link">Insights</a></li>
                 <li><a href="/careers/" class="navbar__link">Careers</a></li>
                 <li><a href="/contact/" class="navbar__link">Contact</a></li>
+                <li><a href="https://www.linkedin.com/company/omnitax-professionals/" class="navbar__link" target="_blank" rel="noopener noreferrer">Follow Us</a></li>
             </ul>
         </nav>
     </header>
@@ -346,9 +348,9 @@
 
     </main>
 
-    <!-- ══════════════════════════════════════════
+    <!-- ------------------------------------------
         PDF VIEWER MODAL
-    ══════════════════════════════════════════ -->
+    ------------------------------------------ -->
     <div class="pdf-viewer" id="tniPdfViewer" role="dialog" aria-modal="true" aria-labelledby="tniPdfTitle">
         <div class="pdf-viewer__grid-bg" aria-hidden="true"></div>
         <div class="pdf-viewer__scanlines" aria-hidden="true"></div>
@@ -420,9 +422,9 @@
         </footer>
     </div>
 
-    <!-- ══════════════════════════════════════════
+    <!-- ------------------------------------------
         FOOTER
-    ══════════════════════════════════════════ -->
+    ------------------------------------------ -->
     <footer class="footer" role="contentinfo" aria-label="Site footer">
         <div class="footer__grid">
             <div>
@@ -436,6 +438,7 @@
                 <div class="footer__registrations">
                     <img src="/assets/icons/tpb.png" alt="Registered Tax Agent — Tax Practitioners Board" class="footer__reg-logo">
                     <img src="/assets/icons/caanz.png" alt="Registered Practice Entity Member — Chartered Accountants Australia and New Zealand" class="footer__reg-logo">
+                    <span class="footer__reg-asic">ASIC Registered Agent 54166</span>
                 </div>
             </div>
             <nav aria-label="Company footer navigation">
@@ -454,11 +457,11 @@
             <div class="footer__col">
                 <h5>Contact</h5>
                 <div class="footer__contact-line">
-                    <span class="footer__contact-icon" aria-hidden="true">📍</span>
+                    <span class="footer__contact-icon" aria-hidden="true">??</span>
                     <span>Brisbane, Queensland, Australia</span>
                 </div>
                 <div class="footer__contact-line">
-                    <span class="footer__contact-icon" aria-hidden="true">✉</span>
+                    <span class="footer__contact-icon" aria-hidden="true">?</span>
                     <a href="mailto:contact@omnitax.com.au">contact@omnitax.com.au</a>
                 </div>
             </div>
@@ -470,6 +473,7 @@
                 <a href="/terms/">Terms of Use</a>
             </div>
         </div>
+        <p class="footer__liability">Liability limited by a scheme approved under Professional Standards Legislation.</p>
     </footer>
 
     <script src="/js/main.js"></script>
@@ -477,7 +481,7 @@
     <script src="/js/pdf-viewer.js"></script>
 
     <script>
-        /* ── Nav ── */
+        /* -- Nav -- */
         const navToggle = document.getElementById('navToggle');
         const mobileNav = document.getElementById('mobileNav');
         navToggle.addEventListener('click', () => {
@@ -512,9 +516,9 @@
         });
         document.getElementById('footerYear').textContent = new Date().getFullYear();
 
-        /* ══════════════════════════════════════
+        /* --------------------------------------
            PDF.js — thumbnails only (viewer uses pdf-viewer.js)
-        ══════════════════════════════════════ */
+        -------------------------------------- */
         pdfjsLib.GlobalWorkerOptions.workerSrc =
             'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -533,7 +537,7 @@
             return tb - ta;
         }
 
-        /* ── Load manifest ── */
+        /* -- Load manifest -- */
         let docs = [];
         async function boot() {
             try {
@@ -546,7 +550,7 @@
             buildGrid();
         }
 
-        /* ── Build card grid ── */
+        /* -- Build card grid -- */
         function buildGrid() {
             const grid = document.getElementById('tniGrid');
             grid.innerHTML = '';
@@ -593,7 +597,7 @@
             });
         }
 
-        /* ── Thumbnail — high-DPI render for crisp card previews ── */
+        /* -- Thumbnail — high-DPI render for crisp card previews -- */
         async function loadThumb(doc) {
             const sk  = document.getElementById('sk-'  + doc.id);
             const th  = document.getElementById('th-'  + doc.id);
@@ -629,9 +633,9 @@
             preview.style.height = `${Math.floor(canvas.offsetHeight / 2)}px`;
         }
 
-        /* ══════════════════════════════════════
+        /* --------------------------------------
            VIEWER — character-select layout
-        ══════════════════════════════════════ */
+        -------------------------------------- */
         const tniPdfViewer = new PdfViewer({
             overlayId:    'tniPdfViewer',
             pageAreaId:   'tniPdfPage',

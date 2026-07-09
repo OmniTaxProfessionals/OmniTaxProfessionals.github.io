@@ -1,5 +1,47 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-07-09 — Navbar: Follow Us LinkedIn link
+
+- Added "Follow Us" nav item after Contact in desktop and mobile navigation on all pages, linking to the OmniTax Professionals LinkedIn company page (opens in new tab).
+
+## 2026-07-09 — Footer: ASIC Registered Agent number
+
+- Added bold "ASIC Registered Agent 54166" alongside TPB and CAANZ logos in `.footer__registrations` on all standard footers.
+- Added `.footer__reg-asic` styling in `css/styles.css`.
+
+## 2026-07-09 — Footer: Professional Standards liability disclaimer
+
+- Added small-print liability disclaimer ("Liability limited by a scheme approved under Professional Standards Legislation.") below the copyright bar on all page footers.
+- Added `.footer__liability` styling in `css/styles.css`.
+
+## 2026-07-09 — Our Values: respect icon — Font Awesome handshake
+
+- Replaced low-detail MDI `respect.svg` with Font Awesome 6 solid handshake (symmetrical clasp with cuffs), filled `#518465` for a sharper render at 48px.
+
+## 2026-07-09 — Our Values: respect and fairness icon redraw (MDI)
+
+- Replaced crude custom `respect.svg` and `fairness.svg` with professional Material Design Icons: standard handshake and open palm with thumb.
+
+## 2026-07-09 — Our Values: respect and fairness icon refinements
+
+- Redrew `respect.svg` as a filled two-hand handshake (distinct left and right hands clasping).
+- Refined `fairness.svg` open palm with separated fingers and a visible thumb.
+
+## 2026-07-09 — Our Values: respect, fairness, initiative icon fixes
+
+- Replaced incorrect `respect.svg` (was a gift/box glyph) with a handshake outline icon.
+- Replaced incorrect `fairness.svg` (was a gavel/briefcase glyph) with an open-palm hand icon.
+- Simplified `initiative.svg` lightbulb by removing the five radiating accent lines.
+
+## 2026-07-09 — Our Values: custom SVG icons
+
+- Replaced emoji symbols on `our-values/index.html` with branded SVG icons (magnifying glass, shield-check, handshake, team, open hand, lightbulb) in `assets/icons/values/`.
+- Added `.card__icon-img` sizing in `css/styles.css`.
+
+## 2026-07-09 — Footer tagline copy update
+
+- Replaced "Services provided throughout Australia and globally" with "Serving clients across Australia and globally" in footers on `index.html`, `our-services/index.html`, `our-values/index.html`, `our-people/index.html`, `contact/index.html`, and `careers/index.html`.
+
 ## 2026-06-20 — Our Values: intro left, commitments in two columns
 
 - Reordered `.commitment-strip` so "Our Commitment to Clients" intro sits in the first column with six commitment items in each of the next two columns.
