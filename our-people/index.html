@@ -56,7 +56,7 @@
                     <li><a href="/insights/" class="navbar__link">Insights</a></li>
                     <li><a href="/careers/" class="navbar__link">Careers</a></li>
                     <li><a href="/contact/" class="navbar__link">Contact</a></li>
-                    <li><a href="https://www.linkedin.com/company/omnitax-professionals/" class="navbar__link" target="_blank" rel="noopener noreferrer">Follow Us</a></li>
+                    <li><a href="https://www.linkedin.com/company/omnitax-professionals/" class="navbar__link" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
                 </ul>
 
                 <button class="navbar__hamburger" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNav">
@@ -81,7 +81,7 @@
                 <li><a href="/insights/" class="navbar__link">Insights</a></li>
                 <li><a href="/careers/" class="navbar__link">Careers</a></li>
                 <li><a href="/contact/" class="navbar__link">Contact</a></li>
-                <li><a href="https://www.linkedin.com/company/omnitax-professionals/" class="navbar__link" target="_blank" rel="noopener noreferrer">Follow Us</a></li>
+                <li><a href="https://www.linkedin.com/company/omnitax-professionals/" class="navbar__link" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
             </ul>
         </nav>
     </header>
@@ -196,23 +196,11 @@
                         <a href="/careers/" class="btn btn--primary">View Opportunities</a>
                     </div>
                     <div class="animate-hidden animate-hidden--delay-2">
-                        <ul style="display: flex; flex-direction: column; gap: 14px;" aria-label="Why work with us">
-                            <li style="display: flex; align-items: flex-start; gap: 14px; font-size: 0.9375rem; color: var(--dark-grey); padding: 14px 18px; background: var(--white); border-radius: var(--radius-sm); border-left: 3px solid var(--omni-gold);">
-                                <span style="color: var(--omni-gold); font-weight: 700; flex-shrink: 0;">?</span>
-                                Genuine independence — no institutional conflicts
-                            </li>
-                            <li style="display: flex; align-items: flex-start; gap: 14px; font-size: 0.9375rem; color: var(--dark-grey); padding: 14px 18px; background: var(--white); border-radius: var(--radius-sm); border-left: 3px solid var(--omni-gold);">
-                                <span style="color: var(--omni-gold); font-weight: 700; flex-shrink: 0;">?</span>
-                                Direct client relationships at the highest level
-                            </li>
-                            <li style="display: flex; align-items: flex-start; gap: 14px; font-size: 0.9375rem; color: var(--dark-grey); padding: 14px 18px; background: var(--white); border-radius: var(--radius-sm); border-left: 3px solid var(--omni-gold);">
-                                <span style="color: var(--omni-gold); font-weight: 700; flex-shrink: 0;">?</span>
-                                Work on complex, high-value engagements
-                            </li>
-                            <li style="display: flex; align-items: flex-start; gap: 14px; font-size: 0.9375rem; color: var(--dark-grey); padding: 14px 18px; background: var(--white); border-radius: var(--radius-sm); border-left: 3px solid var(--omni-gold);">
-                                <span style="color: var(--omni-gold); font-weight: 700; flex-shrink: 0;">?</span>
-                                Flexible arrangements to suit senior practitioners
-                            </li>
+                        <ul class="feature-list" style="display: flex; flex-direction: column; gap: 14px;" aria-label="Why work with us">
+                            <li class="feature-list__item">Genuine independence — no institutional conflicts</li>
+                            <li class="feature-list__item">Direct client relationships at the highest level</li>
+                            <li class="feature-list__item">Work on complex, high-value engagements</li>
+                            <li class="feature-list__item">Flexible arrangements to suit senior practitioners</li>
                         </ul>
                     </div>
                 </div>
@@ -333,7 +321,12 @@
                 <div class="footer__registrations">
                     <img src="/assets/icons/tpb.png" alt="Registered Tax Agent — Tax Practitioners Board" class="footer__reg-logo">
                     <img src="/assets/icons/caanz.png" alt="Registered Practice Entity Member — Chartered Accountants Australia and New Zealand" class="footer__reg-logo">
-                    <span class="footer__reg-asic">ASIC Registered Agent 54166</span>
+                    <div class="footer__reg-asic" role="img" aria-label="ASIC Registered Agent 54166">
+                        <span class="footer__reg-asic-brand">ASIC</span>
+                        <span class="footer__reg-asic-text">Registered</span>
+                        <span class="footer__reg-asic-text">Agent</span>
+                        <span class="footer__reg-asic-num">54166</span>
+                    </div>
                 </div>
             </div>
 
@@ -355,11 +348,11 @@
             <div class="footer__col">
                 <h5>Contact</h5>
                 <div class="footer__contact-line">
-                    <span class="footer__contact-icon" aria-hidden="true">??</span>
+                    <span class="footer__contact-icon footer__contact-icon--location" aria-hidden="true"></span>
                     <span>Brisbane, Queensland, Australia</span>
                 </div>
                 <div class="footer__contact-line">
-                    <span class="footer__contact-icon" aria-hidden="true">?</span>
+                    <span class="footer__contact-icon footer__contact-icon--email" aria-hidden="true"></span>
                     <a href="mailto:contact@omnitax.com.au">contact@omnitax.com.au</a>
                 </div>
                 <div class="footer__contact-line" style="margin-top: 16px; font-size: 0.8rem; color: rgba(255,255,255,0.45);">

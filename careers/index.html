@@ -55,7 +55,7 @@
                     <li><a href="/insights/" class="navbar__link">Insights</a></li>
                     <li><a href="/careers/" class="navbar__link active">Careers</a></li>
                     <li><a href="/contact/" class="navbar__link">Contact</a></li>
-                    <li><a href="https://www.linkedin.com/company/omnitax-professionals/" class="navbar__link" target="_blank" rel="noopener noreferrer">Follow Us</a></li>
+                    <li><a href="https://www.linkedin.com/company/omnitax-professionals/" class="navbar__link" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
                 </ul>
                 <button class="navbar__hamburger" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNav">
                     <span></span><span></span><span></span>
@@ -76,7 +76,7 @@
                 <li><a href="/insights/" class="navbar__link">Insights</a></li>
                 <li><a href="/careers/" class="navbar__link">Careers</a></li>
                 <li><a href="/contact/" class="navbar__link">Contact</a></li>
-                <li><a href="https://www.linkedin.com/company/omnitax-professionals/" class="navbar__link" target="_blank" rel="noopener noreferrer">Follow Us</a></li>
+                <li><a href="https://www.linkedin.com/company/omnitax-professionals/" class="navbar__link" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
             </ul>
         </nav>
     </header>
@@ -146,7 +146,7 @@
                         <h2 id="apply-heading" style="margin-bottom: 32px;">Apply Now</h2>
 
                         <div class="contact-info__item">
-                            <div class="contact-info__icon" aria-hidden="true">?</div>
+                            <div class="contact-info__icon contact-info__icon--email" aria-hidden="true"></div>
                             <div>
                                 <div class="contact-info__label">Email</div>
                                 <div class="contact-info__value">
@@ -156,7 +156,7 @@
                         </div>
 
                         <div class="contact-info__item">
-                            <div class="contact-info__icon" aria-hidden="true">??</div>
+                            <div class="contact-info__icon contact-info__icon--location" aria-hidden="true"></div>
                             <div>
                                 <div class="contact-info__label">Location</div>
                                 <div class="contact-info__value">Brisbane CBD, Queensland, Australia</div>
@@ -166,16 +166,13 @@
                         <div style="margin-top: 40px; padding: 24px; background: var(--off-white); border-radius: var(--radius-md); border-left: 3px solid var(--omni-gold);">
                             <h3 style="font-size: 1rem; margin-bottom: 10px; color: var(--omni-green);">File Requirements</h3>
                             <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8rem; color: var(--dark-grey);">
-                                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                                    <span style="color: var(--omni-gold); font-weight: 700; flex-shrink: 0;">?</span>
+                                <div class="text-bullet" style="font-size: 0.8rem; color: var(--dark-grey);">
                                     Individual files cannot exceed 10 MB
                                 </div>
-                                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                                    <span style="color: var(--omni-gold); font-weight: 700; flex-shrink: 0;">?</span>
+                                <div class="text-bullet" style="font-size: 0.8rem; color: var(--dark-grey);">
                                     Total attachments cannot exceed 15 MB
                                 </div>
-                                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                                    <span style="color: var(--omni-gold); font-weight: 700; flex-shrink: 0;">?</span>
+                                <div class="text-bullet" style="font-size: 0.8rem; color: var(--dark-grey);">
                                     Accepted formats: PDF, DOC, DOCX
                                 </div>
                             </div>
@@ -277,7 +274,7 @@
                                         class="careers-upload__input"
                                     >
                                     <label for="attachments" class="careers-upload__label" aria-hidden="true">
-                                        <span class="careers-upload__icon" aria-hidden="true">?</span>
+                                        <span class="careers-upload__icon" aria-hidden="true"></span>
                                         <span class="careers-upload__text">Click to upload or drag &amp; drop</span>
                                         <span class="careers-upload__sub">PDF, DOC, DOCX — max 10 MB per file, 15 MB total</span>
                                     </label>
@@ -344,7 +341,12 @@
                 <div class="footer__registrations">
                     <img src="/assets/icons/tpb.png" alt="Registered Tax Agent — Tax Practitioners Board" class="footer__reg-logo">
                     <img src="/assets/icons/caanz.png" alt="Registered Practice Entity Member — Chartered Accountants Australia and New Zealand" class="footer__reg-logo">
-                    <span class="footer__reg-asic">ASIC Registered Agent 54166</span>
+                    <div class="footer__reg-asic" role="img" aria-label="ASIC Registered Agent 54166">
+                        <span class="footer__reg-asic-brand">ASIC</span>
+                        <span class="footer__reg-asic-text">Registered</span>
+                        <span class="footer__reg-asic-text">Agent</span>
+                        <span class="footer__reg-asic-num">54166</span>
+                    </div>
                 </div>
             </div>
 
@@ -366,11 +368,11 @@
             <div class="footer__col">
                 <h5>Contact</h5>
                 <div class="footer__contact-line">
-                    <span class="footer__contact-icon" aria-hidden="true">??</span>
+                    <span class="footer__contact-icon footer__contact-icon--location" aria-hidden="true"></span>
                     <span>Brisbane, Queensland, Australia</span>
                 </div>
                 <div class="footer__contact-line">
-                    <span class="footer__contact-icon" aria-hidden="true">?</span>
+                    <span class="footer__contact-icon footer__contact-icon--email" aria-hidden="true"></span>
                     <a href="mailto:contact@omnitax.com.au">contact@omnitax.com.au</a>
                 </div>
                 <div class="footer__contact-line" style="margin-top: 16px; font-size: 0.8rem; color: rgba(255,255,255,0.45);">

@@ -1,5 +1,17 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-07-09 — Our Values: larger core value name text
+
+- Increased `.card--value h3` font size to `clamp(2rem, 4.2vw, 2.5rem)` so value names (Precise, Reliable, etc.) stand out more above card body copy.
+
+## 2026-07-09 — Icon & bullet encoding fixes, UI polish
+
+- Replaced corrupted emoji/question-mark markers with CSS SVG mask icons for footer contact (location, email), contact/careers info panels, and CV upload area.
+- Replaced commitment and feature-list bullets with CSS `::before` gold bullets (Our Values commitments, Our People network list, Contact credentials, Careers file requirements).
+- Navbar "Follow Us" renamed to "LinkedIn" site-wide.
+- Removed faint row dividers from Industries list under Clients We Serve on Our Services.
+- Centred icon and value name in Our Values core value cards (`.card--value`).
+
 ## 2026-07-09 — Navbar logo size & Services industries list spacing
 
 - Increased `.navbar__logo` height from 36px to 50px site-wide.
