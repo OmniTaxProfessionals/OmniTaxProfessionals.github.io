@@ -1,5 +1,9 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-07-10 — Footer: fix ASIC badge clipping on mobile
+
+- At `≤768px`, footer registration badges use a 3-column grid with proportional sizing instead of a non-wrapping flex row, so the ASIC badge is no longer cut off on narrow screens. Logo heights and ASIC typography scale down via CSS variables and `clamp()`.
+
 ## 2026-07-10 — Footer: tunable CAANZ logo size token
 
 - Added `--footer-caanz-logo-height` and `--footer-caanz-logo-max-width` in `css/styles.css` `:root` so the CAANZ badge can be adjusted without hunting for selectors. Defaults match TPB/ASIC via `--footer-reg-logo-height` (`100px`).

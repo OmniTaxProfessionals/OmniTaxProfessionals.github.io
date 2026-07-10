@@ -2648,6 +2648,9 @@ p {
     :root {
         --section-pad:    60px 20px;
         --section-pad-sm: 40px 20px;
+        --footer-reg-logo-inset: 0;
+        --footer-reg-logo-height: 80px;
+        --footer-caanz-logo-height: 80px;
     }
 
     .cards-grid--3,
@@ -2661,6 +2664,48 @@ p {
     }
 
     .footer__grid       { grid-template-columns: 1fr; gap: 28px; }
+
+    .footer__registrations {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: center;
+        justify-items: center;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .footer__reg-logo {
+        height: auto;
+        max-height: var(--footer-reg-logo-height);
+        max-width: 100%;
+        width: auto;
+    }
+
+    .footer__reg-logo[src*="caanz"] {
+        height: auto;
+        max-height: var(--footer-caanz-logo-height);
+        max-width: 100%;
+    }
+
+    .footer__reg-asic {
+        height: auto;
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+        padding: 5px 6px;
+    }
+
+    .footer__reg-asic-brand {
+        font-size: clamp(0.75rem, 3.2vw, 1.1rem);
+    }
+
+    .footer__reg-asic-text {
+        font-size: clamp(0.45rem, 2vw, 0.58rem);
+    }
+
+    .footer__reg-asic-num {
+        font-size: clamp(0.62rem, 2.5vw, 0.82rem);
+    }
 
     .hero               { padding: 76px 20px 64px; }
 
