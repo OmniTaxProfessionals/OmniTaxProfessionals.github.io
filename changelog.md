@@ -1,8 +1,20 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-07-10 — Footer: tunable CAANZ logo size token
+
+- Added `--footer-caanz-logo-height` and `--footer-caanz-logo-max-width` in `css/styles.css` `:root` so the CAANZ badge can be adjusted without hunting for selectors. Defaults match TPB/ASIC via `--footer-reg-logo-height` (`100px`).
+
+## 2026-07-10 — Footer: reduce CAANZ registration logo size
+
+- Removed the oversized `.footer__reg-logo[src*="caanz"]` override so the CAANZ badge uses the same `100px` height as the TPB and ASIC footer logos site-wide.
+
 ## 2026-07-10 — Footer: spell out "Limited" in copyright
 
 - Replaced "Pty Ltd" with "Pty Limited" in footer copyright lines site-wide (`index.html`, `our-services/index.html`, `our-values/index.html`, `our-people/index.html`, `contact/index.html`, `careers/index.html`, `insights/index.html`, `terms/index.html`, `privacy/index.html`).
+
+## 2026-07-10 — Footer: update global reach tagline wording
+
+- Changed "serving clients" to "servicing clients" in the footer tagline site-wide (`index.html`, `our-services/index.html`, `our-values/index.html`, `our-people/index.html`, `contact/index.html`, `careers/index.html`, `insights/index.html`, `terms/index.html`, `privacy/index.html`).
 
 ## 2026-07-10 — Footer: update global reach tagline
 

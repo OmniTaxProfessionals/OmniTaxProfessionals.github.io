@@ -36,6 +36,10 @@
 
     /* Footer TPB / CAANZ logos — horizontal inset from brand column edges (higher = closer together) */
     --footer-reg-logo-inset: 25px;
+    --footer-reg-logo-height: 100px;
+    /* CAANZ portrait asset — raise/lower independently of TPB & ASIC (try 90–130px) */
+    --footer-caanz-logo-height: 140px;
+    --footer-caanz-logo-max-width: calc(var(--footer-caanz-logo-height) * 1.4);
 
     --radius-sm:  6px;
     --radius-md:  10px;
@@ -1842,7 +1846,7 @@ p {
 }
 
 .footer__reg-logo {
-    height: 100px;
+    height: var(--footer-reg-logo-height);
     width: auto;
     max-width: 200px;
     object-fit: contain;
@@ -1851,10 +1855,9 @@ p {
     opacity: 1;
 }
 
-/* CAANZ asset is portrait with more inset — scale up to match TPB / ASIC visual weight */
 .footer__reg-logo[src*="caanz"] {
-    height: 230px;
-    max-width: 320px;
+    height: var(--footer-caanz-logo-height);
+    max-width: var(--footer-caanz-logo-max-width);
 }
 
 .footer__reg-asic {
@@ -1863,7 +1866,7 @@ p {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    height: 100px;
+    height: var(--footer-reg-logo-height);
     min-width: 88px;
     padding: 6px 12px;
     border: 2px solid rgba(255, 255, 255, 0.9);
