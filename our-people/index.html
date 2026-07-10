@@ -356,13 +356,13 @@
                     <a href="mailto:contact@omnitax.com.au">contact@omnitax.com.au</a>
                 </div>
                 <div class="footer__contact-line" style="margin-top: 16px; font-size: 0.8rem; color: rgba(255,255,255,0.45);">
-                    Serving clients across Australia and globally.
+                    Servicing clients accross Australia and globally.
                 </div>
             </div>
         </div>
 
         <div class="footer__bottom">
-            <span>&copy; <span id="footerYear"></span> OmniTax Professionals Pty Ltd. All rights reserved.</span>
+            <span>&copy; <span id="footerYear"></span> OmniTax Professionals Pty Limited. All rights reserved.</span>
             <div style="display: flex; gap: 20px;">
                 <a href="/privacy/">Privacy Policy</a>
                 <a href="/terms/">Terms of Use</a>
@@ -496,6 +496,23 @@
             return 'center ' + y;
         }
 
+        function formatPhotoOffset(value, fallback) {
+            if (value == null || value === '') {
+                return fallback;
+            }
+            return typeof value === 'number' ? value + 'px' : String(value);
+        }
+
+        function getStandingPhotoObjectPosition(person, defaults) {
+            const x = Object.prototype.hasOwnProperty.call(person, 'standingPhotoOffsetX')
+                ? person.standingPhotoOffsetX
+                : defaults.standingPhotoOffsetX;
+            const y = Object.prototype.hasOwnProperty.call(person, 'standingPhotoOffsetY')
+                ? person.standingPhotoOffsetY
+                : defaults.standingPhotoOffsetY;
+            return formatPhotoOffset(x, 'center') + ' ' + formatPhotoOffset(y, 'top');
+        }
+
         /* -- Load team from assets/info/team.json -- */
         async function loadTeam() {
             const grid = document.getElementById('teamGrid');
@@ -528,6 +545,7 @@
                     const cardPhotoSrc = person.cardPhoto || person.photo;
                     const standingPhotoSrc = person.standingPhoto || person.photo;
                     const cardPhotoPosition = getCardPhotoObjectPosition(person, defaults);
+                    const standingPhotoPosition = getStandingPhotoObjectPosition(person, defaults);
 
                     /* -- 1. Define Card Photo (portrait / headshot) -- */
                     const cardPhotoHTML = cardPhotoSrc
@@ -560,7 +578,7 @@
 
                     /* -- 3. Define Modal Photo (standing) -- */
                     const modalPhotoHTML = standingPhotoSrc
-                        ? `<img src="${standingPhotoSrc}" alt="${person.name}" class="modal__standing-photo">`
+                        ? `<img src="${standingPhotoSrc}" alt="${person.name}" class="modal__standing-photo" style="object-position: ${standingPhotoPosition}">`
                         : '<div class="modal__photo-placeholder" aria-hidden="true">??</div>';
 
                     const bioHTML = buildBioHTML(person.bio);

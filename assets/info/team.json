@@ -1,6 +1,8 @@
 {
   "defaults": {
-    "cardPhotoOffsetY": "25%"
+    "cardPhotoOffsetY": "25%",
+    "standingPhotoOffsetX": "center",
+    "standingPhotoOffsetY": "top"
   },
   "members": [
     {
@@ -23,7 +25,9 @@
       ],
       "cardPhoto": "/assets/images/abhi-aggarwal.jpg",
       "standingPhoto": "/assets/images/abhi-aggarwal-standing.jpg",
-      "pdf": "abhi-aggarwal.pdf"
+      "pdf": "abhi-aggarwal.pdf",
+      "standingPhotoOffsetY": "center",
+      "standingPhotoOffsetX": "47.5%"
     },
     {
       "id": "allan-neilsen",
@@ -45,7 +49,9 @@
       ],
       "cardPhoto": "/assets/images/allan-neilsen.jpg",
       "standingPhoto": "/assets/images/allan-neilsen-standing.jpg",
-      "pdf": "allan-neilsen.pdf"
+      "pdf": "allan-neilsen.pdf",
+      "standingPhotoOffsetY": "center",
+      "standingPhotoOffsetX": "52.5%"
     },
     {
       "id": "stephanie-lam",
@@ -88,7 +94,9 @@
       ],
       "cardPhoto": "/assets/images/alice-ratcliffe.jpg",
       "standingPhoto": "/assets/images/alice-ratcliffe-standing.jpg",
-      "pdf": "alice-ratcliffe.pdf"
+      "pdf": "alice-ratcliffe.pdf",
+      "standingPhotoOffsetY": "center",
+      "standingPhotoOffsetX": "38%"
     },
     {
       "id": "ted-ryan",

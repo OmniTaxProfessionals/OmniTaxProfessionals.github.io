@@ -1851,6 +1851,12 @@ p {
     opacity: 1;
 }
 
+/* CAANZ asset is portrait with more inset — scale up to match TPB / ASIC visual weight */
+.footer__reg-logo[src*="caanz"] {
+    height: 230px;
+    max-width: 320px;
+}
+
 .footer__reg-asic {
     display: flex;
     flex-direction: column;
@@ -2213,6 +2219,114 @@ p {
 
 .teaser-cards--site {
     grid-template-columns: repeat(3, 1fr);
+}
+
+/* ── 15b-i. Home — modern platinum accent (replaces gold) ─ */
+.page-home {
+    --home-accent:        #ffffff;
+    --home-accent-soft:   rgba(255, 255, 255, 0.90);
+    --home-accent-muted:  rgba(255, 255, 255, 0.68);
+    --home-accent-subtle: rgba(255, 255, 255, 0.14);
+    --home-accent-border: rgba(255, 255, 255, 0.32);
+    --home-accent-on-light: var(--omni-green-light);
+}
+
+.page-home .hero {
+    background: linear-gradient(135deg, var(--omni-green-dark) 0%, var(--omni-green) 52%, var(--omni-green-mid) 100%);
+}
+
+.page-home .hero::before {
+    background:
+        radial-gradient(ellipse 75% 65% at 92% -8%,  rgba(255, 255, 255, 0.12) 0%, transparent 58%),
+        radial-gradient(ellipse 50% 50% at -4% 108%, rgba(255, 255, 255, 0.07) 0%, transparent 55%),
+        radial-gradient(ellipse 42% 48% at 50% 0%,   rgba(255, 255, 255, 0.08) 0%, transparent 62%);
+}
+
+.page-home .hero::after {
+    background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.06) 50%, transparent 100%);
+}
+
+.page-home .hero__image img {
+    border-color: var(--home-accent-border);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.page-home .hero__badge-icon {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--home-accent-border);
+    color: var(--home-accent);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.page-home .divider {
+    background: linear-gradient(90deg, transparent, var(--home-accent-on-light), transparent);
+}
+
+.page-home .about-commitments li span {
+    color: var(--home-accent-on-light);
+}
+
+.page-home .leadership__eyebrow {
+    color: var(--omni-green-mid);
+}
+
+.page-home .teaser-card:hover {
+    border-top-color: var(--home-accent-on-light);
+}
+
+.page-home .cta-section::before {
+    background: radial-gradient(ellipse 80% 60% at center, rgba(255, 255, 255, 0.10) 0%, transparent 65%);
+}
+
+.page-home .cta-section .btn--primary {
+    background: var(--home-accent);
+    color: var(--omni-green-dark);
+    border-color: var(--home-accent);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.14);
+}
+
+.page-home .cta-section .btn--primary:hover {
+    background: #f4f7f5;
+    border-color: #f4f7f5;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18);
+}
+
+.page-home .btn--secondary {
+    color: var(--omni-green);
+    border-color: var(--omni-green);
+}
+
+.page-home .btn--secondary:hover {
+    background: var(--omni-green);
+    color: var(--home-accent);
+    box-shadow: 0 8px 24px rgba(81, 132, 101, 0.28);
+}
+
+.page-home .navbar__link::after {
+    background: var(--omni-green-light);
+}
+
+.page-home .footer__grid {
+    border-bottom-color: var(--home-accent-subtle);
+}
+
+.page-home .footer__name,
+.page-home .footer__col h5 {
+    color: var(--home-accent-soft);
+}
+
+.page-home .footer__links a:hover,
+.page-home .footer__bottom a:hover {
+    color: var(--home-accent);
+}
+
+.page-home .footer__contact-icon {
+    color: var(--home-accent-muted);
+}
+
+.page-home .section--offwhite {
+    background: #f7f9f8;
 }
 
 /* ── 15b-ii. Home — About & Leadership ─────────────────── */

@@ -1,5 +1,31 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-07-10 — Footer: spell out "Limited" in copyright
+
+- Replaced "Pty Ltd" with "Pty Limited" in footer copyright lines site-wide (`index.html`, `our-services/index.html`, `our-values/index.html`, `our-people/index.html`, `contact/index.html`, `careers/index.html`, `insights/index.html`, `terms/index.html`, `privacy/index.html`).
+
+## 2026-07-10 — Footer: update global reach tagline
+
+- Replaced "Serving clients across Australia and globally" with "Servicing clients accross Australia and globally" in footers on `index.html`, `our-services/index.html`, `our-values/index.html`, `our-people/index.html`, `contact/index.html`, and `careers/index.html`.
+
+## 2026-07-10 — Our People: standing photo position offsets in team.json
+
+- Added `defaults.standingPhotoOffsetX` / `standingPhotoOffsetY` and per-member overrides (same pattern as `cardPhotoOffsetY`).
+- Modal standing photos read offsets from `team.json`; Abhi Aggarwal, Allan Neilsen, and Alice Ratcliffe use `standingPhotoOffsetY: "center"`.
+
+## 2026-07-10 — Home: hero gold accents retained
+
+- Restored gold styling for hero eyebrow ("Tax Services"), title accent ("Drives Results"), and Explore Services primary button; white primary button styling now scoped to CTA section only.
+
+## 2026-07-10 — Home: modern platinum accent (replaces gold)
+
+- Added `page-home` body class on `index.html` and scoped accent overrides in `css/styles.css`.
+- Hero gradient, typography highlights, badges, dividers, CTA glow, buttons, teaser hovers, and footer accents now use a clean white/platinum palette instead of gold for a fresher, more contemporary look. Other pages retain the existing gold brand tokens.
+
+## 2026-07-10 — Footer: enlarge CAANZ registration logo
+
+- Increased footer CAANZ logo display size (`height: 230px`, `max-width: 320px`) via `.footer__reg-logo[src*="caanz"]` so it balances visually with the TPB and ASIC badges site-wide.
+
 ## 2026-07-09 — Our Values: larger core value name text
 
 - Increased `.card--value h3` font size to `clamp(2rem, 4.2vw, 2.5rem)` so value names (Precise, Reliable, etc.) stand out more above card body copy.
