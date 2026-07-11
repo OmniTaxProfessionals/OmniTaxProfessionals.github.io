@@ -326,8 +326,8 @@
 
         <!--
             HOW TO ADD A NEW REPORT:
-            1. Drop your PDF into assets/tnipdfs/
-            2. Open assets/tnipdfs/manifest.json and add:
+            1. Drop your PDF into assets/documents/insights/
+            2. Open assets/documents/insights/manifest.json and add:
                { "id": "report-002", "title": "Title Here", "date": "YYYY-MM-DD", "file": "filename.pdf" }
         -->
         <section class="tni-section" aria-label="Tax News and Insights">
@@ -546,7 +546,7 @@
         let docs = [];
         async function boot() {
             try {
-                const r = await fetch('/assets/tnipdfs/manifest.json?v=' + Date.now());
+                const r = await fetch('/assets/documents/insights/manifest.json?v=' + Date.now());
                 docs = await r.json();
                 docs.sort(compareInsightDates);
             } catch { docs = []; }
@@ -609,7 +609,7 @@
             const pgb = document.getElementById('pg-'  + doc.id);
             const preview = th ? th.closest('.tni-card-preview') : null;
             try {
-                const pdf  = await pdfjsLib.getDocument({ url: '/assets/tnipdfs/' + encodeURIComponent(doc.file) }).promise;
+                const pdf  = await pdfjsLib.getDocument({ url: '/assets/documents/insights/' + encodeURIComponent(doc.file) }).promise;
                 if (pgb) pgb.textContent = pdf.numPages + (pdf.numPages === 1 ? ' page' : ' pages');
                 const page = await pdf.getPage(1);
                 const vp0  = page.getViewport({ scale: 1 });
@@ -653,7 +653,7 @@
             prevId:       'tniPdfPrev',
             nextId:       'tniPdfNext',
             closeId:      'tniPdfClose',
-            basePath:     '/assets/tnipdfs/'
+            basePath:     '/assets/documents/insights/'
         });
 
         function openViewer(doc) {

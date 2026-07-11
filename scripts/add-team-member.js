@@ -42,7 +42,7 @@ function main() {
     throw new Error('A team member with id "' + id + '" already exists.');
   }
 
-  const imagesDir = path.join(root, 'assets', 'images');
+  const imagesDir = path.join(root, 'assets', 'images', 'team');
   const cardDest = path.join(imagesDir, id + '.jpg');
   const standingDest = path.join(imagesDir, id + '-standing.jpg');
 
@@ -51,7 +51,7 @@ function main() {
 
   let pdfFilename = id + '.pdf';
   if (profilePdf) {
-    const pdfDest = path.join(root, 'assets', 'teampdfs', pdfFilename);
+    const pdfDest = path.join(root, 'assets', 'documents', 'team', pdfFilename);
     copyFile(profilePdf, pdfDest);
   }
 
@@ -66,8 +66,8 @@ function main() {
     title: title,
     bioPreview: bioPreview,
     bio: bio,
-    cardPhoto: '/assets/images/' + id + '.jpg',
-    standingPhoto: '/assets/images/' + id + '-standing.jpg'
+    cardPhoto: '/assets/images/team/' + id + '.jpg',
+    standingPhoto: '/assets/images/team/' + id + '-standing.jpg'
   };
   if (profilePdf) member.pdf = pdfFilename;
 
@@ -80,7 +80,7 @@ function main() {
   console.log('  title: ' + member.title);
   console.log('  card:  ' + member.cardPhoto);
   console.log('  stand: ' + member.standingPhoto);
-  if (profilePdf) console.log('  pdf:   assets/teampdfs/' + pdfFilename);
+  if (profilePdf) console.log('  pdf:   assets/documents/team/' + pdfFilename);
 }
 
 try {

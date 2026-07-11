@@ -31,8 +31,8 @@ GitHub workflow forms cannot accept file uploads directly. Use the **staging fol
    - **Date** — `YYYY-MM-DD`
    - **pdf_filename** — exact filename you uploaded (e.g. `fortnightly-report-may-2026.pdf`)
 4. Run the workflow. It will:
-   - Copy the PDF to `assets/tnipdfs/`
-   - Append an entry to `assets/tnipdfs/manifest.json` (auto id: `report-002`, `report-003`, …)
+   - Copy the PDF to `assets/documents/insights/`
+   - Append an entry to `assets/documents/insights/manifest.json` (auto id: `report-002`, `report-003`, …)
    - Remove the staged file and push to `main`
 
 ### Add a Team Member
@@ -50,8 +50,8 @@ GitHub workflow forms cannot accept file uploads directly. Use the **staging fol
    - **card_photo_filename** / **standing_photo_filename** — exact staged filenames
    - **profile_pdf_filename** — optional staged PDF filename
 4. Run the workflow. It will:
-   - Save images as `/assets/images/{slug}.jpg` and `{slug}-standing.jpg`
-   - Save PDF to `assets/teampdfs/{slug}.pdf` if provided
+   - Save images as `/assets/images/team/{slug}.jpg` and `{slug}-standing.jpg`
+   - Save PDF to `assets/documents/team/{slug}.pdf` if provided
    - Append to `assets/info/team.json`
    - Remove staged files and push to `main`
 
@@ -69,7 +69,7 @@ node scripts/add-insight.js `
   --date "2026-05-30" `
   --pdf "C:\path\to\report.pdf"
 
-git add assets/tnipdfs/
+git add assets/documents/insights/
 git commit -m "Add insight: Fortnightly Tax Report"
 git push
 ```
@@ -86,7 +86,7 @@ node scripts/add-team-member.js `
   --standing-photo "C:\path\to\standing.jpg" `
   --profile-pdf "C:\path\to\profile.pdf"
 
-git add assets/info/team.json assets/images/ assets/teampdfs/
+git add assets/info/team.json assets/images/team/ assets/documents/team/
 git commit -m "Add team member: Jane Smith"
 git push
 ```
@@ -125,7 +125,7 @@ Separate each block with a blank line. In the GitHub Actions form, paste the bio
 | Workflow not visible in Actions | Push these files to `main` first |
 | "Staged PDF not found" | Upload the file to `.staging/insight/` and use the exact filename |
 | "Team member already exists" | The name slug is taken; use a distinct name or edit `team.json` manually |
-| "PDF already exists" | Rename your PDF or remove the duplicate from `assets/tnipdfs/` |
+| "PDF already exists" | Rename your PDF or remove the duplicate from `assets/documents/insights/` |
 | Site not updated after push | Wait 1–2 minutes; hard-refresh the browser (Ctrl+F5) |
 
 ---
@@ -145,4 +145,13 @@ scripts/
 .staging/
   insight/                # Temporary PDF staging for Actions
   team/                   # Temporary image/PDF staging for Actions
+
+assets/
+  documents/
+    insights/             # Published Insights PDFs + manifest.json
+    legal/                # Privacy policy & terms PDFs
+    team/                 # Team profile PDFs
+  images/
+    team/                 # Team headshots and standing photos
+  info/                   # Content data (team.json, copy text)
 ```

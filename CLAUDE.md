@@ -72,7 +72,7 @@ container to `.navbar__logo` or `.footer__logo`. Use `height` + `width: auto` + 
 - HTML pages: `kebab-case.html` (e.g., `insights.html`, `careers.html`)
 - CSS: single stylesheet at `css/styles.css`
 - JS modules: `js/auth.js`, `js/main.js`, `js/sharepoint.js`
-- Assets: `assets/icons/`, `assets/images/`, `assets/info/`
+- Assets: `assets/icons/`, `assets/images/`, `assets/images/team/`, `assets/documents/`, `assets/info/`
 - Docs: `docs/` (architecture markdown files)
 
 ### CSS

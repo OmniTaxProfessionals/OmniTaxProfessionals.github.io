@@ -102,7 +102,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/info/team.json assets/images/ assets/teampdfs/
+          git add assets/info/team.json assets/images/team/ assets/documents/team/
           git diff --staged --quiet && echo "Nothing to commit" && exit 0
           git commit -m "Add team member: ${{ github.event.inputs.name }}"
           git push

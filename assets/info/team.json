@@ -23,8 +23,8 @@
         "• Bachelor of Business (Accounting, Finance)",
         "• Bachelor of Information Technology (Information Systems)"
       ],
-      "cardPhoto": "/assets/images/abhi-aggarwal.jpg",
-      "standingPhoto": "/assets/images/abhi-aggarwal-standing.jpg",
+      "cardPhoto": "/assets/images/team/abhi-aggarwal.jpg",
+      "standingPhoto": "/assets/images/team/abhi-aggarwal-standing.jpg",
       "pdf": "abhi-aggarwal.pdf",
       "standingPhotoOffsetX": "47.5%"
     },
@@ -46,8 +46,8 @@
         "• Bachelor of Laws (Hons)",
         "• Bachelor of Commerce (Hons - Accounting)"
       ],
-      "cardPhoto": "/assets/images/allan-neilsen.jpg",
-      "standingPhoto": "/assets/images/allan-neilsen-standing.jpg",
+      "cardPhoto": "/assets/images/team/allan-neilsen.jpg",
+      "standingPhoto": "/assets/images/team/allan-neilsen-standing.jpg",
       "pdf": "allan-neilsen.pdf",
       "standingPhotoOffsetX": "52.5%"
     },
@@ -68,8 +68,8 @@
         "• Bachelor of Laws (Hons)",
         "• Bachelor of Commerce (Accounting)"
       ],
-      "cardPhoto": "/assets/images/stephanie-lam.jpg",
-      "standingPhoto": "/assets/images/stephanie-lam-standing.jpg",
+      "cardPhoto": "/assets/images/team/stephanie-lam.jpg",
+      "standingPhoto": "/assets/images/team/stephanie-lam-standing.jpg",
       "pdf": "stephanie-lam.pdf"
     },
     {
@@ -90,8 +90,8 @@
         "• Bachelor of Laws (Honours)",
         "• Bachelor of Commerce (Finance)"
       ],
-      "cardPhoto": "/assets/images/alice-ratcliffe.jpg",
-      "standingPhoto": "/assets/images/alice-ratcliffe-standing.jpg",
+      "cardPhoto": "/assets/images/team/alice-ratcliffe.jpg",
+      "standingPhoto": "/assets/images/team/alice-ratcliffe-standing.jpg",
       "pdf": "alice-ratcliffe.pdf",
       "standingPhotoOffsetX": "38%"
     },
@@ -111,8 +111,8 @@
         "• Bachelor of Laws (Honours)",
         "• Bachelor of Commerce (Accounting)"
       ],
-      "cardPhoto": "/assets/images/ted-ryan.jpg",
-      "standingPhoto": "/assets/images/ted-ryan-standing.jpg",
+      "cardPhoto": "/assets/images/team/ted-ryan.jpg",
+      "standingPhoto": "/assets/images/team/ted-ryan-standing.jpg",
       "pdf": "ted-ryan.pdf"
     },
     {
@@ -131,8 +131,8 @@
         "• Advanced Diploma of Law",
         "• Advanced Diploma of Business"
       ],
-      "cardPhoto": "/assets/images/jeff-pfaff.jpg",
-      "standingPhoto": "/assets/images/jeff-pfaff-standing.jpg",
+      "cardPhoto": "/assets/images/team/jeff-pfaff.jpg",
+      "standingPhoto": "/assets/images/team/jeff-pfaff-standing.jpg",
       "pdf": "jeff-pfaff.pdf"
     },
     {
@@ -144,8 +144,8 @@
         "Jonathan is a tax specialist who provides Research & Development Tax Incentive services to all clients of OmniTax Professionals. He has over 20 years of experience as an R&D tax specialist and was previously a Partner in a \"Big 4\" accounting firm, leading their Brisbane R&D tax incentive team for 7 years. Jonathan is also a degree qualified mechanical engineer with 18 years of experience as a design engineer in the defence, transportation and automotive industries.",
         "Jonathan provides a more immersive approach to his R&D tax services, regularly visiting clients throughout the claim period to ensure an R&D governance framework is in place, that suitable processes are developed and implemented to ensure that all R&D activities are captured, that contemporaneous documents are being produced and filed, and that staff time and project expenditure can be linked back to the activities being claimed. He provides R&D Tax Incentive services across a range of industries, including underground and open-cut operations in the resources sector, automotive, motorsport, agriculture, meat processing, animal genetics, veterinary products, healthcare, manufacturing, engineering and software."
       ],
-      "cardPhoto": "/assets/images/jonathan-turner.jpg",
-      "standingPhoto": "/assets/images/jonathan-turner-standing.jpg"
+      "cardPhoto": "/assets/images/team/jonathan-turner.jpg",
+      "standingPhoto": "/assets/images/team/jonathan-turner-standing.jpg"
     },
     {
       "id": "graham-sorensen",
@@ -162,8 +162,8 @@
         "• Bachelor of Laws (Hons)",
         "• Bachelor of Commerce"
       ],
-      "cardPhoto": "/assets/images/graham-sorensen.jpg",
-      "standingPhoto": "/assets/images/graham-sorensen-standing.jpg",
+      "cardPhoto": "/assets/images/team/graham-sorensen.jpg",
+      "standingPhoto": "/assets/images/team/graham-sorensen-standing.jpg",
       "pdf": "graham-sorensen.pdf"
     },
     {
@@ -181,8 +181,8 @@
         "• Master of Commerce (Finance major)",
         "• Bachelor of Business (Accounting, Finance)"
       ],
-      "cardPhoto": "/assets/images/kevin-qi.jpg",
-      "standingPhoto": "/assets/images/kevin-qi-standing.jpg",
+      "cardPhoto": "/assets/images/team/kevin-qi.jpg",
+      "standingPhoto": "/assets/images/team/kevin-qi-standing.jpg",
       "pdf": "kevin-qi.pdf",
       "cardPhotoOffsetY": "15%"
     },
@@ -203,8 +203,8 @@
         "• Master of Commerce (Accounting and Applied Finance)",
         "• Bachelor of Accounting"
       ],
-      "cardPhoto": "/assets/images/le-chang.jpg",
-      "standingPhoto": "/assets/images/le-chang-standing.jpg",
+      "cardPhoto": "/assets/images/team/le-chang.jpg",
+      "standingPhoto": "/assets/images/team/le-chang-standing.jpg",
       "pdf": "le-chang.pdf"
     },
     {
@@ -217,8 +217,8 @@
         "Shinae's communication and organisation skills, attention to detail, and efficiency focus, allow her to provide an exceptional level of service and professionalism.",
         "Contact Shinae to make an appointment with one of our tax professionals to explore how we can work together and add value to your business and/or tax affairs."
       ],
-      "cardPhoto": "/assets/images/shinae-barratt.jpg",
-      "standingPhoto": "/assets/images/shinae-barratt-standing.jpg"
+      "cardPhoto": "/assets/images/team/shinae-barratt.jpg",
+      "standingPhoto": "/assets/images/team/shinae-barratt-standing.jpg"
     }
   ]
 }

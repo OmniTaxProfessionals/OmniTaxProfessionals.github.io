@@ -24,7 +24,7 @@ function main() {
   assertDate(date);
   assertFileExists(pdfPath, 'PDF');
 
-  const destDir = path.join(root, 'assets', 'tnipdfs');
+  const destDir = path.join(root, 'assets', 'documents', 'insights');
   const manifestPath = path.join(destDir, 'manifest.json');
   const manifest = readJson(manifestPath);
 
@@ -32,7 +32,7 @@ function main() {
   const destPath = path.join(destDir, destFilename);
 
   if (fs.existsSync(destPath)) {
-    throw new Error('A PDF with this filename already exists in assets/tnipdfs/: ' + destFilename);
+    throw new Error('A PDF with this filename already exists in assets/documents/insights/: ' + destFilename);
   }
 
   copyFile(pdfPath, destPath);
@@ -51,7 +51,7 @@ function main() {
   console.log('  id:    ' + entry.id);
   console.log('  title: ' + entry.title);
   console.log('  date:  ' + entry.date);
-  console.log('  file:  assets/tnipdfs/' + entry.file);
+  console.log('  file:  assets/documents/insights/' + entry.file);
 }
 
 try {

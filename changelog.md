@@ -1,5 +1,16 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-07-11 — Workspace restructure for GitHub repository clarity
+
+- Reorganized `assets/` into a clear hierarchy: `assets/documents/{insights,legal,team}`, `assets/images/team/`, and `assets/_archive/` for dev artifacts.
+- Renamed legal PDFs to kebab-case (`privacy-policy.pdf`, `website-disclaimer.pdf`) under `assets/documents/legal/`; updated Privacy and Terms page paths.
+- Moved team headshots to `assets/images/team/`; updated `team.json`, admin scripts, and Our People PDF viewer base path.
+- Relocated Insights PDFs from `assets/tnipdfs/` to `assets/documents/insights/`; updated Insights page, scripts, and GitHub Actions workflows.
+- Relocated team profile PDFs from `assets/teampdfs/` to `assets/documents/team/`.
+- Archived unused CAANZ logo size variants from repo root; moved internal proposal PDF to `docs/internal/`.
+- Removed duplicate `tpb2.png` icon and empty `assets/icons/industries/` folder.
+- Added `README.md`, `.gitignore` (excludes `node_modules/`), and updated `docs/admin-workflows.md` with new paths.
+
 ## 2026-07-10 — Footer: fix ASIC badge clipping on mobile
 
 - At `≤768px`, footer registration badges use a 3-column grid with proportional sizing instead of a non-wrapping flex row, so the ASIC badge is no longer cut off on narrow screens. Logo heights and ASIC typography scale down via CSS variables and `clamp()`.
