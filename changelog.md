@@ -1,5 +1,9 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-07-11 — Client discovery questionnaire for launch and quoting
+
+- Added `docs/questionnaire.md` — comprehensive client-facing discovery form covering all built pages (Home, Services, People, Values, Insights, Careers, Contact, Legal), outstanding gaps (dashboard, forms, our-values.txt), integrations, SEO, and Phase 1 vs Phase 2 quote scope.
+
 ## 2026-07-11 — Workspace restructure for GitHub repository clarity
 
 - Reorganized `assets/` into a clear hierarchy: `assets/documents/{insights,legal,team}`, `assets/images/team/`, and `assets/_archive/` for dev artifacts.
