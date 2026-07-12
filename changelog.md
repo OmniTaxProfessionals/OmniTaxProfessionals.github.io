@@ -1,5 +1,9 @@
 # Changelog — OmniTax Professionals Website
 
+## 2026-07-13 — FormSubmit recipient email corrected
+
+- Updated FormSubmit `action` URLs on `contact/index.html` and `careers/index.html` from `sam.garg2101@gmail.com` to `contact@omnitax.com.au`.
+
 ## 2026-07-11 — Client discovery questionnaire for launch and quoting
 
 - Added `docs/questionnaire.md` — comprehensive client-facing discovery form covering all built pages (Home, Services, People, Values, Insights, Careers, Contact, Legal), outstanding gaps (dashboard, forms, our-values.txt), integrations, SEO, and Phase 1 vs Phase 2 quote scope.
