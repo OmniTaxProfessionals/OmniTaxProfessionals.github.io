@@ -167,6 +167,16 @@
       "pdf": "graham-sorensen.pdf"
     },
     {
+      "id": "preethi-pasumarty",
+      "name": "Preethi Pasumarty",
+      "title": "Senior Manager",
+      "bioPreview": "",
+      "bio": [],
+      "cardPhoto": "/assets/images/team/preethi-pasumarty.jpg",
+      "standingPhoto": "/assets/images/team/preethi-pasumarty.jpg",
+      "pdf": "preethi-pasumarty.pdf"
+    },
+    {
       "id": "kevin-qi",
       "name": "Kevin Qi",
       "title": "Senior Consultant",
