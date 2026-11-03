@@ -138,9 +138,15 @@
     "file": "OTP Tax News - 20261001.pdf"
   },
   {
-    "id":"report-024",
-    "title":"OTP Tax News",
-    "date":"2026-11-03",
-    "file":"OTP Tax News - 20261103.pdf"
+    "id": "report-024",
+    "title": "OTP Tax News",
+    "date": "2026-10-19",
+    "file": "OTP Tax News - 20261019.pdf"
+  },
+  {
+    "id": "report-025",
+    "title": "OTP Tax News",
+    "date": "2026-11-03",
+    "file": "OTP Tax News - 20261103.pdf"
   }
 ]
